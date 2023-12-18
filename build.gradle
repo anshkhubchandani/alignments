@@ -6,8 +6,21 @@ group = 'de.unijena.bioinf.dm23.grp06'
 version = '1.0-SNAPSHOT'
 
 repositories {
-    mavenLocal()
+   // mavenLocal()
     mavenCentral()
+
+    maven {
+        url 'https://git.uni-jena.de/api/v4/projects/3621/packages/maven'
+        name = "FSU-Gitlab"
+        credentials(PasswordCredentials) {
+            username = project.findProperty("dm.registry.tokenName") as String
+            password = project.findProperty("dm.registry.token") as String
+            // the variable resides in $GRADLE_USER_HOME/gradle.properties
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+    }
 }
 
 dependencies {
