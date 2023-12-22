@@ -8,7 +8,7 @@ public class NeedlemanWunsch extends AlignerMethods {
     }
 
     public void setAlignmentScore () {
-
+        this.bestAlignmentScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
     }
 
     @Override

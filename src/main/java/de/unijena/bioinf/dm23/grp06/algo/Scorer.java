@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class Scorer {
 
-    boolean defaultScores;
-    int match = 1;
-    int mismatch = 0;
-    int gap = 0;
-    HashMap<String,Integer> customScores;
+    private boolean defaultScores;
+    private int match = 1; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
+    private int mismatch = 0;
+    protected int gap = 0;
+    private HashMap<String,Integer> customScores;
 
     public Scorer (boolean defScores) {
         this.defaultScores = defScores;
@@ -31,7 +31,7 @@ public class Scorer {
         if (firstChar == secondChar) {
             return match;
         }
-        else if ((firstChar == '#') || secondChar == '#') {
+        else if ((firstChar == '#') || secondChar == '#') { // Gaps aktuell als # gekennzeichnet
             return gap;
         }
         else {
@@ -54,7 +54,7 @@ public class Scorer {
 
     private void setCustomScores () {
 
-        // TODO hier ergänzen!!
+        // TODO ergänzen, hier wird customScores aufgefüllt
 
     }
 
