@@ -1,6 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 public class NeedlemanWunsch extends AlignerMethods {
+    //Output: Kosten des optimalen Alignments (Minimum)
 
     public NeedlemanWunsch (String sequence1, String sequence2, boolean defaultScoring) {
         super(sequence1, sequence2, defaultScoring);
@@ -8,6 +9,7 @@ public class NeedlemanWunsch extends AlignerMethods {
         this.alignmentScorer = new Scorer(true);
         initializeAlignmentMatrix(algorithm);
         align(algorithm);
+        setAlignmentScore();
 
     }
     @Override
@@ -37,9 +39,9 @@ public class NeedlemanWunsch extends AlignerMethods {
     }
 
     public static void main(String[] args) {
-    //Example usage
-    String s1 = "AG";
-    String s2 = "AC";
+    //Example
+    String s1 = "AC";
+    String s2 = "AG";
     NeedlemanWunsch aligner = new NeedlemanWunsch(s1,s2,true);
     System.out.println("Best Alignment Score: " + aligner.getAlignmentScore());
     }
