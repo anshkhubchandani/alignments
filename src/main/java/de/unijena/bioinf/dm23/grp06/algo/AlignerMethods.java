@@ -44,7 +44,7 @@ public abstract class AlignerMethods implements Aligner {
 
     }
 
-    private void initializeAlignmentMatrix (String algo) {
+    void initializeAlignmentMatrix (String algo) {
         scores = new int[firstSequence.length()+1][secondSequence.length()+1];
         // int[Zeilen][Spalten] -> erste Sequenz senkrecht, zweite Sequenz waagerecht
 
@@ -60,7 +60,7 @@ public abstract class AlignerMethods implements Aligner {
 
     }
 
-    private int returnBestScoreAtPosition (int i, int j) {
+    int returnBestScoreAtPosition (int i, int j) {
 
 
         return 0;
