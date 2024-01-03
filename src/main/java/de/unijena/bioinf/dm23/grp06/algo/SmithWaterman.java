@@ -1,7 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 public class SmithWaterman extends AlignerMethods {
-    //Output: Kosten des optimalen Alignments (Minimum)
+    //Output: Ähnlichlkeit des optimalen Alignments (Maximum)
 
     public SmithWaterman (String sequence1, String sequence2, boolean defaultScoring) {
         super(sequence1, sequence2, defaultScoring);
@@ -25,7 +25,6 @@ public class SmithWaterman extends AlignerMethods {
 
     @Override
     protected int returnBestScoreAtPosition(int i, int j) {
-        // Needleman-Wunsch specific logic for retrieving the best score at position (i, j)
         return scores[i][j];
     }
 
