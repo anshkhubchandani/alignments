@@ -34,8 +34,9 @@ public class NeedlemanWunsch extends AlignerMethods {
     }
 
     @Override
-    public int getOptimalAlignment() {
-        return bestAlignmentScore;
+    public String getOptimalAlignment() {
+        //Keine Ahnung was die Rückgabe ist
+        return "";
     }
 
     public static void main(String[] args) {
@@ -43,6 +44,9 @@ public class NeedlemanWunsch extends AlignerMethods {
     String s1 = "AC";
     String s2 = "AG";
     NeedlemanWunsch aligner = new NeedlemanWunsch(s1,s2,true);
+
+    aligner.align(aligner.getAlgorithm());
+
     System.out.println("Best Alignment Score: " + aligner.getAlignmentScore());
     }
 }

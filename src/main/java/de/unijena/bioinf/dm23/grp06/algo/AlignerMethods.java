@@ -20,7 +20,7 @@ public abstract class AlignerMethods implements Aligner {
         this.firstSequence = sequence1;
         this.secondSequence = sequence2;
     }
-
+    //Hier viele Fragen
     public void align (String algo) {
         // int diagonalScore;
 
@@ -68,6 +68,12 @@ public abstract class AlignerMethods implements Aligner {
 
     public int getAlignmentScore() {
         return bestAlignmentScore;
+    }
+
+
+    public String getAlgorithm()
+    {
+        return algorithm;
     }
 
 }
