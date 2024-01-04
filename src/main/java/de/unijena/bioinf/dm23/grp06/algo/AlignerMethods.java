@@ -36,6 +36,7 @@ public abstract class AlignerMethods implements Aligner {
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
 
                 //Todo Berechnung des Minimums?
+                //Test
                 if (algo.equals("SW") && scores[i][j] > maxScore) {
                     maxScore = scores[i][j];
                     maxPositions.add(i);
