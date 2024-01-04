@@ -7,6 +7,10 @@ public class AlignmentImpl<T> implements Alignment<T> {
     private List<T> sequence1;
     private List<T> sequence2;
 
+    public AlignmentImpl (String firstSequence, String secondSequence) {
+
+    }
+
     @Override
     public void setSequence1(List<T> sequence1) {
         this.sequence1 = sequence1;

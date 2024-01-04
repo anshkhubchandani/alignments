@@ -11,6 +11,7 @@ public abstract class AlignerMethods implements Aligner {
     String algorithm;
 
     int[][] scores;
+    int[][] backtrackArray;
 
 
     int maxScore;
@@ -24,6 +25,7 @@ public abstract class AlignerMethods implements Aligner {
     // int [][] oder int [] instead of void?
     public void align (String algo) {
         // int diagonalScore;
+        backtrackArray = new int[firstSequence.length()][secondSequence.length()];
 
         for (int i = 1; i < firstSequence.length(); i++) {
             for (int j = 1; j < secondSequence.length(); j++) {
@@ -31,7 +33,7 @@ public abstract class AlignerMethods implements Aligner {
                 int gapUpScore = scores[i-1][j] + alignmentScorer.gap;
                 int gapLeftScore = scores[i][j-1] + alignmentScorer.gap;
                 //Todo Backtracking
-                backtracking(diagonalScore,gapUpScore, gapLeftScore);
+                backtracking(diagonalScore,gapUpScore, gapLeftScore, i, j);
                 //Berechnung des Maximums -> Beste Score
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
 
