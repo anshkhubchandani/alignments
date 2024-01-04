@@ -27,11 +27,15 @@ public abstract class AlignerMethods implements Aligner {
 
         for (int i = 1; i < firstSequence.length(); i++) {
             for (int j = 1; j < secondSequence.length(); j++) {
+                int diagonalScore = scores[i-1][j-1] + alignmentScorer.score(firstSequence.charAt(i), secondSequence.charAt(j));
+                int gapUpScore = scores[i-1][j] + alignmentScorer.gap;
+                int gapLeftScore = scores[i][j-1] + alignmentScorer.gap;
+                //Todo Backtracking
+                backtracking(diagonalScore,gapUpScore, gapLeftScore);
+                //Berechnung des Maximums -> Beste Score
+                scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
 
-                // diagonalScore = scores[i-1][j-1] + alignmentScorer.score(firstSequence.charAt(i), secondSequence.charAt(j));
-                // scores[i][j] = Math.max(diagonalScore,
-                //        (Math.max((scores[i-1][j] + alignmentScorer.gap), (scores[i][j-1] + alignmentScorer.gap))));
-
+                //Todo Berechnung des Minimums?
                 if (algo.equals("SW") && scores[i][j] > maxScore) {
                     maxScore = scores[i][j];
                     maxPositions.add(i);
@@ -44,7 +48,9 @@ public abstract class AlignerMethods implements Aligner {
         }
 
     }
+    public int[][] backtracking(int diagonalScore, int gapUpScore,int gapLeftScore){
 
+    }
     void initializeAlignmentMatrix (String algo) {
         scores = new int[firstSequence.length()+1][secondSequence.length()+1];
         // int[Zeilen][Spalten] -> erste Sequenz senkrecht, zweite Sequenz waagerecht
