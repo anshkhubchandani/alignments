@@ -1,5 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
+import java.util.ArrayList;
+
 public class SmithWaterman extends AlignerMethods {
     //Output: Ähnlichlkeit des optimalen Alignments (Maximum)
 
@@ -9,12 +11,13 @@ public class SmithWaterman extends AlignerMethods {
         this.alignmentScorer = new Scorer(true);
         initializeAlignmentMatrix(algorithm);
         align(algorithm);
-        setAlignmentScore();
 
     }
     @Override
     public void align(String algo) {
         super.align(algo);
+        // Smith-Waterman specific logic for finding the best alignment
+
     }
 
     @Override

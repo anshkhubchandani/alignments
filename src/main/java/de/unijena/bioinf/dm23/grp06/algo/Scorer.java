@@ -53,10 +53,10 @@ public class Scorer {
     }
 
     private void setCustomScores () {
-        //Hier Beispiel eingefügt zum Testen
-        customScores = new HashMap<>();
-        customScores.put("AA", 2);
-        customScores.put("GT", -1);
+//        Hier Beispiel eingefügt zum Testen
+//        customScores = new HashMap<>();
+//        customScores.put("AA", 2);
+//        customScores.put("GT", -1);
 
         // TODO ergänzen, hier wird customScores aufgefüllt
 

@@ -21,6 +21,7 @@ public abstract class AlignerMethods implements Aligner {
         this.secondSequence = sequence2;
     }
     //Hier viele Fragen
+    // int [][] oder int [] instead of void?
     public void align (String algo) {
         // int diagonalScore;
 
