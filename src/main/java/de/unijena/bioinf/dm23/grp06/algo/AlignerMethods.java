@@ -36,9 +36,7 @@ public abstract class AlignerMethods implements Aligner {
                 backtracking(diagonalScore,gapUpScore, gapLeftScore, i, j);
                 //Berechnung des Maximums -> Beste Score
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
-
-                //Todo Berechnung des Minimums?
-                //Test
+                // Todo Bei SW auch 0 mit eintragen !
                 if (algo.equals("SW") && scores[i][j] > maxScore) {
                     maxScore = scores[i][j];
                     maxPositions.add(i);
@@ -51,7 +49,19 @@ public abstract class AlignerMethods implements Aligner {
         }
 
     }
-    public int[][] backtracking(int diagonalScore, int gapUpScore,int gapLeftScore){
+    public void backtracking (int diagonalScore, int gapUpScore, int gapLeftScore, int i, int j){
+
+        int bestScore = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
+        // Todo Unterscheidung SW und NW wegen Scores unter 0
+        if (bestScore == diagonalScore) {
+            // Wert kommt von diagonal oben -> in backtrackArray speichern
+        }
+        if (bestScore == gapUpScore) {
+            // von oben
+        }
+        if (bestScore == gapLeftScore) {
+            // von links
+        }
 
     }
     void initializeAlignmentMatrix (String algo) {
@@ -70,16 +80,13 @@ public abstract class AlignerMethods implements Aligner {
 
     }
 
-    int returnBestScoreAtPosition (int i, int j) {
-
-
-        return 0;
-    }
-
-    public int getAlignmentScore() {
-        return bestAlignmentScore;
-    }
-
+//    int returnBestScoreAtPosition (int i, int j) {
+//        return 0;
+//    }
+//
+//    public int getAlignmentScore() {
+//        return bestAlignmentScore;
+//    }
 
     public String getAlgorithm()
     {
