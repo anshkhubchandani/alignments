@@ -22,9 +22,16 @@ public class CLMain {
 
 class AlignerOptions implements Runnable {
 
-    // Scorer irgendwie anpassen wg. default und manuelle Eingabe
-    @CommandLine.Option(names = {"-c"})
-    String scorerFileNameOrPath;
+    @CommandLine.ArgGroup(exclusive = true)
+    ScorerInput scorerGroup;
+
+    static class ScorerInput {
+        @CommandLine.Option(names = {"-c"})
+        String scorerFileNameOrPath;
+
+        @CommandLine.Option(names = {"-m"})
+        boolean manualScorerInput;
+    }
 
     @CommandLine.ArgGroup(exclusive = true)
     ProgrammeFunction group;
@@ -38,13 +45,13 @@ class AlignerOptions implements Runnable {
     }
 
     // Input 1 wird mit Input 2 verglichen
-    @CommandLine.Option(names = {"-i1", "--input1"}, split = " ", arity = "1...*")
+    @CommandLine.Option(names = {"-i1", "--input1"}, split = " ", arity = "1...*", required = true)
     ArrayList<String> inputSequences1;
 
-    @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*")
+    @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*", required = true)
     ArrayList<String> inputSequences2;
 
-    @CommandLine.Option(names = {"-d", "--distance"})
+    @CommandLine.Option(names = {"-d", "--distance"}, description = "Saves distance matrix in an output file.")
     String distFileNameOrPath;
 
     @Override
