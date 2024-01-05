@@ -69,11 +69,28 @@ public class Scorer {
             reader = new BufferedReader(new FileReader(fileNameOrPath));
             String nextLine = reader.readLine();
 
-            while (!nextLine.startsWith("   ")) { //(nextLine = reader.readLine()) != null
+            while (!nextLine.startsWith("   ")) { // oder (nextLine = reader.readLine()) != null ?
                 nextLine = reader.readLine();
             }
 
-            String[] firstCharacters = nextLine.split(" ");
+            String[] firstCharacters = nextLine.split("  ");
+            String secondCharacter;
+            String[] characterPairScores;
+
+            while ((nextLine = reader.readLine()) != null) {
+                secondCharacter = nextLine.substring(0, 1);
+
+                characterPairScores = nextLine.split(" ");
+
+                for (String currentFirstCharacter : firstCharacters) {
+                    for (String currentScore : characterPairScores) {
+                        if (!currentScore.isEmpty()) {
+                            customScores.put(currentFirstCharacter.concat(secondCharacter), Integer.parseInt(currentScore));
+                        }
+                    }
+                }
+
+            }
         }
         catch (IOException e) {
 
@@ -86,7 +103,6 @@ public class Scorer {
 
             }
         }
-        // TODO ergänzen, hier wird customScores aufgefüllt
 
     }
 
