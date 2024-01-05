@@ -26,14 +26,18 @@ public class SmithWaterman extends AlignerMethods {
         // Additional Needleman-Wunsch specific initialization if needed
     }
 
-    @Override
-    protected int returnBestScoreAtPosition(int i, int j) {
-        return scores[i][j];
-    }
+//    @Override
+//    protected int returnBestScoreAtPosition(int i, int j) {
+//        return scores[i][j];
+//    }
+//    public int getAlignmentScore() {
+//        return bestAlignmentScore;
+//    }
 
     public void setAlignmentScore () {
         this.bestAlignmentScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
     }
+
 
     @Override
     public String getOptimalAlignment() {
