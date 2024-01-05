@@ -25,7 +25,7 @@ public abstract class AlignerMethods implements Aligner {
         this.firstSequence = sequence1;
         this.secondSequence = sequence2;
     }
-
+    //Test
     //Ausfüllen der Scoringmatrix?
     public int[][] align(String algo) {
         // int diagonalScore;
