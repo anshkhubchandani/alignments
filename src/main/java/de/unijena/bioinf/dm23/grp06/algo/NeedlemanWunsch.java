@@ -14,6 +14,7 @@ public class NeedlemanWunsch extends AlignerMethods {
         setAlignmentScore();
 
     }
+    //Placeholder
     @Override
     public int[][] align(String algo) {
         super.align(algo);

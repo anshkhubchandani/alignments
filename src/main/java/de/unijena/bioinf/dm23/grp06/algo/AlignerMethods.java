@@ -13,7 +13,7 @@ public abstract class AlignerMethods implements Aligner {
 
     int[][] scores;
     int[][] backtrackArray;
-    private List<Character> directions = new ArrayList<Character>();
+    private List<Character> backtrackingDirections = new ArrayList<Character>();
 
     int maxScore;
     ArrayList<Integer> maxPositions;
@@ -34,8 +34,7 @@ public abstract class AlignerMethods implements Aligner {
                 int gapUpScore = scores[i-1][j] + alignmentScorer.gap;
                 int gapLeftScore = scores[i][j-1] + alignmentScorer.gap;
 
-                //Todo Backtracking
-                backtracking(i, j, diagonalScore,gapUpScore, gapLeftScore);
+                backtracking(i, j, diagonalScore,gapUpScore, gapLeftScore, algorithm);
 
                 //Berechnung des Maximums -> Beste Score
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
@@ -54,43 +53,49 @@ public abstract class AlignerMethods implements Aligner {
         //Return alignment matrix
         return scores;
     }
-    public List<Character> backtracking (int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore){
+    public List<Character> backtracking (int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore, String algorithm){
         //Getting the bestScore from the 3 options
         int bestScore = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
         int score = scores[i][j];
+
         //Idee
+        List<Character> dir = new ArrayList<Character>();
         //Todo Hinzufügen aller Möglichkeiten z.B: diagonal = getUp = getLeft
         //Unterscheidung SW und NW wegen Scores unter 0
-        if(algorithm.equals("SW")){
+        if(this.algorithm.equals("SW")){
             while (i > 0 && j > 0 && scores[i][j] >= 0) {
                 if(score == diagonalScore){
-                    directions.add('D');
+                    dir.add('D');
                     i--;
                     j--;
                 } else if (score == gapUpScore){
-                    directions.add('U');
+                    dir.add('U');
                     i--;
                 } else if (score == gapLeftScore){
                     j--;
-                    directions.add('L');
+                    dir.add('L');
                 }
             }
-        } else if(algorithm.equals("NW")){
+        } else if(this.algorithm.equals("NW")){
             while (i > 0 && j > 0) {
                 if(score == diagonalScore){
-                    directions.add('D');
+                    dir.add('D');
                     i--;
                     j--;
                 } else if (score == gapUpScore){
-                    directions.add('U');
+                    dir.add('U');
                     i--;
                 } else if (score == gapLeftScore){
                     j--;
-                    directions.add('L');
+                    dir.add('L');
                 }
             }
         }
-        return directions;
+        // Umgekehrte Reihenfolge der Richtungen, da Rückverfolgung von der Endposition beginnt
+        for (int k = dir.size() - 1; k >= 0; k--) {
+            backtrackingDirections.add(dir.get(k));
+        }
+        return backtrackingDirections;
         //Idee Ende
 
 
