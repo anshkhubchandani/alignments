@@ -38,12 +38,5 @@ public class SmithWaterman extends AlignerMethods {
         this.bestAlignmentScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
     }
 
-
-    @Override
-    public String getOptimalAlignment() {
-        //Keine Ahnung was die Rückgabe ist
-        return "";
-    }
-
 }
 

@@ -38,12 +38,6 @@ public class NeedlemanWunsch extends AlignerMethods {
         return 0;
     }
 
-    @Override
-    public String getOptimalAlignment() {
-        //Keine Ahnung was die Rückgabe ist
-        return "";
-    }
-
     public static void main(String[] args) {
     //Example
     String s1 = "AC";
