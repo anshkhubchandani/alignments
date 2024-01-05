@@ -9,6 +9,3 @@ public interface Alignment<T> {
     List<T> getSequence1();
     List<T> getSequence2();
 }
-
-
-

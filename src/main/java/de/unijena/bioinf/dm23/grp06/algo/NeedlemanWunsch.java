@@ -48,14 +48,14 @@ public class NeedlemanWunsch extends AlignerMethods {
         return null;
     }
 
-    public static void main(String[] args) {
-    //Example
-    String s1 = "AC";
-    String s2 = "AG";
-    NeedlemanWunsch aligner = new NeedlemanWunsch(s1,s2,true);
-
-    aligner.align(aligner.getAlgorithm());
-
-    System.out.println("Best Alignment Score: " + aligner.getAlignmentScore());
-    }
+//    public static void main(String[] args) {
+//    //Example
+//    String s1 = "AC";
+//    String s2 = "AG";
+//    NeedlemanWunsch aligner = new NeedlemanWunsch(s1,s2,true);
+//
+//    aligner.align(aligner.getAlgorithm());
+//
+//    System.out.println("Best Alignment Score: " + aligner.getAlignmentScore());
+//    }
 }
