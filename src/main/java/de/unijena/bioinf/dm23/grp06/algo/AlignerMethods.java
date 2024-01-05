@@ -37,19 +37,24 @@ public abstract class AlignerMethods implements Aligner {
                 int gapUpScore = scores[i - 1][j] + alignmentScorer.gap;
                 int gapLeftScore = scores[i][j - 1] + alignmentScorer.gap;
 
-                backtracking(i, j, diagonalScore, gapUpScore, gapLeftScore, algorithm);
+                backtracking(i, j, diagonalScore, gapUpScore, gapLeftScore);
 
                 //Berechnung des Maximums -> Beste Score
+
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
 
-                // Todo Bei SW auch 0 mit eintragen !
+                // MaxScore für lokales Alignment
                 if (algo.equals("SW") && scores[i][j] > maxScore) {
                     maxScore = scores[i][j];
                     maxPositions.add(i);
                     maxPositions.add(j);
-
-                    // Dann in Smith-Waterman alignmentScore auf maxScore setzen und für Traceback Startposition(en) rauslesen
                 }
+                if (algo.equals("SW") && scores[i][j] < 0) {
+                    scores[i][j] = 0;
+                }
+
+                // Dann in Smith-Waterman alignmentScore auf maxScore setzen und für Traceback Startposition(en) rauslesen
+
             }
         }
         //Return alignment matrix
@@ -65,17 +70,19 @@ public abstract class AlignerMethods implements Aligner {
         //Idee
         List<Character> dir = new ArrayList<>();
         //Todo Hinzufügen aller Möglichkeiten z.B: diagonal = getUp = getLeft
-        //Unterscheidung SW und NW wegen Scores unter 0
+        // Aufteilung in mehrere Listen/Wege
         if (this.algorithm.equals("SW")) {
             while (i > 0 && j > 0 && scores[i][j] >= 0) {
                 if (score == diagonalScore) {
                     dir.add('D');
                     i--;
                     j--;
-                } else if (score == gapUpScore) {
+                }
+                if (score == gapUpScore) {
                     dir.add('U');
                     i--;
-                } else if (score == gapLeftScore) {
+                }
+                if (score == gapLeftScore) {
                     j--;
                     dir.add('L');
                 }
@@ -95,23 +102,11 @@ public abstract class AlignerMethods implements Aligner {
                 }
             }
         }
-        //Muss das?
-        // Umgekehrte Reihenfolge der Richtungen, da Rückverfolgung von der Endposition beginnt
-        for (int k = dir.size() - 1; k >= 0; k--) {
-            backtrackingDirections.add(dir.get(k));
-        }
+//        // Umgekehrte Reihenfolge der Richtungen, da Rückverfolgung von der Endposition beginnt
+//        for (int k = dir.size() - 1; k >= 0; k--) {
+//            backtrackingDirections.add(dir.get(k));
+//        }
         //Idee Ende
-
-
-//        if (bestScore == diagonalScore) {
-//            // Wert kommt von diagonal oben -> in backtrackArray speichern
-//        }
-//        if (bestScore == gapUpScore) {
-//            // von oben
-//        }
-//        if (bestScore == gapLeftScore) {
-//            // von links
-//        }
 
     }
 
@@ -131,7 +126,7 @@ public abstract class AlignerMethods implements Aligner {
             for (int j = 1; j < secondSequence.length(); j++) {
                 scores[0][j] = scores[0][j - 1] + this.alignmentScorer.gap;
             }
-            //Initialisation mit 0
+        //Initialization with 0
         } else if (algo.equals("SW")) {
             for (int i = 1; i < firstSequence.length(); i++) {
                 scores[i][0] = 0;
@@ -143,6 +138,7 @@ public abstract class AlignerMethods implements Aligner {
     }
 
     //Todo getOptimalAlignment()-method
+    //Todo Alignment aus 2 Listen -> Anpassen
     public Alignment getOptimalAlignment() {
         Alignment<Character> optimalAlignment = new AlignmentImpl<>();
         List<Character> seq1List = new ArrayList<>();

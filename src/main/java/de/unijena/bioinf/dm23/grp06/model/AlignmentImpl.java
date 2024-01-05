@@ -26,6 +26,7 @@ import java.util.List;
         public List<T> getSequence2() {
             return sequence2;
         }
+        // Todo Print-Methode
 
         // Additional methods here...
     }
