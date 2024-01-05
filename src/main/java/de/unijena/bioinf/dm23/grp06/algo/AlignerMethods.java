@@ -35,7 +35,8 @@ public abstract class AlignerMethods implements Aligner {
                 int gapLeftScore = scores[i][j-1] + alignmentScorer.gap;
 
                 //Todo Backtracking
-                backtracking(diagonalScore,gapUpScore, gapLeftScore, i, j);
+                backtracking(i, j, diagonalScore,gapUpScore, gapLeftScore);
+
                 //Berechnung des Maximums -> Beste Score
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
 
@@ -50,8 +51,8 @@ public abstract class AlignerMethods implements Aligner {
                 }
             }
         }
-    //Return alignment matrix
-    return scores;
+        //Return alignment matrix
+        return scores;
     }
     public List<Character> backtracking (int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore){
         //Getting the bestScore from the 3 options
@@ -62,7 +63,7 @@ public abstract class AlignerMethods implements Aligner {
         //Unterscheidung SW und NW wegen Scores unter 0
         if(algorithm.equals("SW")){
             while (i > 0 && j > 0 && scores[i][j] >= 0) {
-                if( score == diagonalScore){
+                if(score == diagonalScore){
                     directions.add('D');
                     i--;
                     j--;
@@ -76,7 +77,7 @@ public abstract class AlignerMethods implements Aligner {
             }
         } else if(algorithm.equals("NW")){
             while (i > 0 && j > 0) {
-                if( score == diagonalScore){
+                if(score == diagonalScore){
                     directions.add('D');
                     i--;
                     j--;
