@@ -53,32 +53,46 @@ public abstract class AlignerMethods implements Aligner {
     //Return alignment matrix
     return scores;
     }
-    public void backtracking (int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore){
+    public List<Character> backtracking (int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore){
         //Getting the bestScore from the 3 options
         int bestScore = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
-
+        int score = scores[i][j];
         //Idee
         //Todo Hinzufügen aller Möglichkeiten z.B: diagonal = getUp = getLeft
-        //Smith Waterman
-        while (i > 0 && j > 0 && scores[i][j] >= 0) {
-            int score = scores[i][j];
-
-            if( score == diagonalScore){
-                directions.add('D');
-                i--;
-                j--;
-            } else if (score == gapUpScore){
-                directions.add('U');
-                i--;
-            } else if (score == gapLeftScore){
-                j--;
-                directions.add('L');
+        //Unterscheidung SW und NW wegen Scores unter 0
+        if(algorithm.equals("SW")){
+            while (i > 0 && j > 0 && scores[i][j] >= 0) {
+                if( score == diagonalScore){
+                    directions.add('D');
+                    i--;
+                    j--;
+                } else if (score == gapUpScore){
+                    directions.add('U');
+                    i--;
+                } else if (score == gapLeftScore){
+                    j--;
+                    directions.add('L');
+                }
+            }
+        } else if(algorithm.equals("NW")){
+            while (i > 0 && j > 0) {
+                if( score == diagonalScore){
+                    directions.add('D');
+                    i--;
+                    j--;
+                } else if (score == gapUpScore){
+                    directions.add('U');
+                    i--;
+                } else if (score == gapLeftScore){
+                    j--;
+                    directions.add('L');
+                }
             }
         }
-
+        return directions;
         //Idee Ende
 
-        //Todo Unterscheidung SW und NW wegen Scores unter 0
+
 
 //        if (bestScore == diagonalScore) {
 //            // Wert kommt von diagonal oben -> in backtrackArray speichern
