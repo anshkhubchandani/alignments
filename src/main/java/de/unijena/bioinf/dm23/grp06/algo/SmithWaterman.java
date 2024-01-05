@@ -1,5 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
+import de.unijena.bioinf.dm23.grp06.model.Alignment;
+
 import java.util.ArrayList;
 
 public class SmithWaterman extends AlignerMethods {
@@ -36,6 +38,16 @@ public class SmithWaterman extends AlignerMethods {
 
     public void setAlignmentScore () {
         this.bestAlignmentScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
+    }
+
+    @Override
+    public int getAlignmentScore() {
+        return 0;
+    }
+
+    @Override
+    public Alignment getOptimalAlignment() {
+        return null;
     }
 
 }
