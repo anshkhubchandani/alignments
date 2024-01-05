@@ -1,6 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AlignerMethods implements Aligner {
 
@@ -12,7 +13,7 @@ public abstract class AlignerMethods implements Aligner {
 
     int[][] scores;
     int[][] backtrackArray;
-
+    private List<Character> directions = new ArrayList<Character>();
 
     int maxScore;
     ArrayList<Integer> maxPositions;
@@ -21,9 +22,9 @@ public abstract class AlignerMethods implements Aligner {
         this.firstSequence = sequence1;
         this.secondSequence = sequence2;
     }
-    //Hier viele Fragen
-    // int [][] oder int [] instead of void?
-    public void align (String algo) {
+
+    //Ausfüllen der Scoringmatrix?
+    public int[][] align (String algo) {
         // int diagonalScore;
         backtrackArray = new int[firstSequence.length()][secondSequence.length()];
 
@@ -32,10 +33,12 @@ public abstract class AlignerMethods implements Aligner {
                 int diagonalScore = scores[i-1][j-1] + alignmentScorer.score(firstSequence.charAt(i), secondSequence.charAt(j));
                 int gapUpScore = scores[i-1][j] + alignmentScorer.gap;
                 int gapLeftScore = scores[i][j-1] + alignmentScorer.gap;
+
                 //Todo Backtracking
                 backtracking(diagonalScore,gapUpScore, gapLeftScore, i, j);
                 //Berechnung des Maximums -> Beste Score
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
+
                 // Todo Bei SW auch 0 mit eintragen !
                 if (algo.equals("SW") && scores[i][j] > maxScore) {
                     maxScore = scores[i][j];
@@ -47,22 +50,49 @@ public abstract class AlignerMethods implements Aligner {
                 }
             }
         }
+    //Return alignment matrix
+    return scores;
+    }
+    public void backtracking (int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore){
+        //Getting the bestScore from the 3 options
+        int bestScore = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
+
+        //Idee
+        //Todo Hinzufügen aller Möglichkeiten z.B: diagonal = getUp = getLeft
+        //Smith Waterman
+        while (i > 0 && j > 0 && scores[i][j] >= 0) {
+            int score = scores[i][j];
+
+            if( score == diagonalScore){
+                directions.add('D');
+                i--;
+                j--;
+            } else if (score == gapUpScore){
+                directions.add('U');
+                i--;
+            } else if (score == gapLeftScore){
+                j--;
+                directions.add('L');
+            }
+        }
+
+        //Idee Ende
+
+        //Todo Unterscheidung SW und NW wegen Scores unter 0
+
+//        if (bestScore == diagonalScore) {
+//            // Wert kommt von diagonal oben -> in backtrackArray speichern
+//        }
+//        if (bestScore == gapUpScore) {
+//            // von oben
+//        }
+//        if (bestScore == gapLeftScore) {
+//            // von links
+//        }
 
     }
-    public void backtracking (int diagonalScore, int gapUpScore, int gapLeftScore, int i, int j){
-
-        int bestScore = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
-        // Todo Unterscheidung SW und NW wegen Scores unter 0
-        if (bestScore == diagonalScore) {
-            // Wert kommt von diagonal oben -> in backtrackArray speichern
-        }
-        if (bestScore == gapUpScore) {
-            // von oben
-        }
-        if (bestScore == gapLeftScore) {
-            // von links
-        }
-
+    public List<Character> getDirections(){
+        return directions;
     }
     void initializeAlignmentMatrix (String algo) {
         scores = new int[firstSequence.length()+1][secondSequence.length()+1];
