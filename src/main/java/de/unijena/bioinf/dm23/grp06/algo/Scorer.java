@@ -17,7 +17,13 @@ public class Scorer {
     public Scorer (boolean defScores) {
         this.defaultScores = defScores;
         if (!defaultScores) {
-            // setCustomScores();
+           setCustomScores("BLA");
+         }
+    }
+    public Scorer (boolean defScores, String scorerFilenameOrPath) {
+        this.defaultScores = defScores;
+        if (!defaultScores) {
+            setCustomScores(scorerFilenameOrPath);
         }
     }
 
@@ -44,7 +50,7 @@ public class Scorer {
 
     private int scorerByInputScheme (char firstChar, char secondChar) {
 
-        String charPair = Character.toString(firstChar).concat(Character.toString(secondChar));
+        String charPair = Character.toString(firstChar).concat(Character.toString(secondChar)); //
 
         if (customScores.containsKey(charPair)) {
             return customScores.get(charPair);
@@ -52,10 +58,10 @@ public class Scorer {
         else {
             return defaultScorer(firstChar, secondChar);
         }
-        // TODO es könnte sein, dass Paar andersherum eingefügt ist!
+        // TODO es könnte sein, dass Paar andersherum eingefügt ist! AT == TA
     }
 
-    private void setCustomScores (String fileNameOrPath) {
+    public void setCustomScores (String fileNameOrPath) {
 //        Hier Beispiel eingefügt zum Testen
 //        customScores = new HashMap<>();
 //        customScores.put("AA", 2);
@@ -73,22 +79,29 @@ public class Scorer {
                 nextLine = reader.readLine();
             }
 
-            String[] firstCharacters = nextLine.split("  ");
+            String[] firstCharacters = nextLine.substring(3).split("  ");
             String secondCharacter;
             String[] characterPairScores;
 
             while ((nextLine = reader.readLine()) != null) {
+
                 secondCharacter = nextLine.substring(0, 1);
 
-                characterPairScores = nextLine.split(" ");
+                // TODO Dreiecksmatrix, Zeile muss nicht immer komplett eingelesen werden
+                characterPairScores = nextLine.substring(1).split(" ");
 
-                for (String currentFirstCharacter : firstCharacters) {
+                for (int i = 0; i < firstCharacters.length; i++) {
+                    System.out.println("currentfirst " + firstCharacters[i] + " second " + secondCharacter + " currentscore " + characterPairScores[i]);
+                }
+
+                /* for (String currentFirstCharacter : firstCharacters) {
                     for (String currentScore : characterPairScores) {
                         if (!currentScore.isEmpty()) {
+                            System.out.println("currentfirst " + currentFirstCharacter + "second " + secondCharacter + "currentscore " + currentScore);
                             customScores.put(currentFirstCharacter.concat(secondCharacter), Integer.parseInt(currentScore));
                         }
                     }
-                }
+                } */
 
             }
         }
@@ -103,7 +116,7 @@ public class Scorer {
 
             }
         }
-
+        System.out.println(score('X','X'));
     }
 
 }
