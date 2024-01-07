@@ -122,14 +122,17 @@ public class Scorer {
         HashMap<String, Integer> scorerMap = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+
             String line;
             boolean readScores = false;
 
             while ((line = reader.readLine()) != null) {
-                line = line.trim();
+                //line = line.trim();
+
 
                 if (line.isEmpty() || line.startsWith("#")) {
                     // Ignore empty lines or lines starting with "#"
+                    System.out.println(line);
                     continue;
                 }
 
@@ -138,21 +141,24 @@ public class Scorer {
                 Matcher matcher = pattern.matcher(line);
 
                 if (matcher.find()) {
+                    System.out.println("hi1");
                     // Start reading scores
                     readScores = true;
-                    continue;
                 }
 
                 if (readScores) {
+                    System.out.println("hi2");
                     // Process lines with scores
-                    String[] parts = line.split("\\s+");
+                    String[] parts = line.split("\n");
 
                     if (parts.length > 1) {
                         String aminoAcid = parts[0];
+                        System.out.println(aminoAcid);
                         for (int i = 1; i < parts.length; i++) {
                             String key = aminoAcid + parts[i];
                             int score = Integer.parseInt(parts[i]);
                             scorerMap.put(key, score);
+
                         }
                     }
                 }
