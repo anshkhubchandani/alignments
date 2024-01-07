@@ -23,8 +23,8 @@ public class Scorer {
            setCustomScores("BLA");
          }
     }
-    public Scorer () {
-        this.defaultScores = defaultScores;
+    public Scorer (boolean defScores, String path) {
+        this.defaultScores = defScores;
         if (!defaultScores) {
             setCustomScores(path);
         }
@@ -53,15 +53,18 @@ public class Scorer {
 
     private int scorerByInputScheme (char firstChar, char secondChar) {
 
-        String charPair = Character.toString(firstChar).concat(Character.toString(secondChar)); //
+        String charPair = Character.toString(firstChar).concat(Character.toString(secondChar));
+        String charPairRev = new StringBuilder(charPair).reverse().toString();
 
         if (customScores.containsKey(charPair)) {
             return customScores.get(charPair);
         }
+        else if (customScores.containsKey(charPairRev)) {
+            return customScores.get(charPairRev);
+        }
         else {
             return defaultScorer(firstChar, secondChar);
         }
-        // TODO es könnte sein, dass Paar andersherum eingefügt ist! AT == TA
     }
 
     public void setCustomScores (String fileNameOrPath) {
@@ -74,48 +77,43 @@ public class Scorer {
             reader = new BufferedReader(new FileReader(fileNameOrPath));
             String nextLine = reader.readLine();
 
-            while (!nextLine.startsWith("   ")) { // oder (nextLine = reader.readLine()) != null ?
+            while (nextLine.startsWith("#")) { // oder (nextLine = reader.readLine()) != null ?
                 nextLine = reader.readLine();
             }
 
             String[] firstCharacters = nextLine.substring(3).split("  ");
             String secondCharacter;
             String[] characterPairScores;
+            int k = 0;
 
             while ((nextLine = reader.readLine()) != null) {
 
                 secondCharacter = nextLine.substring(0, 1);
 
-                // TODO Dreiecksmatrix, Zeile muss nicht immer komplett eingelesen werden
-                characterPairScores = nextLine.substring(1).split(" ");
+                characterPairScores = nextLine.substring(2).trim().split(" +");
 
-                for (int i = 0; i < firstCharacters.length; i++) {
-                    System.out.println("currentfirst " + firstCharacters[i] + " second " + secondCharacter + " currentscore " + characterPairScores[i]);
+                for (int i = k; i < firstCharacters.length; i++) {
+                    // System.out.println("currentfirst " + firstCharacters[i] + " second " + secondCharacter + " currentscore " + characterPairScores[i]);
+                    customScores.put(firstCharacters[i].concat(secondCharacter), Integer.parseInt(characterPairScores[i]));
                 }
 
-                /* for (String currentFirstCharacter : firstCharacters) {
-                    for (String currentScore : characterPairScores) {
-                        if (!currentScore.isEmpty()) {
-                            System.out.println("currentfirst " + currentFirstCharacter + "second " + secondCharacter + "currentscore " + currentScore);
-                            customScores.put(currentFirstCharacter.concat(secondCharacter), Integer.parseInt(currentScore));
-                        }
-                    }
-                } */
-
+                k++;
             }
         }
         catch (IOException e) {
-
+            e.printStackTrace();
         }
         finally {
             try {
                 reader.close();
             }
             catch (IOException e) {
-
+                e.printStackTrace();
             }
         }
         System.out.println(score('X','X'));
+        System.out.println(score('R','A'));
+        System.out.println(score('N','N'));
     }
     //Andere Idee um Scores aus einer Datei einzulesen
     public static HashMap<String, Integer> readScorerFile(String filePath) {
