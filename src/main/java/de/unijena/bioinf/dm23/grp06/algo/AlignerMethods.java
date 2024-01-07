@@ -163,6 +163,7 @@ public abstract class AlignerMethods implements Aligner {
                 j--;
             }
         }
+        return optimalAlignment;
 //    int returnBestScoreAtPosition (int i, int j) {
 //        return 0;
 //    }
@@ -171,10 +172,10 @@ public abstract class AlignerMethods implements Aligner {
 //        return bestAlignmentScore;
 //    }
 
-        public String getAlgorithm ()
+       /* public String getAlgorithm ()
         {
             return algorithm;
-        }
+        }*/
 
     }
 }
