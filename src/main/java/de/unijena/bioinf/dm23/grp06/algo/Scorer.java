@@ -3,7 +3,6 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,13 +19,13 @@ public class Scorer {
     public Scorer (boolean defScores) {
         this.defaultScores = defScores;
         if (!defaultScores) {
-           setCustomScores("BLA");
+           getScoresFromFile("BLA");
          }
     }
     public Scorer (boolean defScores, String path) {
         this.defaultScores = defScores;
         if (!defaultScores) {
-            setCustomScores(path);
+            getScoresFromFile(path);
         }
     }
 
@@ -67,7 +66,7 @@ public class Scorer {
         }
     }
 
-    public void setCustomScores (String fileNameOrPath) {
+    public void getScoresFromFile (String fileNameOrPath) {
 
         customScores = new HashMap<>();
 
@@ -81,7 +80,9 @@ public class Scorer {
                 nextLine = reader.readLine();
             }
 
-            String[] firstCharacters = nextLine.substring(3).split("  ");
+            // String[] firstCharacters = nextLine.substring(3).split("  ");
+            String[] firstCharacters = nextLine.trim().split("\\s+");
+
             String secondCharacter;
             String[] characterPairScores;
             int k = 0;
