@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class AlignerMethods implements Aligner {
 
-    String firstSequence;
-    String secondSequence;
+    String firstSequence = "AA";
+    String secondSequence = "TT";
     int bestAlignmentScore;
     Scorer alignmentScorer;
     String algorithm;
@@ -162,8 +162,12 @@ public abstract class AlignerMethods implements Aligner {
                 seq2List.add(secondSequence.charAt(j));
                 j--;
             }
+            System.out.println("Sequenz 1: "+ seq1List.toString());
+            System.out.println("Sequenz 2: "+ seq2List.toString());
         }
+        optimalAlignment.setSequences(seq1List, seq2List);
         return optimalAlignment;
+
 //    int returnBestScoreAtPosition (int i, int j) {
 //        return 0;
 //    }
