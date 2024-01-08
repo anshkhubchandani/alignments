@@ -42,7 +42,7 @@ public class Scorer {
         if (firstChar == secondChar) {
             return match;
         }
-        else if ((firstChar == '#') || secondChar == '#') { // Gaps aktuell als # gekennzeichnet
+        else if ((firstChar == '*') || secondChar == '*') { // Gaps aktuell als # gekennzeichnet
             return gap;
         }
         else {
@@ -112,9 +112,7 @@ public class Scorer {
                 e.printStackTrace();
             }
         }
-        System.out.println(score('X','X'));
-        System.out.println(score('R','A'));
-        System.out.println(score('N','N'));
+
     }
     //Andere Idee um Scores aus einer Datei einzulesen
     public static HashMap<String, Integer> readScorerFile(String filePath) {
