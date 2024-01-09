@@ -4,6 +4,7 @@ import de.unijena.bioinf.dm23.grp06.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AlignerMethods implements Aligner {
@@ -73,6 +74,15 @@ public abstract class AlignerMethods implements Aligner {
         // Aufteilung in mehrere Listen/Wege
         if (this.algorithm.equals("SW")) {
             while (i > 0 && j > 0 && scores[i][j] >= 0) {
+                if (score == diagonalScore && score == gapUpScore && score == gapLeftScore){
+                    dir.addAll(Arrays.asList('D', 'U', 'L' ));
+                } else if (score == diagonalScore && score == gapUpScore){
+                    dir.addAll(Arrays.asList('D', 'U'));
+                } else if (score == diagonalScore && score == gapLeftScore){
+                    dir.addAll(Arrays.asList('D', 'L'));
+                } else if (score == gapUpScore && score == gapLeftScore ){
+                    dir.addAll(Arrays.asList('U', 'L'));
+                }
                 if (score == diagonalScore) {
                     dir.add('D');
                     i--;
