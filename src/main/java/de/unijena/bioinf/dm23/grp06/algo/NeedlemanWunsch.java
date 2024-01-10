@@ -5,10 +5,10 @@ import de.unijena.bioinf.dm23.grp06.model.Alignment;
 public class NeedlemanWunsch extends AlignerMethods {
     //Output: Kosten des optimalen Alignments (Minimum)
 
-    public NeedlemanWunsch (String sequence1, String sequence2, boolean defaultScoring) {
-        super(sequence1, sequence2, defaultScoring);
+    public NeedlemanWunsch (String sequence1, String sequence2, Scorer scorer) {
+        super(sequence1, sequence2, scorer);
         this.algorithm = "NW";
-        this.alignmentScorer = new Scorer(true);
+        // this.alignmentScorer = new Scorer(true);
         initializeAlignmentMatrix(algorithm);
         align(algorithm);
         setAlignmentScore();
@@ -35,11 +35,6 @@ public class NeedlemanWunsch extends AlignerMethods {
     @Override
     public int getAlignmentScore() {
         return 0;
-    }
-
-    @Override
-    public Alignment getOptimalAlignment() {
-        return null;
     }
 
 //    public static void main(String[] args) {

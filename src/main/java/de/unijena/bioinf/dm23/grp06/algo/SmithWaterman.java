@@ -5,10 +5,11 @@ import de.unijena.bioinf.dm23.grp06.model.Alignment;
 public class SmithWaterman extends AlignerMethods {
     //Output: Ähnlichlkeit des optimalen Alignments (Maximum)
 
-    public SmithWaterman (String sequence1, String sequence2, boolean defaultScoring) {
-        super(sequence1, sequence2, defaultScoring);
+    // Teammate hat hier Scorer scorer als Eingangparameter eingefügt, ich hoffe das ist ok so
+    public SmithWaterman (String sequence1, String sequence2, Scorer scorer) {
+        super(sequence1, sequence2, scorer);
         this.algorithm = "SW";
-        this.alignmentScorer = new Scorer(true);
+        //this.alignmentScorer = new Scorer(true);
         initializeAlignmentMatrix(algorithm);
         align(algorithm);
 

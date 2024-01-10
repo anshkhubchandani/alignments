@@ -22,9 +22,10 @@ public abstract class AlignerMethods implements Aligner {
     int maxScore;
     ArrayList<Integer> maxPositions;
 
-    public AlignerMethods(String sequence1, String sequence2, boolean defaultScoring) {
+    public AlignerMethods(String sequence1, String sequence2, Scorer scorer) {
         this.firstSequence = sequence1;
         this.secondSequence = sequence2;
+        this.alignmentScorer = scorer;
     }
 
 //    public AlignerMethods() {
@@ -51,8 +52,8 @@ public abstract class AlignerMethods implements Aligner {
                 // MaxScore für lokales Alignment
                 if (algo.equals("SW") && scores[i][j] > maxScore) {
                     maxScore = scores[i][j];
-                    maxPositions.add(i);
-                    maxPositions.add(j);
+                    maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
+                    maxPositions.add(j); // Position j
                 }
                 if (algo.equals("SW") && scores[i][j] < 0) {
                     scores[i][j] = 0;

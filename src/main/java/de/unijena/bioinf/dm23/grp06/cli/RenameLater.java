@@ -2,6 +2,7 @@ package de.unijena.bioinf.dm23.grp06.cli;
 
 import de.unijena.bioinf.dm23.grp06.algo.Aligner;
 import de.unijena.bioinf.dm23.grp06.algo.NeedlemanWunsch;
+import de.unijena.bioinf.dm23.grp06.algo.Scorer;
 import de.unijena.bioinf.dm23.grp06.exactsearch.algo.SearchResult;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.Fasta;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.FastaReader;
@@ -34,6 +35,7 @@ public class RenameLater {
                 // Erstelle Objekt der gewünschten Alignerklasse und füge in alignerObjects ein
             }
         }
+
     }
 
     private String readString (String sequenceOrPath) { // Other SearchResult-Methode nutzen?
