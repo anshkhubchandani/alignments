@@ -22,16 +22,22 @@ public class CLMain {
 
 class AlignerOptions implements Runnable {
 
-    @CommandLine.ArgGroup(exclusive = true)
+    @CommandLine.Option(names = {"-a", "--algo"})
+    String algorithm;
+
+    /* @CommandLine.ArgGroup(exclusive = true)
     ScorerInput scorerGroup;
 
     static class ScorerInput {
         @CommandLine.Option(names = {"-c"})
         String scorerFileNameOrPath;
 
-        @CommandLine.Option(names = {"-m"})
+        @CommandLine.Option(names = {"-m"}) // oder weg?
         boolean manualScorerInput;
-    }
+    } */
+
+    @CommandLine.Option(names = {"-c"})
+    String scorerFileNameOrPath;
 
     @CommandLine.ArgGroup(exclusive = true)
     ProgrammeFunction group;
@@ -45,17 +51,44 @@ class AlignerOptions implements Runnable {
     }
 
     // Input 1 wird mit Input 2 verglichen
-    @CommandLine.Option(names = {"-i1", "--input1"}, split = " ", arity = "1...*", required = true)
+    @CommandLine.Option(names = {"-i", "--input"}, split = " ", arity = "1...*", required = true)
     ArrayList<String> inputSequences1;
 
-    @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*", required = true)
+    @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*")
     ArrayList<String> inputSequences2;
 
     @CommandLine.Option(names = {"-d", "--distance"}, description = "Saves distance matrix in an output file.")
     String distFileNameOrPath;
 
+    @CommandLine.Option(names = {"-o", "--output"}, description = "Saves results in an output file.")
+    String outputFileNameOrPath;
+
     @Override
     public void run() {
+        RenameLater userRequest;
 
+        if (inputSequences2.isEmpty()) {
+            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences1, scorerFileNameOrPath);
+        }
+        else {
+            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath);
+        }
+
+        if (group.score) {
+            userRequest.printScores();
+        }
+        else {
+            userRequest.printOptimalAlignments();
+        }
+
+        if (!outputFileNameOrPath.isEmpty()) {
+            userRequest.saveResults(outputFileNameOrPath);
+            System.out.println("\nResults saved in file " + outputFileNameOrPath);
+        }
+
+        if (!distFileNameOrPath.isEmpty()) {
+            userRequest.generateDistanceMatrix(distFileNameOrPath);
+            System.out.println("\nDistance matrix saved in file " + distFileNameOrPath);
+        }
     }
 }
