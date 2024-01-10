@@ -22,12 +22,16 @@ public class NaivGlobal <S extends Sequence> implements Aligner { // muss Aligne
         Scorer = scorer;
         Aligned = false;
     }
+    //braucht eigene Methoden
 
+    //Score bleibt gleich?
     @Override
     public int getAlignmentScore() {
         return 0;
     }
 
+
+    //nicht das selbe wie bei Methods
     public Alignment<S> getOptimalAlignment() {
         return null;
     }
