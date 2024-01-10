@@ -63,6 +63,8 @@ public abstract class AlignerMethods implements Aligner {
     }
 
     // void oder List<Character>?
+    //i und j müssen nicht reduziert werden
+    //Bioinfonotizen
     public void backtracking(int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore) {
         //Getting the bestScore from the 3 options
         int bestScore = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
@@ -149,6 +151,7 @@ public abstract class AlignerMethods implements Aligner {
 
     //Todo getOptimalAlignment()-method
     //Todo Alignment aus 2 Listen -> Anpassen
+    //oder nicht doch AlignmentImpl
     public Alignment getOptimalAlignment() {
         Alignment<Character> optimalAlignment = new AlignmentImpl<>();
         List<Character> seq1List = new ArrayList<>();

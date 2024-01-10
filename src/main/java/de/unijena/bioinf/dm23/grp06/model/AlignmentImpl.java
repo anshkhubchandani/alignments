@@ -37,7 +37,7 @@ public class AlignmentImpl<T> implements Alignment<T> {
         return sequence2;
     }
 
-    public void printAlignment () {
+    public void printAlignment () { //für Character :)
         // Todo Print-Methode
     }
     // Additional methods here...
