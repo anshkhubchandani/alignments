@@ -10,9 +10,3 @@ public interface Aligner <S extends Sequence> {
    int getAlignmentScore();
     Alignment<S> getOptimalAlignment();
 }
-/*public interface Aligner {
-
-    int getAlignmentScore();
-    String getOptimalAlignment();
-
-}*/

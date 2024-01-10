@@ -22,10 +22,15 @@ public abstract class AlignerMethods implements Aligner {
     int maxScore;
     ArrayList<Integer> maxPositions;
 
-    public AlignerMethods(String sequence1, String sequence2, boolean defaultScoring) {
+    public AlignerMethods(String sequence1, String sequence2, Scorer scorer) {
         this.firstSequence = sequence1;
         this.secondSequence = sequence2;
+        this.alignmentScorer = scorer;
     }
+
+//    public AlignerMethods() {
+//    }
+
     //Test
     //Ausfüllen der Scoringmatrix?
     public int[][] align(String algo) {
@@ -47,8 +52,8 @@ public abstract class AlignerMethods implements Aligner {
                 // MaxScore für lokales Alignment
                 if (algo.equals("SW") && scores[i][j] > maxScore) {
                     maxScore = scores[i][j];
-                    maxPositions.add(i);
-                    maxPositions.add(j);
+                    maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
+                    maxPositions.add(j); // Position j
                 }
                 if (algo.equals("SW") && scores[i][j] < 0) {
                     scores[i][j] = 0;
@@ -63,6 +68,8 @@ public abstract class AlignerMethods implements Aligner {
     }
 
     // void oder List<Character>?
+    //i und j müssen nicht reduziert werden
+    //Bioinfonotizen
     public void backtracking(int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore) {
         //Getting the bestScore from the 3 options
         int bestScore = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
@@ -149,6 +156,7 @@ public abstract class AlignerMethods implements Aligner {
 
     //Todo getOptimalAlignment()-method
     //Todo Alignment aus 2 Listen -> Anpassen
+    //oder nicht doch AlignmentImpl
     public Alignment getOptimalAlignment() {
         Alignment<Character> optimalAlignment = new AlignmentImpl<>();
         List<Character> seq1List = new ArrayList<>();

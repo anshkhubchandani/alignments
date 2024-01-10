@@ -5,7 +5,7 @@ import java.util.List;
 
 // Alignment implementation
 public class AlignmentImpl<T> implements Alignment<T> {
-    private List<T> sequence1;
+    private List<T> sequence1; // Listenelemente: String oder Character (oder Buchstaben)
     private List<T> sequence2;
 
     public AlignmentImpl () {
@@ -37,8 +37,11 @@ public class AlignmentImpl<T> implements Alignment<T> {
         return sequence2;
     }
 
-    public void printAlignment () {
+    public void printAlignment () { //für Character :)
         // Todo Print-Methode
+        for (T element : sequence1) {
+
+        }
     }
     // Additional methods here...
 }
