@@ -10,28 +10,29 @@ import java.util.List;
  */
 public class AlignmentString implements Alignment <String> {
 
+
     @Override
-    public void setSequence1(List<String> sequence1) {
+    public void setSequence1(String sequence1) {
 
     }
 
     @Override
-    public void setSequence2(List<String> sequence2) {
+    public void setSequence2(String sequence2) {
 
     }
 
     @Override
-    public void setSequences(List<String> seq1List, List<String> seq2List) {
+    public void setScore(Scorer score) {
 
     }
 
     @Override
-    public List<String> getSequence1() {
+    public String getSequence1() {
         return null;
     }
 
     @Override
-    public List<String> getSequence2() {
+    public String getSequence2() {
         return null;
     }
 

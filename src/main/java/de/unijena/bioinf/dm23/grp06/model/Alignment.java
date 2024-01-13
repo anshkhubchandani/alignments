@@ -6,10 +6,10 @@ import java.util.List;
 
 // Alignment interface
 public interface Alignment<T> {
-    void setSequence1(List<T> sequence1);
-    void setSequence2(List<T> sequence2);
-    void setSequences(List<T> seq1List, List<T> seq2List);
-    List<T> getSequence1();
-    List<T> getSequence2();
+    void setSequence1(T sequence1);
+    void setSequence2(T sequence2);
+    void setScore(Scorer score);
+    T getSequence1();
+    T getSequence2();
     Scorer getScore();
 }
