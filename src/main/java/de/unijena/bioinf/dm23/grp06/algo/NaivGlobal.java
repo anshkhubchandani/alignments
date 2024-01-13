@@ -30,11 +30,18 @@ public class NaivGlobal <S extends Sequence> implements Aligner { // muss Aligne
         return 0;
     }
 
+    /**
+     * Using a scoring matrix, this method creates an optimal global alignment of two sequences.
+     *
+     * @return the existing global Alignment, if the sequences are already aligned
+     */
 
-    //nicht das selbe wie bei Methods
+    //aligns
     public Alignment<S> getOptimalAlignment() {
-        return null;
+        if (Aligned)
+        return Alignment;
     }
+
 
 }
 

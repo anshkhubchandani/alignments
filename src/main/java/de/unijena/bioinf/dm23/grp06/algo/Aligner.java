@@ -8,5 +8,5 @@ import de.unijena.bioinf.dm23.grp06.model.Alignment;
 
 public interface Aligner <S extends Sequence> {
    int getAlignmentScore();
-    Alignment<S> getOptimalAlignment();
+    Alignment<S> getOptimalAlignment(); //aligns
 }

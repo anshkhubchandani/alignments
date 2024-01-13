@@ -9,6 +9,5 @@ public interface Alignment<T> {
     void setSequences(List<T> seq1List, List<T> seq2List);
     List<T> getSequence1();
     List<T> getSequence2();
-
-
+    int getScore();
 }
