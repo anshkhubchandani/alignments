@@ -14,9 +14,8 @@ import java.util.List;
 public class AlignmentImpl<T> implements Alignment<T> {
     private List<T> sequence1// Listenelemente: String oder Character zB.
     private List<T> sequence2;
-    int score;
 
-    private Scorer Score
+    private Scorer score;
 
     public AlignmentImpl () {
         this.sequence1 = new ArrayList<>();
@@ -49,11 +48,11 @@ public class AlignmentImpl<T> implements Alignment<T> {
     }
 
     @Override
-    public int getScore() {
+    public Scorer getScore() {
         return score;
     }
 
-    public void printAlignment () { //für Character :)
+    public void printAlignment () {
         // Todo Print-Methode
         for (T element : sequence1) {
 

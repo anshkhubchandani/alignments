@@ -2,7 +2,9 @@ package de.unijena.bioinf.dm23.grp06.algo;
 
 import javax.sound.midi.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
-import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
+
+import java.util.ArrayList;
 
 /**
  * This code defines a Java class named NaivGlobal. The NaivGlobal class also implements
@@ -38,10 +40,37 @@ public class NaivGlobal <S extends Sequence> implements Aligner { // muss Aligne
 
     //aligns
     public Alignment<S> getOptimalAlignment() {
-        if (Aligned)
-        return Alignment;
+        if (Aligned) {
+            return Alignment;
+        }
+        ArrayList<AlignmentString> alignments = new ArrayList<>();
+        store(alignments);
+
+        //It iterates through the alignments to find the one with the highest score.
+        AlignmentString highestScore = findHighestScore(alignments);
+
     }
 
+    private void store (ArrayList<AlignmentString> alignments) {
+        // Method implementation for alignment enumeration
+    }
+    private AlignmentString findHighestScore (ArrayList<AlignmentString>alignments){
+        //baseCase
+    if (alignments.isEmpty()){
+            return null;
+        }
+
+        AlignmentString highestScore = alignments.get(0); //get index?
+
+        for (AlignmentString alignment : alignments) {
+            if (alignment.getScore() > highestScore.getScore()) {
+                highestScore = alignment;
+            }
+        }
+
+        return highestScore;
+
+    }
 
 }
 
