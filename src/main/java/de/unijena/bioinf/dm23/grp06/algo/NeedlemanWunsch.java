@@ -11,7 +11,6 @@ public class NeedlemanWunsch extends AlignerMethods {
         // this.alignmentScorer = new Scorer(true);
         initializeAlignmentMatrix();
         align();
-        setAlignmentScore();
 
     }
 
