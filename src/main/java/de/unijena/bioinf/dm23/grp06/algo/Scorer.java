@@ -14,59 +14,52 @@ public class Scorer {
     private int mismatch = -1;
     protected int gap = -1;
     protected String path = "";
-    private HashMap<String,Integer> customScores;
+    private HashMap<String, Integer> customScores;
 
-    public Scorer (boolean defScores) {
-        this.defaultScores = defScores;
-        if (!defaultScores) {
-           getScoresFromFile("BLA");
-         }
+    //für default Scores
+    public Scorer() {
+        defaultScores = true;
     }
-    public Scorer (boolean defScores, String path) {
-        this.defaultScores = defScores;
-        if (!defaultScores) {
-            getScoresFromFile(path);
-        }
+    //für custom
+    public Scorer(String path) {
+        getScoresFromFile(path);
+        defaultScores = false;
+
     }
 
-    protected int score (char firstChar, char secondChar) {
+    protected int score(char firstChar, char secondChar) {
         if (defaultScores) {
             return defaultScorer(firstChar, secondChar);
-        }
-        else {
+        } else {
             return scorerByInputScheme(firstChar, secondChar);
         }
     }
 
-    private int defaultScorer (char firstChar, char secondChar) {
+    private int defaultScorer(char firstChar, char secondChar) {
         if (firstChar == secondChar) {
             return match;
-        }
-        else if ((firstChar == '#') || secondChar == '#') { // Gaps aktuell als # gekennzeichnet
+        } else if ((firstChar == '#') || secondChar == '#') { // Gaps aktuell als # gekennzeichnet
             return gap;
-        }
-        else {
+        } else {
             return mismatch;
         }
     }
 
-    private int scorerByInputScheme (char firstChar, char secondChar) {
+    private int scorerByInputScheme(char firstChar, char secondChar) {
 
         String charPair = Character.toString(firstChar).concat(Character.toString(secondChar));
         String charPairRev = new StringBuilder(charPair).reverse().toString();
 
         if (customScores.containsKey(charPair)) {
             return customScores.get(charPair);
-        }
-        else if (customScores.containsKey(charPairRev)) {
+        } else if (customScores.containsKey(charPairRev)) {
             return customScores.get(charPairRev);
-        }
-        else {
+        } else {
             return defaultScorer(firstChar, secondChar);
         }
     }
 
-    public void getScoresFromFile (String fileNameOrPath) {
+    public void getScoresFromFile(String fileNameOrPath) {
 
         customScores = new HashMap<>();
 
@@ -100,22 +93,20 @@ public class Scorer {
 
                 k++;
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 reader.close();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println(score('X','X'));
-        System.out.println(score('R','A'));
-        System.out.println(score('N','N'));
+        System.out.println(score('X', 'X'));
+        System.out.println(score('R', 'A'));
+        System.out.println(score('N', 'N'));
     }
+
     //Andere Idee um Scores aus einer Datei einzulesen
     public static HashMap<String, Integer> readScorerFile(String filePath) {
         HashMap<String, Integer> scorerMap = new HashMap<>();
@@ -168,7 +159,8 @@ public class Scorer {
 
         return scorerMap;
     }
-   // Idee Ende
+
+    // Idee Ende
     public static void main(String[] args) throws IOException {
         String path = "/Users/larry/Git/BLOSUM100.txt";
 

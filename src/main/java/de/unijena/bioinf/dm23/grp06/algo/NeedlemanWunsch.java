@@ -6,18 +6,17 @@ public class NeedlemanWunsch extends AlignerMethods {
     //Output: Kosten des optimalen Alignments (Minimum)
 
     public NeedlemanWunsch (String sequence1, String sequence2, Scorer scorer) {
-        super(sequence1, sequence2, scorer);
+        super(sequence1, sequence2, scorer, "NW");
         this.algorithm = "NW";
         // this.alignmentScorer = new Scorer(true);
-        initializeAlignmentMatrix(algorithm);
-        align(algorithm);
+        initializeAlignmentMatrix();
+        align();
         setAlignmentScore();
 
     }
 
-    @Override
-    protected void initializeAlignmentMatrix(String algo) {
-        super.initializeAlignmentMatrix(algo);
+    protected void initializeAlignmentMatrix() {
+        super.initializeAlignmentMatrix();
         // Additional Needleman-Wunsch specific initialization if needed
     }
 
