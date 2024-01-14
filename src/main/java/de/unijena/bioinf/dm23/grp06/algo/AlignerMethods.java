@@ -168,4 +168,10 @@ public class AlignerMethods implements Aligner {
             return algorithm;
         }*/
 
+    public String getFirstSequence() {
+        return firstSequence;
+    }
+    public String getSecondSequence() {
+        return secondSequence;
+    }
 }
