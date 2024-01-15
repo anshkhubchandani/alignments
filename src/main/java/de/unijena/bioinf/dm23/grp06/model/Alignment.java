@@ -8,8 +8,11 @@ import java.util.List;
 public interface Alignment<T> {
     void setSequence1(T sequence1);
     void setSequence2(T sequence2);
-    void setScore(Scorer score);
+
+
     T getSequence1();
     T getSequence2();
-    Scorer getScore();
+    int getScore();
+    void setScore(int score);
+
 }

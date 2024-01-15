@@ -31,7 +31,7 @@ public class AlignmentCharacters implements Alignment <Character>{
     }
 
     @Override
-    public Scorer getScore() {
+    public int getScore() {
         return null;
     }
 }

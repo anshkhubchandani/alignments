@@ -1,10 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
-import de.unijena.bioinf.dm23.grp06.algo.Scorer;
-
-import javax.sound.midi.Sequence;
-import java.util.List;
-
 /** This class is a specific implementation of the Alignment interface where String is used as the sequence type.
  * Additionally, it overrides the toString() method to provide a custom string representation of the alignment, concatenating the two sequences with a newline between them.
  */
@@ -47,7 +42,7 @@ public class AlignmentString implements Alignment <String> {
     }
 
     @Override
-    public Scorer getScore() {
-        return null;
+    public int getScore() {
+        return int;
     }
 }

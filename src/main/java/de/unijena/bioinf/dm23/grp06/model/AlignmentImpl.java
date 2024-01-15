@@ -1,10 +1,6 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
 import de.unijena.bioinf.dm23.grp06.algo.Scorer;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
-
-import java.util.ArrayList;
-import java.util.List;
 
 // Alignment implementation
 
@@ -15,12 +11,13 @@ import java.util.List;
 public class AlignmentImpl<T> implements Alignment<T> {
     private T sequence1;
     private T sequence2;
-    private Scorer score;
+    int score;
 
-    public AlignmentImpl(T sequence1, T sequence2, Scorer score) {
+    public AlignmentImpl(T sequence1, T sequence2, int score) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
-        this.score = score;
+        this.score=score;
+
     }
     @Override
     public T getSequence1() {
@@ -43,12 +40,12 @@ public class AlignmentImpl<T> implements Alignment<T> {
     }
 
     @Override
-    public Scorer getScore() {
-        return score;
+    public int getScore() {
+        return int;
     }
 
     @Override
-    public void setScore(Scorer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 

@@ -120,15 +120,15 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
                 }
             }
             if(position1 < sequence1.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + Scorer.readScorerFile(sequence1.charAt(position1), '-')));
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), '-')));
                 added =true;
             }
             if(position2 < sequence2.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + "-", alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + Scorer.score('-', sequence2.charAt(position2))));
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + "-", alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + scorer.score('-', sequence2.charAt(position2))));
                 added = true;
             }
             if(position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + Scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
                 added = true;
             }
             if(added) {
@@ -153,9 +153,9 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
 
         AlignmentString highestScore = alignments.get(0);
 
-        for (AlignmentString alignment : alignments) {
-            if (alignment.getScore().compareTo(highestScore.getScore()) > 0) {
-                highestScore = alignment;
+        for(int i = 1; i < alignments.size(); i++) {
+            if(alignments.get(i).getScore() > highestScore.getScore()) {
+                highestScore = alignments.get(i);
             }
         }
 
