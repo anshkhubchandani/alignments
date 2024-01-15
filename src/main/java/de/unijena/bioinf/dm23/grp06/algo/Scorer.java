@@ -3,7 +3,6 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,28 +15,46 @@ public class Scorer implements Comparable <Scorer> {
     protected int gap = -1;
     protected String path = "";
     private HashMap<String,Integer> customScores;
-
-    public Scorer (boolean defScores) {
-        this.defaultScores = defScores;
-        if (!defaultScores) {
-           getScoresFromFile("BLA");
-         }
+   //etwas kürzere Variante
+    //für default Scores
+    public Scorer() {
+        defaultScores = true;
     }
-    public Scorer (boolean defScores, String path) {
-        this.defaultScores = defScores;
-        if (!defaultScores) {
-            getScoresFromFile(path);
-        }
+    //für custom
+    public Scorer(String path) {
+        getScoresFromFile(path);
+        defaultScores = false;
+
     }
 
-    protected int score (char firstChar, char secondChar) {
+    protected int score(char firstChar, char secondChar) {
         if (defaultScores) {
             return defaultScorer(firstChar, secondChar);
-        }
-        else {
+        } else {
             return scorerByInputScheme(firstChar, secondChar);
         }
     }
+//    public Scorer () {
+//        this.defaultScores = defScores;
+//        if (!defaultScores) {
+//           getScoresFromFile("BLA");
+//         }
+//    }
+//    public Scorer (boolean defScores, String path) {
+//        this.defaultScores = defScores;
+//        if (!defaultScores) {
+//            getScoresFromFile(path);
+//        }
+//    }
+//
+//    protected int score (char firstChar, char secondChar) {
+//        if (defaultScores) {
+//            return defaultScorer(firstChar, secondChar);
+//        }
+//        else {
+//            return scorerByInputScheme(firstChar, secondChar);
+//        }
+//    }
 
     private int defaultScorer (char firstChar, char secondChar) {
         if (firstChar == secondChar) {
