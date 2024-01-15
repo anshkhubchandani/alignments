@@ -17,12 +17,12 @@ public class Scorer implements Comparable <Scorer> {
     protected String path = "";
     private HashMap<String,Integer> customScores;
 
-    public Scorer (boolean defScores) {
+    /* public Scorer (boolean defScores) {
         this.defaultScores = defScores;
         if (!defaultScores) {
            getScoresFromFile("BLA");
          }
-    }
+    } */
     public Scorer (boolean defScores, String path) {
         this.defaultScores = defScores;
         if (!defaultScores) {
@@ -43,7 +43,7 @@ public class Scorer implements Comparable <Scorer> {
         if (firstChar == secondChar) {
             return match;
         }
-        else if ((firstChar == '#') || secondChar == '#') { // Gaps aktuell als # gekennzeichnet
+        else if ((firstChar == '*') || secondChar == '*') { // Gaps aktuell als # gekennzeichnet
             return gap;
         }
         else {
@@ -67,7 +67,7 @@ public class Scorer implements Comparable <Scorer> {
         }
     }
 
-    public void getScoresFromFile (String fileNameOrPath) {
+    private void getScoresFromFile (String fileNameOrPath) {
 
         customScores = new HashMap<>();
 
@@ -113,9 +113,9 @@ public class Scorer implements Comparable <Scorer> {
                 e.printStackTrace();
             }
         }
-        System.out.println(score('X','X'));
+        /*System.out.println(score('X','X'));
         System.out.println(score('R','A'));
-        System.out.println(score('N','N'));
+        System.out.println(score('N','N'));*/
     }
     //Andere Idee um Scores aus einer Datei einzulesen
     public static HashMap<String, Integer> readScorerFile(String filePath) {
