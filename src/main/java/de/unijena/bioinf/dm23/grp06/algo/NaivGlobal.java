@@ -82,7 +82,7 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
      * @param sampleInstance An instance of the Sequence class for reflection.
      * @return A new instance of the specified Sequence class.
      */
-    private S createSequenceInstance(String sequence, String name, S sampleInstance) {
+    private S createSequenceInstance(String sequence, String name, Sequence sampleInstance) {
         try {
             // Use reflection to create an instance of the specified Sequence class
             Class<?> sequenceClass = sampleInstance.getClass();
@@ -120,7 +120,7 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
                 }
             }
             if(position1 < sequence1.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + Scorer.score(sequence1.charAt(position1), '-')));
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + Scorer.readScorerFile(sequence1.charAt(position1), '-')));
                 added =true;
             }
             if(position2 < sequence2.getSequence().length()) {

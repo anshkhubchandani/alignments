@@ -10,6 +10,15 @@ import java.util.List;
  */
 public class AlignmentString implements Alignment <String> {
 
+    String sequence1;
+    String sequence2;
+    int score;
+
+    public AlignmentString(String sequence1, String sequence2, int score) {
+        this.sequence1 = sequence1;
+        this.sequence2 = sequence2;
+        this.score = score;
+    }
 
     @Override
     public void setSequence1(String sequence1) {
