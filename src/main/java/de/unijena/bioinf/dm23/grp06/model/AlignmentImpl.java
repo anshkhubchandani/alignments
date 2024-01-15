@@ -19,6 +19,10 @@ public class AlignmentImpl<T> implements Alignment<T> {
         this.score=score;
 
     }
+
+    public AlignmentImpl() {
+    }
+
     @Override
     public T getSequence1() {
         return sequence1;
