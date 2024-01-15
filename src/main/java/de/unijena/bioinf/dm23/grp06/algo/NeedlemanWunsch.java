@@ -1,7 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
-import de.unijena.bioinf.dm23.grp06.model.Alignment;
-
 public class NeedlemanWunsch extends AlignerMethods {
     //Output: Kosten des optimalen Alignments (Minimum)
 
@@ -26,13 +24,14 @@ public class NeedlemanWunsch extends AlignerMethods {
 //    }
 
     public void setAlignmentScore () {
-        this.bestAlignmentScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
+        this.bestScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
     }
 
 
     @Override
     public int getAlignmentScore() {
-        return 0;
+
+        return bestScore;
     }
 
 //    public static void main(String[] args) {

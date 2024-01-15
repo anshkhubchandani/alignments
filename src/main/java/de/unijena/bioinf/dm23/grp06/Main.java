@@ -9,15 +9,14 @@ import de.unijena.bioinf.dm23.grp06.model.Alignment;
 public class Main {
 
     public static void main(String[] args) {
-        String s1 = "AAT";
-        String s2 = "AC";
+        String s1 = "AAA";
+        String s2 = "AAA";
         Scorer sc = new Scorer();
-        AlignerMethods al = new AlignerMethods(s1,s2,sc, "NW");
-        System.out.println(al.getOptimalAlignment());
-//        NeedlemanWunsch nw = new NeedlemanWunsch("ABCA", "BCAA", true);
-//        nw.align("NW");
-//        Alignment newAlignment = nw.getOptimalAlignment();
-
+//        AlignerMethods alnw = new AlignerMethods(s1,s2,sc, "NW");
+//        System.out.println(alnw.getOptimalAlignment());
+        AlignerMethods alsw = new AlignerMethods(s1,s2,sc, "SW");
+        System.out.println(alsw.getOptimalAlignment());
+        System.out.println(alsw.getAlignmentScore());
        // Scorer sc = new Scorer(false, "C:\\Users\\Eva\\Desktop\\BLOSUM100.txt");
     }
 }

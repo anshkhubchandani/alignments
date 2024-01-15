@@ -13,7 +13,9 @@ import java.util.List;
  * @param <T> is the type of the sequences
  */
 public class AlignmentImpl<T> implements Alignment<T> {
-    private T sequence1// Listenelemente: String oder Character zB.
+//public class AlignmentImpl<T extends List<Character>> implements Alignment<T>{
+
+    private T sequence1;// Listenelemente: String oder Character zB.
     private T sequence2;
     private Scorer score;
 
@@ -22,6 +24,11 @@ public class AlignmentImpl<T> implements Alignment<T> {
         this.sequence2 = sequence2;
         this.score = score;
     }
+
+    public AlignmentImpl() {
+
+    }
+
     @Override
     public T getSequence1() {
         return sequence1;
@@ -42,6 +49,10 @@ public class AlignmentImpl<T> implements Alignment<T> {
         this.sequence2 = sequence2;
     }
 
+    public void setSequences(T sequence1, T sequence2){
+        this.sequence1 = sequence1;
+        this.sequence2 =sequence2;
+    }
     @Override
     public Scorer getScore() {
         return score;
@@ -52,11 +63,11 @@ public class AlignmentImpl<T> implements Alignment<T> {
         this.score = score;
     }
 
-    public void printAlignment () {
-        // Todo Print-Methode
-        for (T element : sequence1) {
-
-        }
-    }
+//    public void printAlignment () {
+//        // Todo Print-Methode
+//        for (T element : sequence1) {
+//
+//        }
+//    }
     // Additional methods here...
 }

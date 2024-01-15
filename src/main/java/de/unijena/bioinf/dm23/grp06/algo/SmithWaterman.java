@@ -16,24 +16,16 @@ public class SmithWaterman extends AlignerMethods {
     }
     protected void initializeAlignmentMatrix() {
         super.initializeAlignmentMatrix();
-        // Additional Needleman-Wunsch specific initialization if needed
     }
 
-//    @Override
-//    protected int returnBestScoreAtPosition(int i, int j) {
-//        return scores[i][j];
-//    }
-//    public int getAlignmentScore() {
-//        return bestAlignmentScore;
-//    }
-
     public void setAlignmentScore () {
-        this.bestAlignmentScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
+        this.bestScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
     }
 
     @Override
     public int getAlignmentScore() {
-        return 0;
+
+        return bestScore;
     }
 
     @Override

@@ -6,16 +6,16 @@ import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlignerMethods implements Aligner {
-
+//public class AlignerMethods<T> implements Aligner {
+public class AlignerMethods<T extends List<Character>> implements Aligner {
     String firstSequence = "AA";
     String secondSequence = "TT";
-    int bestAlignmentScore;
+    int bestScore;
     Scorer alignmentScorer;
     String algorithm;
 
     int[][] scores;
-    int[][] backtrackArray;
+
     int[][] backtrackingDirections;
 
     int maxScore;
@@ -69,22 +69,28 @@ public class AlignerMethods implements Aligner {
                 int diagonalScore = scores[i - 1][j - 1] + alignmentScorer.score(firstSequence.charAt(i-1), secondSequence.charAt(j-1));
                 int gapUpScore = scores[i - 1][j] + alignmentScorer.gap;
                 int gapLeftScore = scores[i][j - 1] + alignmentScorer.gap;
+                if(algorithm.equals("SW")){
+                    diagonalScore = Math.max(diagonalScore, 0);
+                    gapUpScore = Math.max(gapUpScore, 0);
+                    gapLeftScore = Math.max(gapLeftScore, 0);
+                }
                 //Berechnung des Maximums -> Beste Scores
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
-                fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
 
                 // MaxScore für lokales Alignment
                 if (algorithm.equals("SW") && scores[i][j] > maxScore) {
+                    maxPositions = new ArrayList<>();
                     maxScore = scores[i][j];
                     maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
                     maxPositions.add(j); // Position j
+                    int iPos = maxPositions.get(0);
                 }
                 if (algorithm.equals("SW") && scores[i][j] < 0) {
                     scores[i][j] = 0;
                 }
 
                 // Dann in Smith-Waterman alignmentScore auf maxScore setzen und für Traceback Startposition(en) rauslesen
-
+                fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
             }
         }
         //Return alignment matrix
@@ -96,7 +102,10 @@ public class AlignerMethods implements Aligner {
     //Bioinfonotizen
     public void fillBacktracearray(int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore) {
         //Getting the bestScore from the 3 options
-        int bestScore = scores[i][j];
+        bestScore = scores[i][j];
+        if(algorithm.equals("SW")){
+            bestScore = maxScore;
+        }
         backtrackingDirections[i][j] = 0;
         //int score = scores[i][j];
         if (bestScore == diagonalScore) {
@@ -110,7 +119,7 @@ public class AlignerMethods implements Aligner {
         }
     }
 
-    public Alignment<Character> getOptimalAlignment() {
+    public Alignment getOptimalAlignment() {
         int i = 0;
         int j = 0;
 
@@ -118,7 +127,9 @@ public class AlignerMethods implements Aligner {
         //waiting List
         //maxPosition verwenden als Ausgangspunkt
         if (algorithm.equals("SW")) {
-            //maxscore as start
+            i = maxPositions.get(0);
+            j = maxPositions.get(1);
+
 
         }
         if (algorithm.equals("NW")) {
@@ -126,9 +137,13 @@ public class AlignerMethods implements Aligner {
             j = secondSequence.length();
             //firstSequence.length() and secondSequence.length() -> start
         }
-        Alignment<Character> optimalAlignment = new AlignmentImpl<>();
+        AlignmentImpl<T> optimalAlignment = new AlignmentImpl<T>();
+
         List<Character> seq1List = new ArrayList<>();
         List<Character> seq2List = new ArrayList<>();
+
+//        List<T> seq1List = new ArrayList<>();
+//        List<T> seq2List = new ArrayList<>();
 
         while (i > 0 || j > 0) {
             int dir = backtrackingDirections[i][j];
@@ -152,7 +167,7 @@ public class AlignerMethods implements Aligner {
         System.out.println("Sequenz 1: " + seq1List.toString());
         System.out.println("Sequenz 2: " + seq2List.toString());
 
-        optimalAlignment.setSequences(seq1List, seq2List);
+        optimalAlignment.setSequences((T) seq1List, (T) seq2List);
         return optimalAlignment;
     }
 //    int returnBestScoreAtPosition (int i, int j) {
@@ -160,7 +175,8 @@ public class AlignerMethods implements Aligner {
 //    }
 //
     public int getAlignmentScore() {
-        return 0;
+        System.out.println("The best score is: ");
+        return bestScore;
     }
 
        /* public String getAlgorithm ()
