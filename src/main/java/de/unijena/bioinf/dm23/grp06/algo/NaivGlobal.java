@@ -6,7 +6,7 @@ import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
 
 import java.util.ArrayList;
-
+//Naiv Global
 /**
  * NaivGlobal is a Java class that implements the Aligner interface. It is designed for performing
  * global sequence alignment using a scoring matrix.
