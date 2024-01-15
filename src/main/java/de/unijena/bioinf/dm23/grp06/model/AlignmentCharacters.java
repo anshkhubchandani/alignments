@@ -6,32 +6,38 @@ import java.util.List;
 
 public class AlignmentCharacters implements Alignment <Character>{
 
-    @Override
-    public void setSequence1(Character sequence1) {
+    private Character sequence1;
+    private Character sequence2;
+    int score;
 
-    }
 
-    @Override
-    public void setSequence2(Character sequence2) {
-
-    }
-    @Override
-    public void setScore(Scorer score) {
-
-    }
 
     @Override
     public Character getSequence1() {
-        return null;
+        return sequence1;
     }
 
     @Override
     public Character getSequence2() {
-        return null;
+        return sequence2;
     }
 
     @Override
-    public Scorer getScore() {
-        return null;
+    public int getScore() {
+        return score;
+    }
+    @Override
+    public void setSequence1(Character sequence1) {
+        this.sequence1 = sequence1;
+    }
+
+    @Override
+    public void setSequence2(Character sequence2) {
+        this.sequence2 = sequence2;
+    }
+    @Override
+    public void setScore(int score) {
+        this.score = score;
+
     }
 }
