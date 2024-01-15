@@ -1,6 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.algo;
-
-import javax.sound.midi.Sequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
@@ -102,7 +101,41 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
      */
 
     private void enumeration (ArrayList<AlignmentString> alignments) {
-        // Method implementation for alignment enumeration
+        int position1;
+        int position2;
+        boolean added;
+        alignments.add(new AlignmentString("", "", 0));
+        for (int i = 0; i <alignments.size(); i++) {
+            added = false;
+            position1 = 0;
+            position2 = 0;
+            for(int j = 0; j < alignments.get(i).getSequence1().length(); j++) {
+                if(alignments.get(i).getSequence1().charAt(j) != '-') {
+                    position1++;
+                }
+            }
+            for(int j = 0; j < alignments.get(i).getSequence2().length(); j++) {
+                if(alignments.get(i).getSequence2().charAt(j) != '-') {
+                    position2++;
+                }
+            }
+            if(position1 < sequence1.getSequence().length()) {
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + Scorer.score(sequence1.charAt(position1), '-')));
+                added =true;
+            }
+            if(position2 < sequence2.getSequence().length()) {
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + "-", alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + Scorer.score('-', sequence2.charAt(position2))));
+                added = true;
+            }
+            if(position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + Scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
+                added = true;
+            }
+            if(added) {
+                alignments.remove(i);
+                i--;
+            }
+        }
     }
 
     /**
