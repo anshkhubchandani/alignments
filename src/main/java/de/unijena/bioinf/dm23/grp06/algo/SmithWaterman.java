@@ -7,24 +7,15 @@ public class SmithWaterman extends AlignerMethods {
 
     // Teammate hat hier Scorer scorer als Eingangparameter eingefügt, ich hoffe das ist ok so
     public SmithWaterman (String sequence1, String sequence2, Scorer scorer) {
-        super(sequence1, sequence2, scorer);
+        super(sequence1, sequence2, scorer, "SW");
         this.algorithm = "SW";
         //this.alignmentScorer = new Scorer(true);
-        initializeAlignmentMatrix(algorithm);
-        align(algorithm);
+        initializeAlignmentMatrix();
+        align();
 
     }
-    @Override
-    public int[][] align(String algo) {
-        super.align(algo);
-        // Smith-Waterman specific logic for finding the best alignment
-
-        return new int[0][];
-    }
-
-    @Override
-    protected void initializeAlignmentMatrix(String algo) {
-        super.initializeAlignmentMatrix(algo);
+    protected void initializeAlignmentMatrix() {
+        super.initializeAlignmentMatrix();
         // Additional Needleman-Wunsch specific initialization if needed
     }
 
@@ -46,7 +37,7 @@ public class SmithWaterman extends AlignerMethods {
     }
 
     @Override
-    public Alignment getOptimalAlignment() {
+    public Alignment<Character> getOptimalAlignment() {
         return null;
     }
 
