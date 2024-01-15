@@ -13,7 +13,7 @@ import java.util.List;
  * @param <T> is the type of the sequences
  */
 public class AlignmentImpl<T> implements Alignment<T> {
-    private T sequence1
+    private T sequence1;
     private T sequence2;
     private Scorer score;
 

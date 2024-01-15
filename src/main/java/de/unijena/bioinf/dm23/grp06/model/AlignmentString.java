@@ -22,17 +22,18 @@ public class AlignmentString implements Alignment <String> {
 
     @Override
     public void setSequence1(String sequence1) {
-
+        this.sequence1 = sequence1;
     }
 
     @Override
     public void setSequence2(String sequence2) {
+        this.sequence2 = sequence2;
 
     }
 
     @Override
-    public void setScore(Scorer score) {
-
+    public void setScore(int score) {
+        this.score= score;
     }
 
     @Override
