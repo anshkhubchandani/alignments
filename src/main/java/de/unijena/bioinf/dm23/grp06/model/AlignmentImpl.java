@@ -52,11 +52,5 @@ public class AlignmentImpl<T> implements Alignment<T> {
         this.score = score;
     }
 
-    public void printAlignment () {
-        // Todo Print-Methode
-        for (T element : sequence1) {
-
-        }
-    }
     // Additional methods here...
 }
