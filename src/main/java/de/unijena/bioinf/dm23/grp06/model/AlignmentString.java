@@ -16,6 +16,20 @@ public class AlignmentString implements Alignment <String> {
     }
 
     @Override
+    public String getSequence1() {
+        return sequence1;
+    }
+
+    @Override
+    public String getSequence2() {
+        return sequence2;
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+    @Override
     public void setSequence1(String sequence1) {
         this.sequence1 = sequence1;
     }
@@ -29,20 +43,5 @@ public class AlignmentString implements Alignment <String> {
     @Override
     public void setScore(int score) {
         this.score= score;
-    }
-
-    @Override
-    public String getSequence1() {
-        return null;
-    }
-
-    @Override
-    public String getSequence2() {
-        return null;
-    }
-
-    @Override
-    public int getScore() {
-        return int;
     }
 }

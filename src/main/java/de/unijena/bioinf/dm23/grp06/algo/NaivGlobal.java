@@ -100,43 +100,62 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
      * @param alignments The list to store alignment strings.
      */
 
-    private void enumeration (ArrayList<AlignmentString> alignments) {
+
+    //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
+    // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
+    //con : StringBuilder is not thread-safe
+    private void enumeration(ArrayList<AlignmentString> alignments) {
         int position1;
         int position2;
         boolean added;
+
+        StringBuilder alignedSequence1 = new StringBuilder();
+        StringBuilder alignedSequence2 = new StringBuilder();
+
         alignments.add(new AlignmentString("", "", 0));
-        for (int i = 0; i <alignments.size(); i++) {
+
+        for (int i = 0; i < alignments.size(); i++) {
             added = false;
             position1 = 0;
             position2 = 0;
-            for(int j = 0; j < alignments.get(i).getSequence1().length(); j++) {
-                if(alignments.get(i).getSequence1().charAt(j) != '-') {
+
+            for (int j = 0; j < alignments.get(i).getSequence1().length(); j++) {
+                if (alignments.get(i).getSequence1().charAt(j) != '-') {
                     position1++;
                 }
             }
-            for(int j = 0; j < alignments.get(i).getSequence2().length(); j++) {
-                if(alignments.get(i).getSequence2().charAt(j) != '-') {
+
+            for (int j = 0; j < alignments.get(i).getSequence2().length(); j++) {
+                if (alignments.get(i).getSequence2().charAt(j) != '-') {
                     position2++;
                 }
             }
-            if(position1 < sequence1.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), '-')));
-                added =true;
-            }
-            if(position2 < sequence2.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + "-", alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + scorer.score('-', sequence2.charAt(position2))));
+
+            if (position1 < sequence1.getSequence().length()) {
+                alignedSequence1.append(alignments.get(i).getSequence1()).append(sequence1.getSequence().charAt(position1));
+                alignedSequence2.append(alignments.get(i).getSequence2()).append("-");
                 added = true;
             }
-            if(position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
+
+            if (position2 < sequence2.getSequence().length()) {
+                alignedSequence1.append(alignments.get(i).getSequence1()).append("-");
+                alignedSequence2.append(alignments.get(i).getSequence2()).append(sequence2.getSequence().charAt(position2));
                 added = true;
             }
-            if(added) {
+
+            if (position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
+                alignedSequence1.append(alignments.get(i).getSequence1()).append(sequence1.getSequence().charAt(position1));
+                alignedSequence2.append(alignments.get(i).getSequence2()).append(sequence2.getSequence().charAt(position2));
+                added = true;
+            }
+
+            if (added) {
                 alignments.remove(i);
                 i--;
             }
         }
     }
+
 
     /**
      * Finds the alignment with the highest score from the provided list.
@@ -161,7 +180,5 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
 
         return highestScore;
     }
-
-
 }
 

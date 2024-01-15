@@ -41,7 +41,7 @@ public class AlignmentImpl<T> implements Alignment<T> {
 
     @Override
     public int getScore() {
-        return int;
+        return score;
     }
 
     @Override
