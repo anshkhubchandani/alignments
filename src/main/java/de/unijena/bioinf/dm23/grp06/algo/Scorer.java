@@ -23,20 +23,17 @@ public class Scorer {
            getScoresFromFile("BLA");
          }
     } */
-    public Scorer (boolean defScores, String path) {
-        this.defaultScores = defScores;
-        if (!defaultScores) {
-            getScoresFromFile(path);
-        }
-    }
 
-    protected  int score(char firstChar, char secondChar) {
-        if (defaultScores) {
-            return defaultScorer(firstChar, secondChar);
-        }
-        else {
-            return scorerByInputScheme(firstChar, secondChar);
-        }
+    //etwas kürzere Variante
+    //für default Scores
+    public Scorer() {
+        defaultScores = true;
+    }
+    //für custom
+    public Scorer(String path) {
+        getScoresFromFile(path);
+        defaultScores = false;
+
     }
 
     private int defaultScorer (char firstChar, char secondChar) {
