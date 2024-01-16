@@ -1,4 +1,4 @@
-package de.unijena.bioinf.dm23.grp06.algo;
+/*package de.unijena.bioinf.dm23.grp06.algo;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @param <T> The generic type parameter that extends (or implements) the Sequence and AlignerMethods interface.
  */
-public class NaivGlobal <T extends Sequence> implements Aligner  { // muss AlignerMethods nicht extenden, weil Methoden sowieso nicht benutzt werden
+/*public class NaivGlobalAlt<T extends Sequence > implements Aligner  { // muss AlignerMethods nicht extenden, weil Methoden sowieso nicht benutzt werden
     private final Sequence sequence1;
     private final Sequence sequence2;
     private final Scorer scorer;
@@ -30,11 +30,6 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
     }
 
 
-    /**
-     * Using a scoring matrix, this method creates an optimal global alignment of two sequences.
-     *
-     * @return the existing global Alignment, if the sequences are already aligned
-     */
 
     //aligns
     public Alignment<T> getOptimalAlignment() {
@@ -61,7 +56,7 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
             T alignedSequence2Instance = createSequenceInstance(alignedSequence2, "Aligned Sequence 2", sequence2);
 
             // Create a new Alignment object
-            alignment = new AlignmentImpl<>(alignedSequence1Instance, alignedSequence2Instance, highestScore.getScore());
+            alignment = new AlignmentImpl<T>(alignedSequence1Instance, alignedSequence2Instance, highestScore.getScore());
 
             //  Teammate probiert etwas aus
             // Alignment<String> testAlignment = new AlignmentString(highestScore.getSequence1(), highestScore.getSequence2(), highestScore.getScore());
@@ -91,12 +86,6 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
             throw new RuntimeException("Error creating Sequence instance: " + e.getMessage(), e);
         }
     }
-
-    /**
-     * Method implementation for alignment enumeration.
-     *
-     * @param alignments The list to store alignment strings.
-     */
 
 
     //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
@@ -187,4 +176,4 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
         }
     }
 }
-
+*/

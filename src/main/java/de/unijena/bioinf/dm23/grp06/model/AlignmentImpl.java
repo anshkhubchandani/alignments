@@ -39,7 +39,7 @@ public class AlignmentImpl implements Alignment {
     public void setScore(int score) {
     }
 
-    public void setSequences(T sequence1, T sequence2){
+    public void setSequences(String sequence1, String sequence2){
         this.sequence1 = sequence1;
         this.sequence2 =sequence2;
     }

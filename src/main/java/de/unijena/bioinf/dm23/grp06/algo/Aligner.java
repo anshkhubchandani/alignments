@@ -6,7 +6,7 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
 
-public interface Aligner <S extends Sequence> {
+public interface Aligner {
    int getAlignmentScore();
-    Alignment<S> getOptimalAlignment(); //align
+    Alignment getOptimalAlignment(); //align
 }
