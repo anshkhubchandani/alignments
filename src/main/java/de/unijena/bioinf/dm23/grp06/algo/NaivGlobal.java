@@ -105,30 +105,34 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
     //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
     // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
     //con : StringBuilder is not thread-safe
-    private void enumeration(ArrayList<AlignmentString> alignments) {
+    private void enumeration(ArrayList<AlignmentString> alignments) {  //New alignments are created by adding characters or gaps, and the corresponding scores are updated.
         int position1;
         int position2;
-        boolean added;
+        boolean added;  //Indicates whether new alignments have been added.
 
+        //  Adds an empty alignment to the list initially.
         alignments.add(new AlignmentString("", "", 0));
+
+        // Iterate through the existing alignments
         for (int i = 0; i <alignments.size(); i++) {
-            added = false;
+            added = false;   // Flag to track whether new alignments are added.
             position1 = 0;
             position2 = 0;
-
+            // Count non-gap positions in sequence1
             for(int j = 0; j < alignments.get(i).getSequence1().length(); j++) {
                 if(alignments.get(i).getSequence1().charAt(j) != '-') {
                     position1++;
                 }
             }
+            // Count non-gap positions in sequence2
             for(int j = 0; j < alignments.get(i).getSequence2().length(); j++) {
                 if(alignments.get(i).getSequence2().charAt(j) != '-') {
                     position2++;
                 }
             }
-            Scorer scorer = new Scorer(false,"");
 
             // Add sequence1 character and a gap
+            //Conditions check if adding a character from either sequence (or both) is possible without exceeding their lengths.
             if(position1 < sequence1.getSequence().length()) {
                 alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), '-')));
                 added =true;
@@ -151,6 +155,8 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
                 alignments.remove(i);
                 i--;
             }
+            //The method essentially explores different possibilities of extending existing alignments by adding characters or gaps from the input sequences (sequence1 and sequence2).
+            //The goal is to generate all possible alignments and keep the one with the highest score.
         }
     }
 

@@ -94,40 +94,76 @@ public class NaivLokal<S extends Sequence> implements Aligner {
     // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
     //con : StringBuilder is not thread-safe
     private void enumeration(ArrayList<AlignmentString> alignments) {
+        // Initialize a variable to keep track of the current position in the alignments list
         int arrayPos = 0;
-        for(int h = 0; h < sequence1.getSequence().length(); h++) {
-            for(int i = 0; i < sequence2.getSequence().length(); i++) {
+
+        // Iterate through each position in sequence1
+        for (int h = 0; h < sequence1.getSequence().length(); h++) {
+            // Iterate through each position in sequence2
+            for (int i = 0; i < sequence2.getSequence().length(); i++) {
+                // Variables to track the current positions in sequence1 and sequence2
                 int position1;
                 int position2;
-                Scorer Scorer = new Scorer(false,"");
+
+                // Create a new Scorer object for scoring alignments
+                Scorer scorer = new Scorer(false, "");
+
+                // Add an empty alignment to the list initially
                 alignments.add(new AlignmentString("", "", 0));
-                for (int j = arrayPos; j <alignments.size(); j++) {
+
+                // Iterate through existing alignments starting from the previous position
+                for (int j = arrayPos; j < alignments.size(); j++) {
                     position1 = h;
                     position2 = i;
-                    for(int k = 0; k < alignments.get(j).getSequence1().length(); k++) {
-                        if(alignments.get(j).getSequence1().charAt(k) != '-') {
+
+                    // Count non-gap positions in sequence1 for the current alignment
+                    for (int k = 0; k < alignments.get(j).getSequence1().length(); k++) {
+                        if (alignments.get(j).getSequence1().charAt(k) != '-') {
                             position1++;
                         }
                     }
-                    for(int k = 0; k < alignments.get(j).getSequence2().length(); k++) {
-                        if(alignments.get(j).getSequence2().charAt(k) != '-') {
+
+                    // Count non-gap positions in sequence2 for the current alignment
+                    for (int k = 0; k < alignments.get(j).getSequence2().length(); k++) {
+                        if (alignments.get(j).getSequence2().charAt(k) != '-') {
                             position2++;
                         }
                     }
-                    if(position1 < sequence1.getSequence().length()) {
-                        alignments.add(new AlignmentString(alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(j).getSequence2() + "-", alignments.get(j).getScore() + Scorer.score(sequence1.charAt(position1), '-')));
+
+                    // Add sequence1 character and a gap
+                    if (position1 < sequence1.getSequence().length()) {
+                        alignments.add(new AlignmentString(
+                                alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1),
+                                alignments.get(j).getSequence2() + "-",
+                                alignments.get(j).getScore() + scorer.score(sequence1.charAt(position1), '-')
+                        ));
                     }
-                    if(position2 < sequence2.getSequence().length()) {
-                        alignments.add(new AlignmentString(alignments.get(j).getSequence1() + "-", alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(j).getScore() + Scorer.score('-', sequence2.charAt(position2))));
+
+                    // Add sequence2 character and a gap
+                    if (position2 < sequence2.getSequence().length()) {
+                        alignments.add(new AlignmentString(
+                                alignments.get(j).getSequence1() + "-",
+                                alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2),
+                                alignments.get(j).getScore() + scorer.score('-', sequence2.charAt(position2))
+                        ));
                     }
-                    if(position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
-                        alignments.add(new AlignmentString(alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(j).getScore() + Scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
+
+                    // Add both sequence1 and sequence2 characters
+                    if (position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
+                        alignments.add(new AlignmentString(
+                                alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1),
+                                alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2),
+                                alignments.get(j).getScore() + scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))
+                        ));
                     }
                 }
+
+                // Update the position for the next iteration to start from the end of the current alignments
                 arrayPos = alignments.size();
             }
         }
     }
+
 
 
 
