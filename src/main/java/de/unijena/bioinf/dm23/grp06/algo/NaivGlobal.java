@@ -12,11 +12,11 @@ import java.util.ArrayList;
  *
  * @param <S> The generic type parameter that extends (or implements) the Sequence and AlignerMethods interface.
  */
-public class NaivGlobal <S extends Sequence> implements Aligner  { // muss AlignerMethods nicht extenden, weil Methoden sowieso nicht benutzt werden
+public class NaivGlobal <T extends Sequence> implements Aligner  { // muss AlignerMethods nicht extenden, weil Methoden sowieso nicht benutzt werden
     private final Sequence sequence1;
     private final Sequence sequence2;
     private final Scorer scorer;
-    private Alignment<S> alignment;
+    private Alignment<T> alignment;
     private boolean aligned;
 
 
@@ -27,7 +27,7 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
      * @param sequence2 The second input sequence.
      * @param scorer    The scorer used for sequence alignment.
      */
-    public NaivGlobal(S sequence1, S sequence2, Scorer scorer) {
+    public NaivGlobal(T sequence1, T sequence2, Scorer scorer) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.scorer = scorer;
@@ -46,7 +46,7 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
      */
 
     //aligns
-    public Alignment<S> getOptimalAlignment() {
+    public Alignment<T> getOptimalAlignment() {
         if (aligned) {
             return alignment;
         }
@@ -61,8 +61,8 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
             String alignedSequence1 = highestScore.getSequence1();
             String alignedSequence2 = highestScore.getSequence2();
 
-            S alignedSequence1Instance = createSequenceInstance(alignedSequence1, "Aligned Sequence 1", sequence1);
-            S alignedSequence2Instance = createSequenceInstance(alignedSequence2, "Aligned Sequence 2", sequence2);
+            T alignedSequence1Instance = createSequenceInstance(alignedSequence1, "Aligned Sequence 1", sequence1);
+            T alignedSequence2Instance = createSequenceInstance(alignedSequence2, "Aligned Sequence 2", sequence2);
 
             // Create a new Alignment object
             alignment = new AlignmentImpl<>(alignedSequence1Instance, alignedSequence2Instance, highestScore.getScore());
@@ -83,11 +83,11 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
      * @param sampleInstance An instance of the Sequence class for reflection.
      * @return A new instance of the specified Sequence class.
      */
-    private S createSequenceInstance(String sequence, String name, Sequence sampleInstance) {
+    private T createSequenceInstance(String sequence, String name, Sequence sampleInstance) {
         try {
             // Use reflection to create an instance of the specified Sequence class
             Class<?> sequenceClass = sampleInstance.getClass();
-            return (S) sequenceClass.getConstructor(String.class, String.class).newInstance(sequence, name);
+            return (T) sequenceClass.getConstructor(String.class, String.class).newInstance(sequence, name);
         } catch (Exception e) {
             // Log the error and provide more context
             e.printStackTrace(); // or use a logging framework

@@ -2,8 +2,6 @@ package de.unijena.bioinf.dm23.grp06.model;
 
 import de.unijena.bioinf.dm23.grp06.algo.Scorer;
 
-import java.util.List;
-
 public class AlignmentCharacters implements Alignment <Character>{
 
     private Character sequence1;
@@ -23,7 +21,7 @@ public class AlignmentCharacters implements Alignment <Character>{
     }
 
     @Override
-    public int getScore() {
+    public Scorer getScore() {
         return score;
     }
     @Override
