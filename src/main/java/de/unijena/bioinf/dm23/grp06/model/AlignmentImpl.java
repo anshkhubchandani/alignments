@@ -1,9 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
 import de.unijena.bioinf.dm23.grp06.algo.Scorer;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // Alignment implementation
@@ -12,12 +10,14 @@ import java.util.List;
  * It implements the Alignment<T> interface.
  * @param <T> is the type of the sequences
  */
-public class AlignmentImpl<T> implements Alignment<T> {
-//public class AlignmentImpl<T extends List<Character>> implements Alignment<T>{
+//public class AlignmentImpl<T> implements Alignment<T> {
+public class AlignmentImpl<T extends List<Character>> implements Alignment<T>{
 
     private T sequence1;// Listenelemente: String oder Character zB.
     private T sequence2;
     private Scorer score;
+    //added
+    private int bestScore;
 
     public AlignmentImpl(T sequence1, T sequence2, Scorer score) {
         this.sequence1 = sequence1;
@@ -45,6 +45,16 @@ public class AlignmentImpl<T> implements Alignment<T> {
     }
 
     @Override
+    public Scorer getScore() {
+        return score;
+    }
+
+    @Override
+    public void setScore(int score) {
+
+    }
+
+    @Override
     public void setSequence2(T sequence2) {
         this.sequence2 = sequence2;
     }
@@ -53,12 +63,10 @@ public class AlignmentImpl<T> implements Alignment<T> {
         this.sequence1 = sequence1;
         this.sequence2 =sequence2;
     }
-    @Override
-    public Scorer getScore() {
-        return score;
-    }
-
-    @Override
+//    @Override
+//    public int getScore() {
+//        return bestScore;
+//    }
     public void setScore(Scorer score) {
         this.score = score;
     }

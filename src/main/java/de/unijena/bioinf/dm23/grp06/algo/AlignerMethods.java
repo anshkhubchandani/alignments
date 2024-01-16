@@ -2,8 +2,6 @@ package de.unijena.bioinf.dm23.grp06.algo;
 
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
-import de.unijena.bioinf.dm23.grp06.algo.Scorer;
-
 
 import java.util.ArrayList;
 import java.util.List;
