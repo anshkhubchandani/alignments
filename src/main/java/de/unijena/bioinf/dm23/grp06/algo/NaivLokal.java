@@ -1,4 +1,158 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
-public class NaivLokal {
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+import de.unijena.bioinf.dm23.grp06.model.Alignment;
+import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
+
+import java.util.ArrayList;
+
+public class NaivLokal<S extends Sequence> implements Aligner {
+
+    private final Sequence sequence1;
+    private final Sequence sequence2;
+    private final Scorer scorer;
+    private Alignment<S> alignment;
+    private boolean aligned;
+
+    public NaivLokal(S sequence1, S sequence2, Scorer scorer){
+        this.sequence1 = sequence1;
+        this.sequence2 = sequence2;
+        this.scorer = scorer;
+        this.aligned = false;
+    }
+
+    @Override
+    public int getAlignmentScore() {
+        return 0;
+    }
+
+    /**
+     * Using a scoring matrix, this method creates an optimal local alignment of two sequences.
+     *
+     * @return the existing global Alignment, if the sequences are already aligned
+     */
+
+    //aligns
+    public Alignment<S> getOptimalAlignment() {
+        if (aligned) {
+            return alignment;
+        }
+        ArrayList<AlignmentString> alignments = new ArrayList<>();
+        enumeration(alignments);
+
+        //It iterates through the alignments to find the one with the highest score.
+        AlignmentString highestScore = findHighestScore(alignments);
+
+        // Create a new instance of the specified Sequence class for alignment
+        if (highestScore != null) {
+            String alignedSequence1 = highestScore.getSequence1();
+            String alignedSequence2 = highestScore.getSequence2();
+
+            S alignedSequence1Instance = createSequenceInstance(alignedSequence1, "Aligned Sequence 1", sequence1);
+            S alignedSequence2Instance = createSequenceInstance(alignedSequence2, "Aligned Sequence 2", sequence2);
+
+            // Create a new Alignment object
+            alignment = new AlignmentImpl<>(alignedSequence1Instance, alignedSequence2Instance, highestScore.getScore());
+
+            // Set the aligned flag to true
+            aligned = true;
+        }
+
+
+        return alignment;
+    }
+
+    /**
+     * Creates an instance of a specified Sequence class.
+     *
+     * @param sequence       The sequence string.
+     * @param name           The name of the sequence.
+     * @param sampleInstance An instance of the Sequence class for reflection.
+     * @return A new instance of the specified Sequence class.
+     */
+    private S createSequenceInstance(String sequence, String name, Sequence sampleInstance) {
+        try {
+            // Use reflection to create an instance of the specified Sequence class
+            Class<?> sequenceClass = sampleInstance.getClass();
+            return (S) sequenceClass.getConstructor(String.class, String.class).newInstance(sequence, name);
+        } catch (Exception e) {
+            // Log the error and provide more context
+            e.printStackTrace(); // or use a logging framework
+            throw new RuntimeException("Error creating Sequence instance: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Method implementation for alignment enumeration.
+     *
+     * @param alignments The list to store alignment strings.
+     */
+
+
+    //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
+    // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
+    //con : StringBuilder is not thread-safe
+    private void enumeration(ArrayList<AlignmentString> alignments) {
+        int arrayPos = 0;
+        for(int h = 0; h < sequence1.getSequence().length(); h++) {
+            for(int i = 0; i < sequence2.getSequence().length(); i++) {
+                int position1;
+                int position2;
+                Scorer Scorer = new Scorer(false,"");
+                alignments.add(new AlignmentString("", "", 0));
+                for (int j = arrayPos; j <alignments.size(); j++) {
+                    position1 = h;
+                    position2 = i;
+                    for(int k = 0; k < alignments.get(j).getSequence1().length(); k++) {
+                        if(alignments.get(j).getSequence1().charAt(k) != '-') {
+                            position1++;
+                        }
+                    }
+                    for(int k = 0; k < alignments.get(j).getSequence2().length(); k++) {
+                        if(alignments.get(j).getSequence2().charAt(k) != '-') {
+                            position2++;
+                        }
+                    }
+                    if(position1 < sequence1.getSequence().length()) {
+                        alignments.add(new AlignmentString(alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(j).getSequence2() + "-", alignments.get(j).getScore() + Scorer.score(sequence1.charAt(position1), '-')));
+                    }
+                    if(position2 < sequence2.getSequence().length()) {
+                        alignments.add(new AlignmentString(alignments.get(j).getSequence1() + "-", alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(j).getScore() + Scorer.score('-', sequence2.charAt(position2))));
+                    }
+                    if(position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
+                        alignments.add(new AlignmentString(alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(j).getScore() + Scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
+                    }
+                }
+                arrayPos = alignments.size();
+            }
+        }
+    }
+
+
+
+
+    /**
+     * Finds the alignment with the highest score from the provided list.
+     *
+     * @param alignments The list of alignment strings.
+     * @return The alignment with the highest score, or null if the list is empty.
+     */
+
+    private AlignmentString findHighestScore(ArrayList<AlignmentString> alignments) {
+        // baseCase
+        if (alignments.isEmpty()) {
+            return null;
+        }
+
+        AlignmentString highestScore = alignments.get(0);
+
+        for(int i = 1; i < alignments.size(); i++) {
+            if(alignments.get(i).getScore() > highestScore.getScore()) {
+                highestScore = alignments.get(i);
+            }
+        }
+
+        return highestScore;
+    }
 }

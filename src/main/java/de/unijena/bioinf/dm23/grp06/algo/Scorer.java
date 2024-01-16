@@ -30,7 +30,7 @@ public class Scorer implements Comparable <Scorer> {
         }
     }
 
-    protected int score (char firstChar, char secondChar) {
+    protected  int score(char firstChar, char secondChar) {
         if (defaultScores) {
             return defaultScorer(firstChar, secondChar);
         }
