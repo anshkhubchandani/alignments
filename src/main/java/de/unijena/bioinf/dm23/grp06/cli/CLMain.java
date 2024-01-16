@@ -22,7 +22,12 @@ public class CLMain {
 
 class AlignerOptions implements Runnable {
 
-    @CommandLine.Option(names = {"-a", "--algo"})
+    @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "Prints help message.")
+    protected boolean helpRequested;
+
+    @CommandLine.Option(names = {"-a", "--algo"}, description = "Algorithm to be used for alignment.\n" +
+            "Global alignments:\nGN - Naive algorithm\nNW - Needleman-Wunsch algorithm\n" +
+            "Local alignments:\nGL - Naive algorithm\nSW - Smith-Waterman algorithm")
     String algorithm;
 
     /* @CommandLine.ArgGroup(exclusive = true)
