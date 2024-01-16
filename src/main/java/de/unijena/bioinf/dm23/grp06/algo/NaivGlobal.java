@@ -110,12 +110,12 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
         int position2;
         boolean added;
 
-        Scorer Scorer = new Scorer(false,"");
         alignments.add(new AlignmentString("", "", 0));
         for (int i = 0; i <alignments.size(); i++) {
             added = false;
             position1 = 0;
             position2 = 0;
+
             for(int j = 0; j < alignments.get(i).getSequence1().length(); j++) {
                 if(alignments.get(i).getSequence1().charAt(j) != '-') {
                     position1++;
@@ -126,18 +126,27 @@ public class NaivGlobal <S extends Sequence> implements Aligner  { // muss Align
                     position2++;
                 }
             }
+            Scorer scorer = new Scorer(false,"");
+
+            // Add sequence1 character and a gap
             if(position1 < sequence1.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + Scorer.score(sequence1.charAt(position1), '-')));
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), '-')));
                 added =true;
             }
+
+            // Add sequence2 character and a gap
             if(position2 < sequence2.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + "-", alignments.get(i).getSequence2()+ sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + Scorer.score('-', sequence2.charAt(position2))));
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + "-", alignments.get(i).getSequence2()+ sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + scorer.score('-', sequence2.charAt(position2))));
                 added = true;
             }
+
+            // Add both sequence1 and sequence2 characters
             if(position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
-                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + Scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
+                alignments.add(new AlignmentString(alignments.get(i).getSequence1() + sequence1.getSequence().charAt(position1), alignments.get(i).getSequence2() + sequence2.getSequence().charAt(position2), alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
                 added = true;
             }
+
+            // Remove the original alignment if new ones were added
             if(added) {
                 alignments.remove(i);
                 i--;

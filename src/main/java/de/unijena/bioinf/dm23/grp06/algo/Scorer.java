@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Scorer implements Comparable <Scorer> {
+public class Scorer {
 
     protected boolean defaultScores;
     private int match = 1; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
@@ -168,24 +168,6 @@ public class Scorer implements Comparable <Scorer> {
         }
 
         return scorerMap;
-    }
-
-    @Override
-    public int compareTo(Scorer other) {
-        // Compare based on some criteria, for example, the total score
-        int thisScore = calculateTotalScore();
-        int otherScore = other.calculateTotalScore();
-
-        return Integer.compare(thisScore, otherScore);
-    }
-    private int calculateTotalScore() {
-        // Implement your logic to calculate a total score for comparison
-        // For example, you might sum up the scores from the customScores map
-        int totalScore = 0;
-        for (int score : customScores.values()) {
-            totalScore += score;
-        }
-        return totalScore;
     }
 
     // Idee Ende
