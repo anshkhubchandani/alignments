@@ -1,13 +1,15 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
+//import de.unijena.bioinf.dm23.grp06.model.AlignmentCharacters;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
+//import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //public class AlignerMethods<T> implements Aligner {
-public class AlignerMethods<T extends List<Character>> implements Aligner {
+public class AlignerMethods implements Aligner {
     String firstSequence = "AA";
     String secondSequence = "TT";
     int bestScore;
@@ -40,7 +42,7 @@ public class AlignerMethods<T extends List<Character>> implements Aligner {
 
 
         if (algorithm.equals("NW")) {
-            scores[0][0]=0; //obere linke Ecke
+            scores[0][0] = 0; //obere linke Ecke
             for (int i = 1; i < firstSequence.length() + 1; i++) {
                 scores[i][0] = scores[i - 1][0] + this.alignmentScorer.gap;
                 backtrackingDirections[i][0] = 2; // 2 steht für Up
@@ -64,12 +66,12 @@ public class AlignerMethods<T extends List<Character>> implements Aligner {
     //Erstellen einer Matrix, die mit den jeweiligen Scores ausgefüllt wird
     public int[][] align() {
         // int diagonalScore;
-        for (int i = 1; i < firstSequence.length() +1; i++) {
-            for (int j = 1; j < secondSequence.length() +1; j++) {
-                int diagonalScore = scores[i - 1][j - 1] + alignmentScorer.score(firstSequence.charAt(i-1), secondSequence.charAt(j-1));
+        for (int i = 1; i < firstSequence.length() + 1; i++) {
+            for (int j = 1; j < secondSequence.length() + 1; j++) {
+                int diagonalScore = scores[i - 1][j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
                 int gapUpScore = scores[i - 1][j] + alignmentScorer.gap;
                 int gapLeftScore = scores[i][j - 1] + alignmentScorer.gap;
-                if(algorithm.equals("SW")){
+                if (algorithm.equals("SW")) {
                     diagonalScore = Math.max(diagonalScore, 0);
                     gapUpScore = Math.max(gapUpScore, 0);
                     gapLeftScore = Math.max(gapLeftScore, 0);
@@ -103,7 +105,7 @@ public class AlignerMethods<T extends List<Character>> implements Aligner {
     public void fillBacktracearray(int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore) {
         //Getting the bestScore from the 3 options
         bestScore = scores[i][j];
-        if(algorithm.equals("SW")){
+        if (algorithm.equals("SW")) {
             bestScore = maxScore;
         }
         backtrackingDirections[i][j] = 0;
@@ -137,40 +139,46 @@ public class AlignerMethods<T extends List<Character>> implements Aligner {
             j = secondSequence.length();
             //firstSequence.length() and secondSequence.length() -> start
         }
-        AlignmentImpl<T> optimalAlignment = new AlignmentImpl<T>();
+        //AlignmentImpl<T> optimalAlignment = new AlignmentImpl<T>();
+        //AlignmentCharacters optimalAlignment = new AlignmentCharacters();
+        // ArrayList<Character> seq1List = new ArrayList<>();
+        // ArrayList<Character> seq2List = new ArrayList<>();
 
-        List<Character> seq1List = new ArrayList<>();
-        List<Character> seq2List = new ArrayList<>();
-
-//        List<T> seq1List = new ArrayList<>();
-//        List<T> seq2List = new ArrayList<>();
+        StringBuilder firstAlignmentLine = new StringBuilder();
+        StringBuilder secondAlignmentLine = new StringBuilder();
 
         while (i > 0 || j > 0) {
             int dir = backtrackingDirections[i][j];
             if ((dir & 1) != 0) {
-                seq1List.add(firstSequence.charAt(i-1));
-                seq2List.add(secondSequence.charAt(j-1));
+                //seq1List.add(firstSequence.charAt(i - 1));
+                //seq2List.add(secondSequence.charAt(j - 1));
+                firstAlignmentLine.append(firstSequence.charAt(i - 1));
+                secondAlignmentLine.append(secondSequence.charAt(j - 1));
                 i--;
                 j--;
             } else if ((dir & 2) != 0) {
-                seq1List.add(firstSequence.charAt(i-1));
-                seq2List.add('-'); // Gap in sequence2
+                //seq1List.add(firstSequence.charAt(i - 1));
+                //seq2List.add('-'); // Gap in sequence2
+                firstAlignmentLine.append(firstSequence.charAt(i - 1));
+                secondAlignmentLine.append("-");
                 i--;
             } else if ((dir & 4) != 0) {
-                seq1List.add('-'); // Gap in sequence1
-                seq2List.add(secondSequence.charAt(j-1));
+                //seq1List.add('-'); // Gap in sequence1
+                //seq2List.add(secondSequence.charAt(j - 1));
+                firstAlignmentLine.append("-");
+                secondAlignmentLine.append(secondSequence.charAt(j - 1));
                 j--;
             }
         }
 
-
-        System.out.println("Sequenz 1: " + seq1List.toString());
-        System.out.println("Sequenz 2: " + seq2List.toString());
-
-        optimalAlignment.setSequences((T) seq1List, (T) seq2List);
-        return optimalAlignment;
+        // Teammate hat die folgenden zwei Zeilen auskommentiert
+        //optimalAlignment.setSequences(seq1List,seq2List);
+        //return optimalAlignment;
+        // .toString()-Methode des StringBuilders, um Alignment-Sequenzen weiterzugeben
+        return new AlignmentImpl(firstAlignmentLine.toString(), secondAlignmentLine.toString(), bestScore);
     }
-//    int returnBestScoreAtPosition (int i, int j) {
+
+    //    int returnBestScoreAtPosition (int i, int j) {
 //        return 0;
 //    }
 //
@@ -179,15 +187,17 @@ public class AlignerMethods<T extends List<Character>> implements Aligner {
         return bestScore;
     }
 
-       /* public String getAlgorithm ()
-        {
-            return algorithm;
-        }*/
+    // public String getAlgorithm ()
+    // {
+    //     return algorithm;
+    // }
 
     public String getFirstSequence() {
         return firstSequence;
     }
+
     public String getSecondSequence() {
         return secondSequence;
     }
+
 }

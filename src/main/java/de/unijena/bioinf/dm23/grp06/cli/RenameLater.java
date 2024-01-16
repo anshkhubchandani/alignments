@@ -8,7 +8,7 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.io.Fasta;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.FastaReader;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
-import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
+//import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
 
 import java.io.File;
 import java.io.IOException;

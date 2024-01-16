@@ -11,29 +11,28 @@ import java.util.regex.Pattern;
 public class Scorer {
 
     protected boolean defaultScores;
-    private int match = 1; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
+    private int match = 3; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
     private int mismatch = -1;
     protected int gap = -1;
     protected String path = "";
     private HashMap<String,Integer> customScores;
 
-    /* public Scorer (boolean defScores) {
-        this.defaultScores = defScores;
-        if (!defaultScores) {
-           getScoresFromFile("BLA");
-         }
-    } */
-
-    //etwas kürzere Variante
-    //für default Scores
     public Scorer() {
         defaultScores = true;
     }
-    //für custom
+
     public Scorer(String path) {
         getScoresFromFile(path);
         defaultScores = false;
+    }
 
+    protected int score (char firstChar, char secondChar) {
+        if (defaultScores) {
+            return defaultScorer(firstChar, secondChar);
+        }
+        else {
+            return scorerByInputScheme(firstChar, secondChar);
+        }
     }
 
     private int defaultScorer (char firstChar, char secondChar) {
@@ -78,7 +77,6 @@ public class Scorer {
                 nextLine = reader.readLine();
             }
 
-            // String[] firstCharacters = nextLine.substring(3).split("  ");
             String[] firstCharacters = nextLine.trim().split("\\s+");
 
             String secondCharacter;
@@ -92,7 +90,6 @@ public class Scorer {
                 characterPairScores = nextLine.substring(2).trim().split(" +");
 
                 for (int i = k; i < firstCharacters.length; i++) {
-                    // System.out.println("currentfirst " + firstCharacters[i] + " second " + secondCharacter + " currentscore " + characterPairScores[i]);
                     customScores.put(firstCharacters[i].concat(secondCharacter), Integer.parseInt(characterPairScores[i]));
                 }
 
@@ -115,7 +112,7 @@ public class Scorer {
         System.out.println(score('N','N'));*/
     }
     //Andere Idee um Scores aus einer Datei einzulesen
-    public static HashMap<String, Integer> readScorerFile(String filePath) {
+    /*public static HashMap<String, Integer> readScorerFile(String filePath) {
         HashMap<String, Integer> scorerMap = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -172,5 +169,5 @@ public class Scorer {
         String path = "/Users/larry/Git/BLOSUM100.txt";
 
         readScorerFile(path);
-    }
+    }*/
 }

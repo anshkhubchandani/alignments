@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * NaivGlobal is a Java class that implements the Aligner interface. It is designed for performing
  * global sequence alignment using a scoring matrix.
  *
- * @param <S> The generic type parameter that extends (or implements) the Sequence and AlignerMethods interface.
+ * @param <T> The generic type parameter that extends (or implements) the Sequence and AlignerMethods interface.
  */
 public class NaivGlobal <T extends Sequence> implements Aligner  { // muss AlignerMethods nicht extenden, weil Methoden sowieso nicht benutzt werden
     private final Sequence sequence1;
@@ -18,26 +18,17 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
     private final Scorer scorer;
     private Alignment<T> alignment;
     private boolean aligned;
+    ArrayList<AlignmentString> alignments;
+    AlignmentString highestScore;
 
 
-    /**
-     * Constructs a NaivGlobal instance with two input sequences and a scorer.
-     *
-     * @param sequence1 The first input sequence.
-     * @param sequence2 The second input sequence.
-     * @param scorer    The scorer used for sequence alignment.
-     */
-    public NaivGlobal(T sequence1, T sequence2, Scorer scorer) {
+    public NaivGlobalAlt(T sequence1, T sequence2, Scorer scorer) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.scorer = scorer;
         this.aligned = false;
     }
 
-    @Override
-    public int getAlignmentScore() {
-        return 0;
-    }
 
     /**
      * Using a scoring matrix, this method creates an optimal global alignment of two sequences.
@@ -50,14 +41,19 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
         if (aligned) {
             return alignment;
         }
-        ArrayList<AlignmentString> alignments = new ArrayList<>();
+        //ArrayList<AlignmentString> alignments = new ArrayList<>();
+        this.alignments = new ArrayList<>();
         enumeration(alignments);
 
+        temporaryMethod();
+
         //It iterates through the alignments to find the one with the highest score.
-        AlignmentString highestScore = findHighestScore(alignments);
+        // AlignmentString highestScore = getAlignmentScore(alignments);
 
         // Create a new instance of the specified Sequence class for alignment
         if (highestScore != null) {
+            System.out.println("IF-BLOCK IN NAIVGLOBAL");
+
             String alignedSequence1 = highestScore.getSequence1();
             String alignedSequence2 = highestScore.getSequence2();
 
@@ -67,6 +63,9 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
             // Create a new Alignment object
             alignment = new AlignmentImpl<>(alignedSequence1Instance, alignedSequence2Instance, highestScore.getScore());
 
+            //  Teammate probiert etwas aus
+            // Alignment<String> testAlignment = new AlignmentString(highestScore.getSequence1(), highestScore.getSequence2(), highestScore.getScore());
+
             // Set the aligned flag to true
             aligned = true;
         }
@@ -75,14 +74,12 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
         return alignment;
     }
 
-    /**
-     * Creates an instance of a specified Sequence class.
-     *
-     * @param sequence       The sequence string.
-     * @param name           The name of the sequence.
-     * @param sampleInstance An instance of the Sequence class for reflection.
-     * @return A new instance of the specified Sequence class.
-     */
+    //Placeholder
+    //@Override
+    //public int getAlignmentScore() {
+      //  return 0;
+    //}
+
     private T createSequenceInstance(String sequence, String name, Sequence sampleInstance) {
         try {
             // Use reflection to create an instance of the specified Sequence class
@@ -161,28 +158,33 @@ public class NaivGlobal <T extends Sequence> implements Aligner  { // muss Align
     }
 
 
-    /**
-     * Finds the alignment with the highest score from the provided list.
-     *
-     * @param alignments The list of alignment strings.
-     * @return The alignment with the highest score, or null if the list is empty.
-     */
 
-    private AlignmentString findHighestScore(ArrayList<AlignmentString> alignments) {
+    public int getAlignmentScore () {
         // baseCase
         if (alignments.isEmpty()) {
-            return null;
+            return 0;
         }
 
-        AlignmentString highestScore = alignments.get(0);
+        /*this.highestScore = alignments.get(0);
 
         for(int i = 1; i < alignments.size(); i++) {
-            if(alignments.get(i).getScore() > highestScore.getScore()) {
-                highestScore = alignments.get(i);
+            if(alignments.get(i).getScore() > this.highestScore.getScore()) {
+                this.highestScore = alignments.get(i);
             }
         }
 
-        return highestScore;
+        return this.highestScore.getScore();
+    }
+
+    private void temporaryMethod () {
+
+        this.highestScore = alignments.get(0);
+
+        for(int i = 1; i < alignments.size(); i++) {
+            if(alignments.get(i).getScore() > this.highestScore.getScore()) {
+                this.highestScore = alignments.get(i);
+            }
+        }
     }
 }
 

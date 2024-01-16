@@ -22,16 +22,16 @@ public class SmithWaterman extends AlignerMethods {
         this.bestScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
     }
 
-    @Override
+    /*@Override
     public int getAlignmentScore() {
 
         return bestScore;
-    }
+    }*/
 
-    @Override
-    public Alignment<Character> getOptimalAlignment() {
+    /*@Override
+    public Alignment getOptimalAlignment() {
         return null;
-    }
+    }*/
 
 }
 

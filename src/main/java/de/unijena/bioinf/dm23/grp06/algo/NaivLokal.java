@@ -3,7 +3,7 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
-import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
+//import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
 
 import java.util.ArrayList;
 
@@ -93,14 +93,14 @@ public class NaivLokal<S extends Sequence> implements Aligner {
     //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
     // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
     //con : StringBuilder is not thread-safe
-    private void enumeration(ArrayList<AlignmentString> alignments) {
+    protected void enumeration(ArrayList<AlignmentImpl> alignments) {
         // Initialize a variable to keep track of the current position in the alignments list
         int arrayPos = 0;
 
         // Iterate through each position in sequence1
-        for (int h = 0; h < sequence1.getSequence().length(); h++) {
+        for (int h = 0; h < sequence1.length(); h++) {
             // Iterate through each position in sequence2
-            for (int i = 0; i < sequence2.getSequence().length(); i++) {
+            for (int i = 0; i < sequence2.length(); i++) {
                 // Variables to track the current positions in sequence1 and sequence2
                 int position1;
                 int position2;
@@ -109,7 +109,7 @@ public class NaivLokal<S extends Sequence> implements Aligner {
                 Scorer scorer = new Scorer(false, "");
 
                 // Add an empty alignment to the list initially
-                alignments.add(new AlignmentString("", "", 0));
+                alignments.add(new AlignmentImpl("", "", 0));
 
                 // Iterate through existing alignments starting from the previous position
                 for (int j = arrayPos; j < alignments.size(); j++) {
@@ -131,28 +131,28 @@ public class NaivLokal<S extends Sequence> implements Aligner {
                     }
 
                     // Add sequence1 character and a gap
-                    if (position1 < sequence1.getSequence().length()) {
-                        alignments.add(new AlignmentString(
-                                alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1),
+                    if (position1 < sequence1.length()) {
+                        alignments.add(new AlignmentImpl(
+                                alignments.get(j).getSequence1() + sequence1.charAt(position1),
                                 alignments.get(j).getSequence2() + "-",
                                 alignments.get(j).getScore() + scorer.score(sequence1.charAt(position1), '-')
                         ));
                     }
 
                     // Add sequence2 character and a gap
-                    if (position2 < sequence2.getSequence().length()) {
-                        alignments.add(new AlignmentString(
+                    if (position2 < sequence2.length()) {
+                        alignments.add(new AlignmentImpl(
                                 alignments.get(j).getSequence1() + "-",
-                                alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2),
+                                alignments.get(j).getSequence2() + sequence2.charAt(position2),
                                 alignments.get(j).getScore() + scorer.score('-', sequence2.charAt(position2))
                         ));
                     }
 
                     // Add both sequence1 and sequence2 characters
-                    if (position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
-                        alignments.add(new AlignmentString(
-                                alignments.get(j).getSequence1() + sequence1.getSequence().charAt(position1),
-                                alignments.get(j).getSequence2() + sequence2.getSequence().charAt(position2),
+                    if (position1 < sequence1.length() && position2 < sequence2.length()) {
+                        alignments.add(new AlignmentImpl(
+                                alignments.get(j).getSequence1() + sequence1.charAt(position1),
+                                alignments.get(j).getSequence2() + sequence2.charAt(position2),
                                 alignments.get(j).getScore() + scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))
                         ));
                     }

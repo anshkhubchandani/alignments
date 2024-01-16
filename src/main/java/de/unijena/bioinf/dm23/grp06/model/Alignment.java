@@ -1,16 +1,15 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
-import de.unijena.bioinf.dm23.grp06.algo.Scorer;
+// import de.unijena.bioinf.dm23.grp06.algo.Scorer;
 
 // The Alignment interface and its implementations (AlignmentImpl and AlignmentString) represent the result of sequence alignment.
-public interface Alignment<T> {
-    void setSequence1(T sequence1);
-    void setSequence2(T sequence2);
+public interface Alignment {
+    /*void setSequence1(T sequence1);
+    void setSequence2(T sequence2);*/
 
 
-    T getSequence1();
-    T getSequence2();
-    Scorer getScore();
+    String getSequence1();
+    String getSequence2();
+    int getScore();
     void setScore(int score);
-
 }

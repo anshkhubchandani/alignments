@@ -1,81 +1,54 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
 import de.unijena.bioinf.dm23.grp06.algo.Scorer;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 import java.util.List;
 
 // Alignment implementation
 
-/** This class is generic, where S is a type parameter that extends the Sequence class.
- * It implements the Alignment<T> interface.
- * @param <T> is the type of the sequences
- */
-//public class AlignmentImpl<T> implements Alignment<T> {
-public class AlignmentImpl<T extends List<Character>> implements Alignment<T>{
 
-    private T sequence1;// Listenelemente: String oder Character zB.
-    private T sequence2;
-    private Scorer score;
-    //added
-    private int bestScore;
+public class AlignmentImpl implements Alignment {
+//public class AlignmentImpl<T extends List<Character>> implements Alignment<T>{
 
-    public AlignmentImpl(T sequence1, T sequence2, Scorer score) {
+    private String sequence1;// Listenelemente: String oder Character zB.
+    private String sequence2;
+    private int score;
+
+
+    public AlignmentImpl(String sequence1, String sequence2, int score) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.score = score;
     }
-
-    public AlignmentImpl() {
-
-    }
-
-    @Override
-    public T getSequence1() {
+    //@Override
+    public String getSequence1() {
         return sequence1;
     }
 
-    @Override
-    public void setSequence1(T sequence1) {
-        this.sequence1 = sequence1;
-    }
-
-    @Override
-    public T getSequence2() {
+    //@Override
+    public String getSequence2() {
         return sequence2;
     }
 
-    @Override
-    public Scorer getScore() {
+    public int getScore() {
         return score;
     }
 
     @Override
     public void setScore(int score) {
-
-    }
-
-    @Override
-    public void setSequence2(T sequence2) {
-        this.sequence2 = sequence2;
     }
 
     public void setSequences(T sequence1, T sequence2){
         this.sequence1 = sequence1;
         this.sequence2 =sequence2;
     }
-//    @Override
-//    public int getScore() {
-//        return bestScore;
-//    }
-    public void setScore(Scorer score) {
+
+    public void setScorer(int score) {
         this.score = score;
     }
-
-//    public void printAlignment () {
-//        // Todo Print-Methode
-//        for (T element : sequence1) {
-//
-//        }
-//    }
+    public String toString() {
+        return sequence1 + "\n" + sequence2;
+    }
     // Additional methods here...
 }
