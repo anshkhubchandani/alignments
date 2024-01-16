@@ -3,11 +3,12 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Scorer implements Comparable <Scorer> {
+public class Scorer {
 
     protected boolean defaultScores;
     private int match = 1; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
@@ -15,52 +16,34 @@ public class Scorer implements Comparable <Scorer> {
     protected int gap = -1;
     protected String path = "";
     private HashMap<String,Integer> customScores;
-   //etwas kürzere Variante
-    //für default Scores
-    public Scorer() {
-        defaultScores = true;
-    }
-    //für custom
-    public Scorer(String path) {
-        getScoresFromFile(path);
-        defaultScores = false;
 
+    /* public Scorer (boolean defScores) {
+        this.defaultScores = defScores;
+        if (!defaultScores) {
+           getScoresFromFile("BLA");
+         }
+    } */
+    public Scorer (boolean defScores, String path) {
+        this.defaultScores = defScores;
+        if (!defaultScores) {
+            getScoresFromFile(path);
+        }
     }
 
-    protected int score(char firstChar, char secondChar) {
+    protected  int score(char firstChar, char secondChar) {
         if (defaultScores) {
             return defaultScorer(firstChar, secondChar);
-        } else {
+        }
+        else {
             return scorerByInputScheme(firstChar, secondChar);
         }
     }
-//    public Scorer () {
-//        this.defaultScores = defScores;
-//        if (!defaultScores) {
-//           getScoresFromFile("BLA");
-//         }
-//    }
-//    public Scorer (boolean defScores, String path) {
-//        this.defaultScores = defScores;
-//        if (!defaultScores) {
-//            getScoresFromFile(path);
-//        }
-//    }
-//
-//    protected int score (char firstChar, char secondChar) {
-//        if (defaultScores) {
-//            return defaultScorer(firstChar, secondChar);
-//        }
-//        else {
-//            return scorerByInputScheme(firstChar, secondChar);
-//        }
-//    }
 
     private int defaultScorer (char firstChar, char secondChar) {
         if (firstChar == secondChar) {
             return match;
         }
-        else if ((firstChar == '#') || secondChar == '#') { // Gaps aktuell als # gekennzeichnet
+        else if ((firstChar == '*') || secondChar == '*') { // Gaps aktuell als # gekennzeichnet
             return gap;
         }
         else {
@@ -84,7 +67,7 @@ public class Scorer implements Comparable <Scorer> {
         }
     }
 
-    public void getScoresFromFile (String fileNameOrPath) {
+    private void getScoresFromFile (String fileNameOrPath) {
 
         customScores = new HashMap<>();
 
@@ -130,9 +113,9 @@ public class Scorer implements Comparable <Scorer> {
                 e.printStackTrace();
             }
         }
-        System.out.println(score('X','X'));
+        /*System.out.println(score('X','X'));
         System.out.println(score('R','A'));
-        System.out.println(score('N','N'));
+        System.out.println(score('N','N'));*/
     }
     //Andere Idee um Scores aus einer Datei einzulesen
     public static HashMap<String, Integer> readScorerFile(String filePath) {
@@ -185,24 +168,6 @@ public class Scorer implements Comparable <Scorer> {
         }
 
         return scorerMap;
-    }
-
-    @Override
-    public int compareTo(Scorer other) {
-        // Compare based on some criteria, for example, the total score
-        int thisScore = calculateTotalScore();
-        int otherScore = other.calculateTotalScore();
-
-        return Integer.compare(thisScore, otherScore);
-    }
-    private int calculateTotalScore() {
-        // Implement your logic to calculate a total score for comparison
-        // For example, you might sum up the scores from the customScores map
-        int totalScore = 0;
-        for (int score : customScores.values()) {
-            totalScore += score;
-        }
-        return totalScore;
     }
 
     // Idee Ende
