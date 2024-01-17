@@ -1,10 +1,12 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
+import de.unijena.bioinf.dm23.grp06.exactsearch.io.IllegalSequenceException;
 import de.unijena.bioinf.dm23.grp06.model.Alignment;
 //import de.unijena.bioinf.dm23.grp06.model.AlignmentCharacters;
 import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
 //import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,10 +28,14 @@ public class AlignerMethods implements Aligner {
     ArrayList<Integer> maxPositions;
 
     public AlignerMethods(String sequence1, String sequence2, Scorer scorer, String algorithm) {
+        if(sequence1 == null || sequence2 == null || sequence1.isEmpty() || sequence2.isEmpty()){
+            System.out.println("ERROR: No valid sequence.");
+        }
         this.firstSequence = sequence1;
         this.secondSequence = sequence2;
         this.alignmentScorer = scorer;
         this.algorithm = algorithm; //Added algo
+
         initializeAlignmentMatrix();
         align();
     }
