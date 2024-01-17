@@ -6,6 +6,8 @@ import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
 //import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 //public class AlignerMethods<T> implements Aligner {
@@ -85,7 +87,7 @@ public class AlignerMethods implements Aligner {
                     maxScore = scores[i][j];
                     maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
                     maxPositions.add(j); // Position j
-                    int iPos = maxPositions.get(0);
+
                 }
                 if (algorithm.equals("SW") && scores[i][j] < 0) {
                     scores[i][j] = 0;
@@ -125,8 +127,6 @@ public class AlignerMethods implements Aligner {
         int i = 0;
         int j = 0;
 
-
-        //waiting List
         //maxPosition verwenden als Ausgangspunkt
         if (algorithm.equals("SW")) {
             i = maxPositions.get(0);
@@ -170,6 +170,8 @@ public class AlignerMethods implements Aligner {
                 j--;
             }
         }
+        firstAlignmentLine.reverse();
+        secondAlignmentLine.reverse();
 
         // Teammate hat die folgenden zwei Zeilen auskommentiert
         //optimalAlignment.setSequences(seq1List,seq2List);
