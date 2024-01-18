@@ -3,10 +3,7 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Scorer {
 
@@ -14,9 +11,11 @@ public class Scorer {
     private int match = 3; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
     private int mismatch = -1;
     protected int gap = -1;
-    protected String path = "";
     private HashMap<String,Integer> customScores;
 
+    /**
+     * Creates a Scorer object with default scores.
+     */
     public Scorer() {
         defaultScores = true;
     }
@@ -26,6 +25,12 @@ public class Scorer {
         defaultScores = false;
     }
 
+    /**
+     * Returns the score for a pair of characters according to the scoring scheme
+     * @param firstChar The first character
+     * @param secondChar The second character
+     * @return Integer value of the given pair of characters
+     */
     protected int score (char firstChar, char secondChar) {
         if (defaultScores) {
             return defaultScorer(firstChar, secondChar);
@@ -39,7 +44,7 @@ public class Scorer {
         if (firstChar == secondChar) {
             return match;
         }
-        else if ((firstChar == '*') || secondChar == '*') { // Gaps aktuell als # gekennzeichnet
+        else if (firstChar == '*' || secondChar == '*' || firstChar == '-' || secondChar == '-') {
             return gap;
         }
         else {
@@ -107,9 +112,6 @@ public class Scorer {
                 e.printStackTrace();
             }
         }
-        /*System.out.println(score('X','X'));
-        System.out.println(score('R','A'));
-        System.out.println(score('N','N'));*/
     }
     //Andere Idee um Scores aus einer Datei einzulesen
     /*public static HashMap<String, Integer> readScorerFile(String filePath) {
