@@ -194,6 +194,44 @@ public abstract class AlignerMethods implements Aligner {
     //     return algorithm;
     // }
 
+    public int linearScore () {
+        // linearer Speicher
+        int[] previousRow = new int[secondSequence.length() + 1];
+        int[] currentRow = new int[secondSequence.length() + 1];
+
+        for (int i = 1; i < firstSequence.length() + 1; i++) {
+            for (int j = 1; j < secondSequence.length() + 1; j++) {
+                int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
+                int gapUpScore = previousRow[j] + alignmentScorer.gap;
+                int gapLeftScore = currentRow[j - 1] + alignmentScorer.gap;
+
+                if (algorithm.equals("SW")) {
+                    diagonalScore = Math.max(diagonalScore, 0);
+                    gapUpScore = Math.max(gapUpScore, 0);
+                    gapLeftScore = Math.max(gapLeftScore, 0);
+                }
+
+                //Berechnung des Maximums -> Beste Scores
+                currentRow[j] = Math.max(diagonalScore, Math.max(gapUpScore, gapLeftScore));
+
+                // MaxScore für lokales Alignment
+                if (algorithm.equals("SW") && currentRow[j] > maxScore) {
+                    maxPositions = new ArrayList<>();
+                    maxScore = currentRow[j];
+                    maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
+                    maxPositions.add(j); // Position j
+                }
+                fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
+            }
+
+            // Kopiere currentRow in previousRow für die nächste Iteration
+            System.arraycopy(currentRow, 0, previousRow, 0, currentRow.length);
+
+        }
+
+        return currentRow[secondSequence.length()];
+    }
+
     public String getFirstSequence() {
         return firstSequence;
     }

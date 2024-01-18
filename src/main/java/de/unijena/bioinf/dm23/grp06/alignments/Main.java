@@ -2,6 +2,7 @@ package de.unijena.bioinf.dm23.grp06.alignments;
 
 //import de.unijena.bioinf.dm23.grp06.algo.AlignerMethods;
 //import de.unijena.bioinf.dm23.grp06.algo.NeedlemanWunsch;
+import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
@@ -16,12 +17,13 @@ public class Main {
          //NeedlemanWunsch alnw = new NeedlemanWunsch(s1, s2, sc);
          //System.out.println(alnw.getOptimalAlignment().toString());
 
-        // Create sample sequences
-        Sequence sequence1 = new SequenceImpl("AC");
-        Sequence sequence2 = new SequenceImpl("AG");
 
         // Create a scorer (use default scores)
         Scorer scorer = new Scorer();
+
+        NeedlemanWunsch nw = new NeedlemanWunsch("GGA", "GA", scorer);
+        System.out.println("Quadratisch " + nw.getAlignmentScore());
+        System.out.println("Linear: " + nw.linearScore());
 
         // Create an instance of NaivGlobal
         //NaivGlobal<Sequence> naivGlobal = new NaivGlobal<>(sequence1, sequence2, scorer);

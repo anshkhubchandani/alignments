@@ -7,8 +7,7 @@ public class NeedlemanWunsch extends AlignerMethods {
         super(sequence1, sequence2, scorer, "NW");
         this.algorithm = "NW";
         // this.alignmentScorer = new Scorer(true);
-        initializeAlignmentMatrix();
-        align();
+
 
     }
 

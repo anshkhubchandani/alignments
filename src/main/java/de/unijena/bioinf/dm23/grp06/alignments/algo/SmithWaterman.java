@@ -7,8 +7,7 @@ public class SmithWaterman extends AlignerMethods {
         super(sequence1, sequence2, scorer, "SW");
         this.algorithm = "SW";
         //this.alignmentScorer = new Scorer(true);
-        initializeAlignmentMatrix();
-        align();
+
 
     }
     protected void initializeAlignmentMatrix() {
