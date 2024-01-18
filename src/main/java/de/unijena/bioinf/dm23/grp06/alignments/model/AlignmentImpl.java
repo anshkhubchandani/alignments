@@ -1,9 +1,4 @@
-package de.unijena.bioinf.dm23.grp06.model;
-
-import de.unijena.bioinf.dm23.grp06.algo.Scorer;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
-
-import java.util.List;
+package de.unijena.bioinf.dm23.grp06.alignments.model;
 
 // Alignment implementation
 

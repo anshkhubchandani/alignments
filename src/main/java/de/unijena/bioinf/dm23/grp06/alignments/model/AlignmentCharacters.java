@@ -1,4 +1,4 @@
-//package de.unijena.bioinf.dm23.grp06.model;
+//package de.unijena.bioinf.dm23.grp06.alignments.model;
 //
 //
 //import java.util.ArrayList;

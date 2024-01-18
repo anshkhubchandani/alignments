@@ -1,4 +1,4 @@
-package de.unijena.bioinf.dm23.grp06;
+package de.unijena.bioinf.dm23.grp06.alignments;
 
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 

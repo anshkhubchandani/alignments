@@ -1,4 +1,4 @@
-package de.unijena.bioinf.dm23.grp06.algo;
+package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

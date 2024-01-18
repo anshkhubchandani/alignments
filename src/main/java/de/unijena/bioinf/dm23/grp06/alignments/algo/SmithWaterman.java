@@ -1,6 +1,4 @@
-package de.unijena.bioinf.dm23.grp06.algo;
-
-import de.unijena.bioinf.dm23.grp06.model.Alignment;
+package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 public class SmithWaterman extends AlignerMethods {
     //Output: Ähnlichlkeit des optimalen Alignments (Maximum)

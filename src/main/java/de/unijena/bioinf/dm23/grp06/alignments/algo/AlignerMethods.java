@@ -1,16 +1,11 @@
-package de.unijena.bioinf.dm23.grp06.algo;
+package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
-import de.unijena.bioinf.dm23.grp06.exactsearch.io.IllegalSequenceException;
-import de.unijena.bioinf.dm23.grp06.model.Alignment;
-//import de.unijena.bioinf.dm23.grp06.model.AlignmentCharacters;
-import de.unijena.bioinf.dm23.grp06.model.AlignmentImpl;
-//import de.unijena.bioinf.dm23.grp06.model.AlignmentString;
+import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
+//import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentCharacters;
+import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+//import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 //public class AlignerMethods<T> implements Aligner {
 public abstract class AlignerMethods implements Aligner {

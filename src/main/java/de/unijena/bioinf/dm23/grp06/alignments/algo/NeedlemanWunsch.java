@@ -1,4 +1,4 @@
-package de.unijena.bioinf.dm23.grp06.algo;
+package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 public class NeedlemanWunsch extends AlignerMethods {
     //Output: Kosten des optimalen Alignments (Minimum)

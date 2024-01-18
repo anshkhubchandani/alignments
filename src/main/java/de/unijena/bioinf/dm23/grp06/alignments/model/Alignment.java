@@ -1,8 +1,6 @@
-package de.unijena.bioinf.dm23.grp06.model;
+package de.unijena.bioinf.dm23.grp06.alignments.model;
 
 // import de.unijena.bioinf.dm23.grp06.algo.Scorer;
-
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 // The Alignment interface and its implementations (AlignmentImpl and AlignmentString) represent the result of sequence alignment.
 public interface Alignment {
