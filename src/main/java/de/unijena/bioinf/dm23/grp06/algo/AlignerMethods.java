@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 //public class AlignerMethods<T> implements Aligner {
-public class AlignerMethods implements Aligner {
+public abstract class AlignerMethods implements Aligner {
     String firstSequence = "AA";
     String secondSequence = "TT";
     int bestScore;
