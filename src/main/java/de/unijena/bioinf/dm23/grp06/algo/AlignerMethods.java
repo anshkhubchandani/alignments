@@ -40,8 +40,6 @@ public class AlignerMethods implements Aligner {
         align();
     }
 
-    //    public AlignerMethods() {
-//    }
     void initializeAlignmentMatrix() {
         scores = new int[firstSequence.length() + 1][secondSequence.length() + 1];
         backtrackingDirections = new int[firstSequence.length() + 1][secondSequence.length() + 1];
@@ -73,7 +71,6 @@ public class AlignerMethods implements Aligner {
 
     //Erstellen einer Matrix, die mit den jeweiligen Scores ausgefüllt wird
     public int[][] align() {
-        // int diagonalScore;
         for (int i = 1; i < firstSequence.length() + 1; i++) {
             for (int j = 1; j < secondSequence.length() + 1; j++) {
                 int diagonalScore = scores[i - 1][j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
@@ -153,7 +150,9 @@ public class AlignerMethods implements Aligner {
         StringBuilder firstAlignmentLine = new StringBuilder();
         StringBuilder secondAlignmentLine = new StringBuilder();
 
-        while (i > 0 || j > 0) {
+        //Geändert weil ungleiche Sequenzlängen möglich
+        while (backtrackingDirections[i][j] != 0){
+        //while (i > 0 || j > 0) {
             int dir = backtrackingDirections[i][j];
             if ((dir & 1) != 0) {
                 //seq1List.add(firstSequence.charAt(i - 1));
