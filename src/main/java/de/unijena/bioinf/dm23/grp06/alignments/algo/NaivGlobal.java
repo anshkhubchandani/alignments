@@ -43,7 +43,7 @@ public class NaivGlobal extends AbstractNaivAligner  {
         //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
         // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
         //con : StringBuilder is not thread-safe
-        protected void enumeration(ArrayList<AlignmentImpl> alignments) { //New alignments are created by adding characters or gaps, and the corresponding scores are updated.
+        public void enumeration(ArrayList<AlignmentImpl> alignments) { //New alignments are created by adding characters or gaps, and the corresponding scores are updated.
             int position1;
             int position2;
             boolean added;  //Indicates whether new alignments have been added.
