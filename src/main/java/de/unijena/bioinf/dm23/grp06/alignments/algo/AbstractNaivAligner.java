@@ -39,7 +39,7 @@ public abstract class AbstractNaivAligner implements Aligner {
         this.alignments = new ArrayList<>();
         enumeration(alignments);
 
-        temporaryMethod();
+        setHighestScoreObject();
 
         //It iterates through the alignments to find the one with the highest score.
         // AlignmentString highestScore = getAlignmentScore(alignments);
@@ -79,7 +79,7 @@ public abstract class AbstractNaivAligner implements Aligner {
      */
 
 
-    private void temporaryMethod () {
+    private void setHighestScoreObject() {
 
         this.highestScore = alignments.get(0);
 

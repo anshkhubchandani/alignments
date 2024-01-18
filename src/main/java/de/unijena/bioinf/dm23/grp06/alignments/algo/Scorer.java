@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Scorer {
 
     protected boolean defaultScores;
-    private int match = 3; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
+    private int match = 1; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
     private int mismatch = -1;
     protected int gap = -1;
     private HashMap<String,Integer> customScores;

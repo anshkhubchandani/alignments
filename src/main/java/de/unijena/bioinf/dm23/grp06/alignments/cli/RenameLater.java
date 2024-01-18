@@ -1,7 +1,6 @@
-/*
 package de.unijena.bioinf.dm23.grp06.alignments.cli;
 
-import de.unijena.bioinf.dm23.grp06.algo.*;
+//import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.*;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.Fasta;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.FastaReader;
@@ -36,7 +35,7 @@ public class RenameLater {
 
         for (String i : input1) {
             for (String k : input2) {
-                if (algo.equals("NG")) {
+                /*if (algo.equals("NG")) {
                     alignerObjects.add(new NaivGlobal(readFasta(i), readFasta(k), alignmentScorer));
                 }
                 else if (algo.equals("NL")) {
@@ -47,7 +46,7 @@ public class RenameLater {
                 }
                 else if (algo.equals("SW")) {
                     alignerObjects.add(new SmithWaterman(readFasta(i), readFasta(k), alignmentScorer));
-                }
+                }*/
             }
         }
 
@@ -75,8 +74,7 @@ public class RenameLater {
         return valid;
     }
 
-    */
-/*private String readString (String sequenceOrPath) { // Other SearchResult-Methode nutzen?
+private String readString (String sequenceOrPath) { // Other SearchResult-Methode nutzen?
         // FastaReader
 
         String sequence;
@@ -93,7 +91,7 @@ public class RenameLater {
             }
         }
         return sequenceOrPath;
-    }*//*
+    }
 
 
     private void setScorer (String scorerFilePath) {
@@ -107,11 +105,10 @@ public class RenameLater {
 
     protected void printScores () {
         // Methode, die auf alle Aligner-Objekte zugreift und den Score printet
-        */
-/*for (Aligner a : alignerObjects) {
+for (Aligner a : alignerObjects) {
             // irgendwie noch zugehörige Sequenzen ausgeben
             System.out.println("Score: " + a.getAlignmentScore());
-        }*//*
+        }
 
     }
 
@@ -153,15 +150,12 @@ public class RenameLater {
 
     protected void generateDistanceMatrix (String outputFileNameOrPath) {
         // Methode, die die AlignmentScores in einer Distanzmatrix speichert
-        */
-/*
-        - Den Sequenzen Zahlen zuordnen
-        - Zuordnung ausgeben
-        - Tabelle mit den Zahlen erstellen
-         *//*
+        //- Den Sequenzen Zahlen zuordnen
+        //- Zuordnung ausgeben
+        //- Tabelle mit den Zahlen erstellen
+
 
 
     }
 
 }
-*/
