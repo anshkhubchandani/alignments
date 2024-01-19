@@ -2,13 +2,14 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
 
-public class NaivGlobal extends AbstractNaivAligner  {
-        private final String sequence1;
-        private final String sequence2;
+public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner  {
+        //private final String sequence1;
+        //private final String sequence2;
         private final Scorer scorer;
         private Alignment alignment;
         private boolean aligned;
@@ -24,11 +25,11 @@ public class NaivGlobal extends AbstractNaivAligner  {
          * @param sequence2 The second input sequence.
          * @param scorer    The scorer used for sequence alignment.
          */
-        public NaivGlobal(String sequence1, String sequence2, Scorer scorer) {
-            super();
-            this.sequence1 = sequence1;
-            this.sequence2 = sequence2;
-            this.scorer = scorer;
+        public NaivGlobal(S sequence1, S sequence2, Scorer scorer) {
+            super(sequence1, sequence2, scorer);
+            //this.sequence1 = sequence1;
+            //this.sequence2 = sequence2;
+            //this.scorer = scorer;
             this.aligned = false;
         }
 

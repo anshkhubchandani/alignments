@@ -2,12 +2,14 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+
 import java.util.ArrayList;
 
-public abstract class AbstractNaivAligner implements Aligner {
+public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner<S> {
 
-    private String sequence1;
-    private String sequence2;
+    private S sequence1;
+    private S sequence2;
     private Scorer scorer;
     private Alignment alignment;
     private boolean aligned;
@@ -15,7 +17,7 @@ public abstract class AbstractNaivAligner implements Aligner {
     AlignmentImpl highestScore;
     Alignment testAlignment;
 
-    public AbstractNaivAligner(String sequence1, String sequence2, Scorer scorer) {
+    public AbstractNaivAligner(S sequence1, S sequence2, Scorer scorer) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.scorer = scorer;

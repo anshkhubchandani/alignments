@@ -32,8 +32,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         this.alignmentScorer = scorer;
         this.algorithm = algorithm; //Added algo
 
-        initializeAlignmentMatrix();
-        align();
+
     }
 
     void initializeAlignmentMatrix() {
@@ -123,6 +122,9 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
     }
 
     public Alignment getOptimalAlignment() {
+        initializeAlignmentMatrix();
+        align();
+
         int i = 0;
         int j = 0;
 
@@ -186,7 +188,8 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
 //    }
 //
     public int getAlignmentScore() {
-        System.out.println("The best score is: ");
+        //System.out.println("The best score is")
+        //Boolean-Flag erstellen
         return bestScore;
     }
 
