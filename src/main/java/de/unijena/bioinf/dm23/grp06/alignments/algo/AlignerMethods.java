@@ -243,4 +243,13 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         return algorithm.equals("NW") ? currentRow[secondSequence.getSequence().length()] : maxScore;
     }
 
+    @Override
+    public S getSequence1() {
+        return firstSequence;
+    }
+
+    @Override
+    public S getSequence2() {
+        return secondSequence;
+    }
 }
