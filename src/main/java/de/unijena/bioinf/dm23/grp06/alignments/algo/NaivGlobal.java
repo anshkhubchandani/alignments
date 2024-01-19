@@ -8,13 +8,10 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import java.util.ArrayList;
 
 public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence> {
-        //private final String sequence1;
-        //private final String sequence2;
-        //private final Scorer scorer;
-        private Alignment alignment;
-        private boolean aligned;
-        ArrayList<AlignmentImpl> alignments;
-        AlignmentImpl highestScore;
+    private Alignment alignment;
+    private boolean aligned;
+    ArrayList<AlignmentImpl> alignments;
+    AlignmentImpl highestScore;
 
     Alignment testAlignment;
 

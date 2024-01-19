@@ -128,13 +128,13 @@ public class NaivGlobalTest {
         naivGlobal.enumeration(alignments);
         Alignment result = naivGlobal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("AAB-", result.getSequence1());
         assertEquals("-ABC", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
+    }
 
         //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-
         @Test
         public void testMissingInputs() {
             // sequence1 or sequence2 is not provided
@@ -147,30 +147,23 @@ public class NaivGlobalTest {
             assertThrows(MissingInputsException.class, () -> {
                 naivGlobal.enumeration(alignments);
                 Alignment result = naivGlobal.getOptimalAlignment();
+
             });
         }
 
-        @Test(expected = InvalidCharactersException)
+        @Test
         public void testInvalidCharacters () {
             sequence1= new AsciiSequence("ABBC", "missing input");
             sequence2= new AsciiSequence("AC!", "Sequence2");
             naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
             naivGlobal.enumeration(alignments);
-            result = naivGlobal.getOptimalAlignment();
-        }
 
-        //BRAUCHEN WIR SOWAS????
+            // assertThrows for JUnit 5
+            assertThrows(InvalidCharactersException.class, () -> {
+                naivGlobal.enumeration(alignments);
+                Alignment result = naivGlobal.getOptimalAlignment();
 
-        @ParameterizedTest  // Parameterized test cases with sequences and expected scores
-        @CsvSource({"ABBC, AC, 0", "AGTACG, TACTAG, 3", "...other test cases..."})
-        void testNaivGlobalAlignmentWithParameters (String sequence1, String sequence2,int expectedScore){
-
-            Scorer scorer = new Scorer(); // You may need to adjust this based on your Scorer implementation
-            NaivGlobal naivGlobal = new NaivGlobal(sequence1, sequence2, scorer);
-
-            // Check the aligned sequences and score
-            assertEquals(expectedScore, result.getScore());
-        }
+            });
 
     }
 }
