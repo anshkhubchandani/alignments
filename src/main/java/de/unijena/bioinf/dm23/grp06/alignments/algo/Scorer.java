@@ -5,10 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
+
+//Throw InvalidCharactersException AND MissingInputsException
 public class Scorer {
 
     protected boolean defaultScores;
-    private int match = 1; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
+    private int match = 1; // Defa
+    // ult Scores können auch geändert werden, je nach dem, was Sinn macht
     private int mismatch = -1;
     protected int gap = -1;
     private HashMap<String,Integer> customScores;
@@ -31,7 +34,7 @@ public class Scorer {
      * @param secondChar The second character
      * @return Integer value of the given pair of characters
      */
-    protected int score (char firstChar, char secondChar) {
+    public int score(char firstChar, char secondChar) {
         if (defaultScores) {
             return defaultScorer(firstChar, secondChar);
         }
