@@ -21,7 +21,7 @@ public class Main {
         // Create a scorer (use default scores)
         Scorer scorer = new Scorer();
 
-        NeedlemanWunsch nw = new NeedlemanWunsch("GGA", "GA", scorer);
+        NeedlemanWunsch nw = new NeedlemanWunsch("AAB", "ABC", scorer);
         System.out.println("Quadratisch " + nw.getAlignmentScore());
         System.out.println("Linear: " + nw.linearScore());
 

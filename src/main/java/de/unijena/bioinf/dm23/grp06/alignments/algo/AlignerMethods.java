@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 //public class AlignerMethods<T> implements Aligner {
 public abstract class AlignerMethods implements Aligner {
-    String firstSequence = "AA";
-    String secondSequence = "TT";
+    String firstSequence;
+    String secondSequence;
     int bestScore;
     Scorer alignmentScorer;
     String algorithm;
@@ -199,29 +199,39 @@ public abstract class AlignerMethods implements Aligner {
         int[] previousRow = new int[secondSequence.length() + 1];
         int[] currentRow = new int[secondSequence.length() + 1];
 
+        for (int k = 1; k < previousRow.length; k++) {
+            previousRow[k] = previousRow[k-1] + alignmentScorer.gap;
+        }
+
         for (int i = 1; i < firstSequence.length() + 1; i++) {
-            for (int j = 1; j < secondSequence.length() + 1; j++) {
-                int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
-                int gapUpScore = previousRow[j] + alignmentScorer.gap;
-                int gapLeftScore = currentRow[j - 1] + alignmentScorer.gap;
+            for (int j = 0; j < secondSequence.length() + 1; j++) {
 
-                if (algorithm.equals("SW")) {
-                    diagonalScore = Math.max(diagonalScore, 0);
-                    gapUpScore = Math.max(gapUpScore, 0);
-                    gapLeftScore = Math.max(gapLeftScore, 0);
+                if (j == 0) {
+                    currentRow[j] = previousRow[j] + alignmentScorer.gap;
                 }
+                else {
 
-                //Berechnung des Maximums -> Beste Scores
-                currentRow[j] = Math.max(diagonalScore, Math.max(gapUpScore, gapLeftScore));
+                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
+                    int gapUpScore = previousRow[j] + alignmentScorer.gap;
+                    int gapLeftScore = currentRow[j - 1] + alignmentScorer.gap;
 
+                    if (algorithm.equals("SW")) {
+                        diagonalScore = Math.max(diagonalScore, 0);
+                        gapUpScore = Math.max(gapUpScore, 0);
+                        gapLeftScore = Math.max(gapLeftScore, 0);
+                    }
+
+                    //Berechnung des Maximums -> Beste Scores
+                    currentRow[j] = Math.max(diagonalScore, Math.max(gapUpScore, gapLeftScore));
+                }
                 // MaxScore für lokales Alignment
                 if (algorithm.equals("SW") && currentRow[j] > maxScore) {
-                    maxPositions = new ArrayList<>();
+                    // maxPositions = new ArrayList<>();
                     maxScore = currentRow[j];
-                    maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
-                    maxPositions.add(j); // Position j
+                    // maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
+                    // maxPositions.add(j); // Position j
                 }
-                fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
+                //fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
             }
 
             // Kopiere currentRow in previousRow für die nächste Iteration
@@ -229,15 +239,7 @@ public abstract class AlignerMethods implements Aligner {
 
         }
 
-        return currentRow[secondSequence.length()];
-    }
-
-    public String getFirstSequence() {
-        return firstSequence;
-    }
-
-    public String getSecondSequence() {
-        return secondSequence;
+        return algorithm.equals("NW") ? currentRow[secondSequence.length()] : maxScore;
     }
 
 }
