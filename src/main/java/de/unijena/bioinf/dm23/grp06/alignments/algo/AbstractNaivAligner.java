@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner<S> {
 
-    private S sequence1;
-    private S sequence2;
-    private Scorer scorer;
-    private Alignment alignment;
-    private boolean aligned;
+    S sequence1;
+    S sequence2;
+    Scorer scorer;
+    Alignment alignment;
+    boolean aligned;
     ArrayList<AlignmentImpl> alignments;
     AlignmentImpl highestScore;
     Alignment testAlignment;
