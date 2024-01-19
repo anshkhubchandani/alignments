@@ -1,9 +1,11 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
-public class NeedlemanWunsch extends AlignerMethods {
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+
+public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
     //Output: Kosten des optimalen Alignments (Minimum)
 
-    public NeedlemanWunsch (String sequence1, String sequence2, Scorer scorer) {
+    public NeedlemanWunsch (S sequence1, S sequence2, Scorer scorer) {
         super(sequence1, sequence2, scorer, "NW");
         this.algorithm = "NW";
         // this.alignmentScorer = new Scorer(true);
@@ -23,7 +25,7 @@ public class NeedlemanWunsch extends AlignerMethods {
 //    }
 
     public void setAlignmentScore () {
-        this.bestScore = this.scores[firstSequence.length()-1][secondSequence.length()-1];
+        this.bestScore = this.scores[firstSequence.getSequence().length()-1][secondSequence.getSequence().length()-1];
     }
 
 

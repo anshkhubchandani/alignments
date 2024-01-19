@@ -1,4 +1,4 @@
-package de.unijena.bioinf.dm23.grp06.alignments.test;
+package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.algo.InvalidCharactersExeption;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.NaivGlobal;

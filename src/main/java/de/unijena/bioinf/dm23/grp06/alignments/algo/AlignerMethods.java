@@ -155,21 +155,21 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
             if ((dir & 1) != 0) {
                 //seq1List.add(firstSequence.charAt(i - 1));
                 //seq2List.add(secondSequence.charAt(j - 1));
-                firstAlignmentLine.append(firstSequence.getSequence().charAt(i - 1));
-                secondAlignmentLine.append(secondSequence.getSequence().charAt(j - 1));
+                firstAlignmentLine.append(firstSequence.charAt(i - 1));
+                secondAlignmentLine.append(secondSequence.charAt(j - 1));
                 i--;
                 j--;
             } else if ((dir & 2) != 0) {
                 //seq1List.add(firstSequence.charAt(i - 1));
                 //seq2List.add('-'); // Gap in sequence2
-                firstAlignmentLine.append(firstSequence.getSequence().charAt(i - 1));
+                firstAlignmentLine.append(firstSequence.charAt(i - 1));
                 secondAlignmentLine.append("-");
                 i--;
             } else if ((dir & 4) != 0) {
                 //seq1List.add('-'); // Gap in sequence1
                 //seq2List.add(secondSequence.charAt(j - 1));
                 firstAlignmentLine.append("-");
-                secondAlignmentLine.append(secondSequence.getSequence().charAt(j - 1));
+                secondAlignmentLine.append(secondSequence.charAt(j - 1));
                 j--;
             }
         }
