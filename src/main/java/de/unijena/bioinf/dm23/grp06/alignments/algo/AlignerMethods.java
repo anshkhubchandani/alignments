@@ -215,7 +215,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
                 }
                 else {
 
-                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.getSequence().charAt(i - 1), secondSequence.getSequence().charAt(j - 1));
+                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
                     int gapUpScore = previousRow[j] + alignmentScorer.gap;
                     int gapLeftScore = currentRow[j - 1] + alignmentScorer.gap;
 
