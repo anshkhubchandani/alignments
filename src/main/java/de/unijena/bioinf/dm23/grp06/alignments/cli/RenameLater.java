@@ -4,6 +4,10 @@ package de.unijena.bioinf.dm23.grp06.alignments.cli;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.*;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.Fasta;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.FastaReader;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.NucleotideSequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 
 import java.io.BufferedWriter;
@@ -24,54 +28,68 @@ public class RenameLater {
     // AUsgabe + Check, welchen Typ die Sequenz hat
     // Print-Methode für Alignments
 
-    public RenameLater(String algorithm, ArrayList<String> inputSeq1, ArrayList<String> inputSeq2, String scorerPath) {
+    public RenameLater(String algorithm, ArrayList<String> inputSeq1, ArrayList<String> inputSeq2, String scorerPath, String sequenceType) {
         this.algo = algorithm;
         setScorer(scorerPath);
-        createAlignerObjects(inputSeq1, inputSeq2);
+        createAlignerObjects(inputSeq1, inputSeq2, sequenceType);
     }
 
 
-    private void createAlignerObjects (ArrayList<String> input1, ArrayList<String> input2) {
+    private void createAlignerObjects (ArrayList<String> input1, ArrayList<String> input2, String sequenceType) {
 
         for (String i : input1) {
             for (String k : input2) {
-                /*if (algo.equals("NG")) {
-                    alignerObjects.add(new NaivGlobal(readFasta(i), readFasta(k), alignmentScorer));
+                if (algo.equals("NG")) {
+                    alignerObjects.add(new NaivGlobal(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("NL")) {
-                    alignerObjects.add(new NaivLokal(readFasta(i), readFasta(k), alignmentScorer));
+                    alignerObjects.add(new NaivLokal(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("NW")) {
-                    alignerObjects.add(new NeedlemanWunsch(readFasta(i), readFasta(k), alignmentScorer));
+                    alignerObjects.add(new NeedlemanWunsch(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("SW")) {
-                    alignerObjects.add(new SmithWaterman(readFasta(i), readFasta(k), alignmentScorer));
-                }*/
+                    alignerObjects.add(new SmithWaterman(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
+                }
             }
         }
 
     }
 
-    private Fasta readFasta(String sequenceOrPath) {
+    private Sequence readFastaToSequence(String sequenceOrPath, String type) {
 
         File sequenceFile = new File(sequenceOrPath);
         if (sequenceFile.isFile()) {
 
             try {
-                return FastaReader.getFastaFromFile(sequenceOrPath);
+                Fasta inputFasta = FastaReader.getFastaFromFile(sequenceOrPath);
+                return createSequenceObject(inputFasta.getHeader().substring(1), inputFasta.getSeq(), type);
             }
             catch (IOException e) {
                 System.err.println("ERROR: Error while reading input sequence.");
             }
         }
 
-        return new Fasta(("User input sequence: " + sequenceOrPath.substring(0, 9) + "..."), sequenceOrPath);
+        return createSequenceObject("User input sequence: " + sequenceOrPath.substring(0, 10) + "...", sequenceOrPath, type);
     }
 
-    private boolean checkIfValidSequences (String seq1, String seq2) {
-        boolean valid = false;
-        // TODO
-        return valid;
+    private Sequence createSequenceObject (String header, String sequence, String type) {
+        Sequence inputSequence;
+
+        if (type.equals("DNA")) {
+            inputSequence = new NucleotideSequence(sequence, header, "dna");
+        }
+        else if (type.equals("RNA")) {
+            inputSequence = new NucleotideSequence(sequence, header, "rna");
+        }
+        else if (type.equals("AA")) {
+            inputSequence = new AminoacidSequence(sequence, header);
+        }
+        else {
+            inputSequence = new AsciiSequence(sequence, header);
+        }
+
+        return inputSequence;
     }
 
 private String readString (String sequenceOrPath) { // Other SearchResult-Methode nutzen?
@@ -104,25 +122,14 @@ private String readString (String sequenceOrPath) { // Other SearchResult-Method
     }
 
     protected void printScores () {
-        // Methode, die auf alle Aligner-Objekte zugreift und den Score printet
-for (Aligner a : alignerObjects) {
-            // irgendwie noch zugehörige Sequenzen ausgeben
-            System.out.println("Score: " + a.getAlignmentScore());
-        }
-
+        System.out.println(createResultString("score"));
     }
 
     protected void printOptimalAlignments () {
-        // Methode, die auf die Alignment-Objekte zugreift und alle Alignments ausgibt
-
-        System.out.println("Optimal Alignments:\n");
-
-        for (Aligner i : alignerObjects) {
-
-        }
+        System.out.println(createResultString("alignment"));
     }
 
-    protected void saveResults (String outputFileNameOrPath) {
+    protected void saveResults (String outputFileNameOrPath, String function) {
         // Ergebnisse (Scores oder Alignments) in File speichern
 
         BufferedWriter resultWriter = null;
@@ -130,9 +137,7 @@ for (Aligner a : alignerObjects) {
         try {
             resultWriter = new BufferedWriter(new FileWriter(outputFileNameOrPath));
 
-            resultWriter.write("Alignment results:\n");
-
-
+            resultWriter.write(createResultString(function));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -146,6 +151,25 @@ for (Aligner a : alignerObjects) {
             }
         }
 
+    }
+
+    private String createResultString (String function) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Alignment results:\n");
+
+        for (Aligner a : alignerObjects) {
+            sb.append("Sequence 1: ").append(a.getSequence1().getName()).append("\n");
+            sb.append("Sequence 2: ").append(a.getSequence2().getName()).append("\n");
+            if (function.equals("score")) {
+                sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
+            }
+            else if (function.equals("alignment")) {
+                sb.append("Optimal alignment: ").append(a.getOptimalAlignment()).append("\n");
+            }
+        }
+
+        return sb.toString();
     }
 
     protected void generateDistanceMatrix (String outputFileNameOrPath) {
