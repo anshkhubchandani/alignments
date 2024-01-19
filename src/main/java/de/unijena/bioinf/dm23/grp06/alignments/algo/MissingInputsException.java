@@ -1,10 +1,11 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
-public class MissingInputsException {
+/*public class MissingInputsException {
     /**
      * Creates a new MissingInputsException
      */
-    public MissingInputsException () {
+    /*public MissingInputsException () {
         super("Error: Your file seems to be missing input!");}
     }
 
+*/
