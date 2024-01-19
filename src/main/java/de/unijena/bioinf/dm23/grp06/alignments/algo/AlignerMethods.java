@@ -3,14 +3,15 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentCharacters;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
 
 //public class AlignerMethods<T> implements Aligner {
-public abstract class AlignerMethods implements Aligner {
-    String firstSequence;
-    String secondSequence;
+public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
+    S firstSequence;
+    S secondSequence;
     int bestScore;
     Scorer alignmentScorer;
     String algorithm;
@@ -22,8 +23,8 @@ public abstract class AlignerMethods implements Aligner {
     int maxScore;
     ArrayList<Integer> maxPositions;
 
-    public AlignerMethods(String sequence1, String sequence2, Scorer scorer, String algorithm) {
-        if(sequence1 == null || sequence2 == null || sequence1.isEmpty() || sequence2.isEmpty()){
+    public AlignerMethods(S sequence1, S sequence2, Scorer scorer, String algorithm) {
+        if(sequence1 == null || sequence2 == null || sequence1.getSequence().isEmpty() || sequence2.isEmpty()){
             System.out.println("ERROR: No valid sequence.");
         }
         this.firstSequence = sequence1;
