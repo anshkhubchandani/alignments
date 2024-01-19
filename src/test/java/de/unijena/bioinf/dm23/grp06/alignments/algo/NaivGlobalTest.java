@@ -4,6 +4,7 @@ import de.unijena.bioinf.dm23.grp06.alignments.algo.InvalidCharactersException;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import org.junit.jupiter.api.Test;
@@ -153,8 +154,8 @@ public class NaivGlobalTest {
 
         @Test
         public void testInvalidCharacters () {
-            sequence1= new AsciiSequence("ABBC", "missing input");
-            sequence2= new AsciiSequence("AC!", "Sequence2");
+            sequence1= new AminoacidSequence("ABBC", "missing input");
+            sequence2= new AminoacidSequence("AC", "Sequence2");
             naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
             naivGlobal.enumeration(alignments);
 
