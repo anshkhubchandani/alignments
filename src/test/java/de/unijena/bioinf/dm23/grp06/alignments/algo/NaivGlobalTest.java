@@ -1,7 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
-//import de.unijena.bioinf.dm23.grp06.alignments.algo.InvalidCharactersExeption;
-
+import de.unijena.bioinf.dm23.grp06.alignments.algo.InvalidCharactersException;
+import de.unijena.bioinf.dm23.grp06.alignments.algo.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.testng.AssertJUnit.assertEquals;
 
 public class NaivGlobalTest {
@@ -132,31 +133,30 @@ public class NaivGlobalTest {
         assertEquals("-ABC", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
 
-//Gaps kosten mehr als missmatches
-       /* System.out.println("Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getSequence2());
-        assertEquals("AAB-", result.getSequence1());
-        assertEquals("A-BC", result.getSequence2());
-        assertEquals(expectedScore, result.getScore());
-    }
-*/
-
-
         //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-       /* @Test(expected = InvalidCharactersException)
-        public void testInvalidCharacters () {
-            sequence1 = "ABBC";
-            sequence2 = "AC!";
-            naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
-            naivGlobal.enumeration(alignments);
-            Alignment result = naivGlobal.getOptimalAlignment();
+
+        @Test
+        public void testMissingInputs() {
+            // sequence1 or sequence2 is not provided
+        sequence1= new AsciiSequence(null, "missing input");
+        sequence2= new AsciiSequence("AC", "Sequence2");
+        naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
+        naivGlobal.enumeration(alignments);
+
+            // assertThrows for JUnit 5
+            assertThrows(MissingInputsException.class, () -> {
+                naivGlobal.enumeration(alignments);
+                Alignment result = naivGlobal.getOptimalAlignment();
+            });
         }
 
-        @Test(expected = MissingInputsException)
-        public void testMissingInputs () {
-            // sequence1 or sequence2 is not provided
-            naivGlobal = new NaivGlobal(null, "AC", testDefaultScorer);
+        @Test(expected = InvalidCharactersException)
+        public void testInvalidCharacters () {
+            sequence1= new AsciiSequence("ABBC", "missing input");
+            sequence2= new AsciiSequence("AC!", "Sequence2");
+            naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
             naivGlobal.enumeration(alignments);
-            Alignment result = naivGlobal.getOptimalAlignment();
+            result = naivGlobal.getOptimalAlignment();
         }
 
         //BRAUCHEN WIR SOWAS????
@@ -167,11 +167,10 @@ public class NaivGlobalTest {
 
             Scorer scorer = new Scorer(); // You may need to adjust this based on your Scorer implementation
             NaivGlobal naivGlobal = new NaivGlobal(sequence1, sequence2, scorer);
-            Alignment result = naivGlobal.getOptimalAlignment();
 
             // Check the aligned sequences and score
             assertEquals(expectedScore, result.getScore());
-        }*/
+        }
 
     }
 }
