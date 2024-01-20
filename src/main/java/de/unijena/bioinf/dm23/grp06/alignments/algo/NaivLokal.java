@@ -2,21 +2,17 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
 
 public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequence>  {
-    S sequence1;
-    S sequence2;
-    Scorer scorer;
     private Alignment alignment;
     private boolean aligned;
     ArrayList<AlignmentImpl> alignments;
     AlignmentImpl highestScore;
-
-    Alignment testAlignment;
 
     public NaivLokal(S sequence1, S sequence2, Scorer scorer) {
         super(sequence1, sequence2, scorer);
@@ -31,8 +27,20 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
     //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
     // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
     //con : StringBuilder is not thread-safe
-    protected void enumeration(ArrayList<AlignmentImpl> alignments) {
+    public void enumeration(ArrayList<AlignmentImpl> alignments) {
         // Initialize a variable to keep track of the current position in the alignments list
+        // Handle the case where both sequences are empty
+        if (sequence1.getSequence().isEmpty() && sequence2.getSequence().isEmpty()) {
+            alignments.add(new AlignmentImpl("", "", 0));
+            return;
+        }
+        if (sequence1.getSequence().isEmpty() || sequence1 == null || sequence2 == null || sequence2.getSequence().isEmpty()) {
+            throw new MissingInputsException();
+        }
+        if (sequence1 == null || sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+            throw new MissingInputsException();
+        }
+
         int arrayPos = 0;
 
         // Iterate through each position in sequence1
@@ -48,6 +56,7 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
 
                 // Add an empty alignment to the list initially
                 alignments.add(new AlignmentImpl("", "", 0));
+
 
                 // Iterate through existing alignments starting from the previous position
                 for (int j = arrayPos; j < alignments.size(); j++) {
@@ -103,12 +112,9 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
     }
 
     @Override
-    public S getSequence1() {
-        return sequence1;
-    }
-
+    public Sequence getSequence1() {return sequence1;}
     @Override
-    public S getSequence2() {
+    public Sequence getSequence2() {
         return sequence2;
     }
 }
