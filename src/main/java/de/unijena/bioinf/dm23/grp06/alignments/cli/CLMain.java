@@ -30,6 +30,8 @@ class AlignerOptions implements Runnable {
             "Local alignments:\nGL - Naive algorithm\nSW - Smith-Waterman algorithm")
     String algorithm;
 
+    @CommandLine.Option(names = {"-t", "--type"})
+    String sequenceType;
     /* @CommandLine.ArgGroup(exclusive = true)
     ScorerInput scorerGroup;
 
@@ -68,26 +70,23 @@ class AlignerOptions implements Runnable {
     @CommandLine.Option(names = {"-o", "--output"}, description = "Saves results in an output file.")
     String outputFileNameOrPath;
 
+    // TODO Exceptions einfügen
+
     @Override
     public void run() {
         RenameLater userRequest;
 
         if (inputSequences2.isEmpty()) {
-            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences1, scorerFileNameOrPath);
+            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences1, scorerFileNameOrPath, sequenceType);
         }
         else {
-            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath);
+            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath, sequenceType);
         }
 
-        if (group.score) {
-            userRequest.printScores();
-        }
-        else {
-            userRequest.printOptimalAlignments();
-        }
+        // score oder alignment
 
         if (!outputFileNameOrPath.isEmpty()) {
-            userRequest.saveResults(outputFileNameOrPath);
+            //userRequest.saveResults(outputFileNameOrPath);
             System.out.println("\nResults saved in file " + outputFileNameOrPath);
         }
 

@@ -32,8 +32,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         this.alignmentScorer = scorer;
         this.algorithm = algorithm; //Added algo
 
-        initializeAlignmentMatrix();
-        align();
+
     }
 
     void initializeAlignmentMatrix() {
@@ -123,6 +122,9 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
     }
 
     public Alignment getOptimalAlignment() {
+        initializeAlignmentMatrix();
+        align();
+
         int i = 0;
         int j = 0;
 
@@ -153,21 +155,21 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
             if ((dir & 1) != 0) {
                 //seq1List.add(firstSequence.charAt(i - 1));
                 //seq2List.add(secondSequence.charAt(j - 1));
-                firstAlignmentLine.append(firstSequence.getSequence().charAt(i - 1));
-                secondAlignmentLine.append(secondSequence.getSequence().charAt(j - 1));
+                firstAlignmentLine.append(firstSequence.charAt(i - 1));
+                secondAlignmentLine.append(secondSequence.charAt(j - 1));
                 i--;
                 j--;
             } else if ((dir & 2) != 0) {
                 //seq1List.add(firstSequence.charAt(i - 1));
                 //seq2List.add('-'); // Gap in sequence2
-                firstAlignmentLine.append(firstSequence.getSequence().charAt(i - 1));
+                firstAlignmentLine.append(firstSequence.charAt(i - 1));
                 secondAlignmentLine.append("-");
                 i--;
             } else if ((dir & 4) != 0) {
                 //seq1List.add('-'); // Gap in sequence1
                 //seq2List.add(secondSequence.charAt(j - 1));
                 firstAlignmentLine.append("-");
-                secondAlignmentLine.append(secondSequence.getSequence().charAt(j - 1));
+                secondAlignmentLine.append(secondSequence.charAt(j - 1));
                 j--;
             }
         }
@@ -186,7 +188,8 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
 //    }
 //
     public int getAlignmentScore() {
-        System.out.println("The best score is: ");
+        //System.out.println("The best score is")
+        //Boolean-Flag erstellen
         return bestScore;
     }
 
@@ -212,7 +215,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
                 }
                 else {
 
-                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.getSequence().charAt(i - 1), secondSequence.getSequence().charAt(j - 1));
+                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
                     int gapUpScore = previousRow[j] + alignmentScorer.gap;
                     int gapLeftScore = currentRow[j - 1] + alignmentScorer.gap;
 
@@ -243,4 +246,13 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         return algorithm.equals("NW") ? currentRow[secondSequence.getSequence().length()] : maxScore;
     }
 
+    @Override
+    public S getSequence1() {
+        return firstSequence;
+    }
+
+    @Override
+    public S getSequence2() {
+        return secondSequence;
+    }
 }

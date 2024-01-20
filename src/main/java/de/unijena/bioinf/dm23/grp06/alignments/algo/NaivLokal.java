@@ -2,14 +2,15 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
 
-public class NaivLokal extends AbstractNaivAligner  {
-    private final String sequence1;
-    private final String sequence2;
-    private final Scorer scorer;
+public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequence>  {
+    S sequence1;
+    S sequence2;
+    Scorer scorer;
     private Alignment alignment;
     private boolean aligned;
     ArrayList<AlignmentImpl> alignments;
@@ -17,10 +18,8 @@ public class NaivLokal extends AbstractNaivAligner  {
 
     Alignment testAlignment;
 
-    public NaivLokal(String sequence1, String sequence2, Scorer scorer) {
-        this.sequence1 = sequence1;
-        this.sequence2 = sequence2;
-        this.scorer = scorer;
+    public NaivLokal(S sequence1, S sequence2, Scorer scorer) {
+        super(sequence1, sequence2, scorer);
         this.aligned = false;
     }
 
@@ -37,9 +36,9 @@ public class NaivLokal extends AbstractNaivAligner  {
         int arrayPos = 0;
 
         // Iterate through each position in sequence1
-        for (int h = 0; h < sequence1.length(); h++) {
+        for (int h = 0; h < sequence1.getSequence().length(); h++) {
             // Iterate through each position in sequence2
-            for (int i = 0; i < sequence2.length(); i++) {
+            for (int i = 0; i < sequence2.getSequence().length(); i++) {
                 // Variables to track the current positions in sequence1 and sequence2
                 int position1;
                 int position2;
@@ -70,7 +69,7 @@ public class NaivLokal extends AbstractNaivAligner  {
                     }
 
                     // Add sequence1 character and a gap
-                    if (position1 < sequence1.length()) {
+                    if (position1 < sequence1.getSequence().length()) {
                         alignments.add(new AlignmentImpl(
                                 alignments.get(j).getSequence1() + sequence1.charAt(position1),
                                 alignments.get(j).getSequence2() + "-",
@@ -79,7 +78,7 @@ public class NaivLokal extends AbstractNaivAligner  {
                     }
 
                     // Add sequence2 character and a gap
-                    if (position2 < sequence2.length()) {
+                    if (position2 < sequence2.getSequence().length()) {
                         alignments.add(new AlignmentImpl(
                                 alignments.get(j).getSequence1() + "-",
                                 alignments.get(j).getSequence2() + sequence2.charAt(position2),
@@ -88,7 +87,7 @@ public class NaivLokal extends AbstractNaivAligner  {
                     }
 
                     // Add both sequence1 and sequence2 characters
-                    if (position1 < sequence1.length() && position2 < sequence2.length()) {
+                    if (position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
                         alignments.add(new AlignmentImpl(
                                 alignments.get(j).getSequence1() + sequence1.charAt(position1),
                                 alignments.get(j).getSequence2() + sequence2.charAt(position2),
@@ -101,5 +100,15 @@ public class NaivLokal extends AbstractNaivAligner  {
                 arrayPos = alignments.size();
             }
         }
+    }
+
+    @Override
+    public S getSequence1() {
+        return sequence1;
+    }
+
+    @Override
+    public S getSequence2() {
+        return sequence2;
     }
 }

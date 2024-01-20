@@ -21,9 +21,9 @@ public class Main {
         // Create a scorer (use default scores)
         Scorer scorer = new Scorer();
 
-        NeedlemanWunsch nw = new NeedlemanWunsch("AAB", "ABC", scorer);
-        System.out.println("Quadratisch " + nw.getAlignmentScore());
-        System.out.println("Linear: " + nw.linearScore());
+        // NeedlemanWunsch nw = new NeedlemanWunsch("AAB", "ABC", scorer);
+        // System.out.println("Quadratisch " + nw.getAlignmentScore());
+        // System.out.println("Linear: " + nw.linearScore());
 
         // Create an instance of NaivGlobal
         //NaivGlobal<Sequence> naivGlobal = new NaivGlobal<>(sequence1, sequence2, scorer);

@@ -2,18 +2,16 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
 
-public class NaivGlobal extends AbstractNaivAligner  {
-        private final String sequence1;
-        private final String sequence2;
-        private final Scorer scorer;
-        private Alignment alignment;
-        private boolean aligned;
-        ArrayList<AlignmentImpl> alignments;
-        AlignmentImpl highestScore;
+public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence> {
+    private Alignment alignment;
+    private boolean aligned;
+    ArrayList<AlignmentImpl> alignments;
+    AlignmentImpl highestScore;
 
     Alignment testAlignment;
 
@@ -24,11 +22,8 @@ public class NaivGlobal extends AbstractNaivAligner  {
          * @param sequence2 The second input sequence.
          * @param scorer    The scorer used for sequence alignment.
          */
-        public NaivGlobal(String sequence1, String sequence2, Scorer scorer) {
-            super();
-            this.sequence1 = sequence1;
-            this.sequence2 = sequence2;
-            this.scorer = scorer;
+        public NaivGlobal(S sequence1, S sequence2, Scorer scorer) {
+            super(sequence1, sequence2, scorer);
             this.aligned = false;
         }
 
@@ -71,19 +66,19 @@ public class NaivGlobal extends AbstractNaivAligner  {
 
                 // Add sequence1 character and a gap
                 //Conditions check if adding a character from either sequence (or both) is possible without exceeding their lengths.
-                if(position1 < sequence1.length()) {
+                if(position1 < sequence1.getSequence().length()) {
                     alignments.add(new AlignmentImpl(alignments.get(i).getSequence1() + sequence1.charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), '-')));
                     added =true;
                 }
 
                 // Add sequence2 character and a gap
-                if(position2 < sequence2.length()) {
+                if(position2 < sequence2.getSequence().length()) {
                     alignments.add(new AlignmentImpl(alignments.get(i).getSequence1() + "-", alignments.get(i).getSequence2()+ sequence2.charAt(position2), alignments.get(i).getScore() + scorer.score('-', sequence2.charAt(position2))));
                     added = true;
                 }
 
                 // Add both sequence1 and sequence2 characters
-                if(position1 < sequence1.length() && position2 < sequence2.length()) {
+                if(position1 < sequence1.getSequence().length() && position2 < sequence2.getSequence().length()) {
                     alignments.add(new AlignmentImpl(alignments.get(i).getSequence1() + sequence1.charAt(position1), alignments.get(i).getSequence2() + sequence2.charAt(position2), alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), sequence2.charAt(position2))));
                     added = true;
                 }
@@ -97,4 +92,14 @@ public class NaivGlobal extends AbstractNaivAligner  {
                 //The goal is to generate all possible alignments and keep the one with the highest score.
             }
         }
+
+
+    public Sequence getSequence1() {
+        return sequence1;
+    }
+
+    @Override
+    public Sequence getSequence2() {
+        return sequence2;
+    }
 }
