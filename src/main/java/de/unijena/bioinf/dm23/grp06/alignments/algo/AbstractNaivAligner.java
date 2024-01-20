@@ -92,11 +92,17 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
     }
     public int getAlignmentScore () {
         // baseCase
-        if (alignments.isEmpty()) {
+        /*if (alignments.isEmpty()) {
             return 0;
         }
 
-        return this.highestScore.getScore();
+        return this.highestScore.getScore();*/
+        if (aligned) {
+            return this.highestScore.getScore();
+        }
+        else {
+            return getOptimalAlignment().getScore();
+        }
     }
 
 }

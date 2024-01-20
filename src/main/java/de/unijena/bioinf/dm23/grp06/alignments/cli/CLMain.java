@@ -32,16 +32,6 @@ class AlignerOptions implements Runnable {
 
     @CommandLine.Option(names = {"-t", "--type"})
     String sequenceType;
-    /* @CommandLine.ArgGroup(exclusive = true)
-    ScorerInput scorerGroup;
-
-    static class ScorerInput {
-        @CommandLine.Option(names = {"-c"})
-        String scorerFileNameOrPath;
-
-        @CommandLine.Option(names = {"-m"}) // oder weg?
-        boolean manualScorerInput;
-    } */
 
     @CommandLine.Option(names = {"-c"})
     String scorerFileNameOrPath;
@@ -53,7 +43,7 @@ class AlignerOptions implements Runnable {
         @CommandLine.Option(names = {"-s", "--score"})
         boolean score;
 
-        @CommandLine.Option(names = {"-a", "--align"})
+        @CommandLine.Option(names = {"-b", "--align"})
         boolean alignment;
     }
 
@@ -76,21 +66,24 @@ class AlignerOptions implements Runnable {
     public void run() {
         RenameLater userRequest;
 
-        if (inputSequences2.isEmpty()) {
+        if (inputSequences2 == null) {
             userRequest = new RenameLater(algorithm, inputSequences1, inputSequences1, scorerFileNameOrPath, sequenceType);
         }
         else {
             userRequest = new RenameLater(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath, sequenceType);
         }
 
+        if (group.score) {
+            userRequest.printScores();
+        }
         // score oder alignment
 
-        if (!outputFileNameOrPath.isEmpty()) {
+        if (outputFileNameOrPath != null) {
             //userRequest.saveResults(outputFileNameOrPath);
             System.out.println("\nResults saved in file " + outputFileNameOrPath);
         }
 
-        if (!distFileNameOrPath.isEmpty()) {
+        if (distFileNameOrPath != null) {
             userRequest.generateDistanceMatrix(distFileNameOrPath);
             System.out.println("\nDistance matrix saved in file " + distFileNameOrPath);
         }
