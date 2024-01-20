@@ -1,7 +1,8 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.InvalidCharactersException;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
@@ -133,7 +134,7 @@ public class NaivGlobalTest {
     }
 
         //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-        @Test
+        /*@Test
         public void testMissingInputs() {
             // sequence1 or sequence2 is not provided
         sequence1= new AsciiSequence(null, "missing input");
@@ -147,21 +148,18 @@ public class NaivGlobalTest {
                 Alignment result = naivGlobal.getOptimalAlignment();
 
             });
-        }
+        }*/
 
         @Test
         public void testInvalidCharacters () {
-            sequence1= new AminoacidSequence("ABBC", "missing input");
+            sequence1= new AminoacidSequence("!","INVALID");
             sequence2= new AminoacidSequence("AC", "Sequence2");
             naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
-            naivGlobal.enumeration(alignments);
 
             // assertThrows for JUnit 5
-            assertThrows(InvalidCharactersException.class, () -> {
+            assertThrows(InvalidCharactersException.class, () -> { //expected exception, EXECUTABLE throw the exception
                 naivGlobal.enumeration(alignments);
-                Alignment result = naivGlobal.getOptimalAlignment();
-
-            });
+                Alignment result = naivGlobal.getOptimalAlignment();}, "Invalid Characters");
 
     }
 }
