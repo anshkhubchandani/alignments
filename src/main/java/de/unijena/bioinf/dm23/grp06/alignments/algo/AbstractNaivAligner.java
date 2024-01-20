@@ -40,7 +40,6 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
         //ArrayList<AlignmentString> alignments = new ArrayList<>();
         this.alignments = new ArrayList<>();
         enumeration(alignments);
-
         setHighestScoreObject();
 
         //It iterates through the alignments to find the one with the highest score.

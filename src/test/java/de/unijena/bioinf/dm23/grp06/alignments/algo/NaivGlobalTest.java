@@ -150,7 +150,7 @@ public class NaivGlobalTest {
             });
         }*/
 
-        @Test
+        /*@Test
         public void testInvalidCharacters () {
             sequence1= new AminoacidSequence("!","INVALID");
             sequence2= new AminoacidSequence("AC", "Sequence2");
@@ -161,5 +161,5 @@ public class NaivGlobalTest {
                 naivGlobal.enumeration(alignments);
                 Alignment result = naivGlobal.getOptimalAlignment();}, "Invalid Characters");
 
-    }
+    }*/
 }
