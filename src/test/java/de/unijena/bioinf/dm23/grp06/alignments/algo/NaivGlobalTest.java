@@ -1,15 +1,12 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
-import de.unijena.bioinf.dm23.grp06.alignments.algo.InvalidCharactersException;
-import de.unijena.bioinf.dm23.grp06.alignments.algo.MissingInputsException;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
 
