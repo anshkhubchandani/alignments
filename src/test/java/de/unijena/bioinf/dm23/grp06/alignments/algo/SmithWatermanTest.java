@@ -34,9 +34,10 @@ public class SmithWatermanTest {
         seq1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTYLYINMHFHA", "proteinSequenz100");
         seq2 = new AsciiSequence("SEDTTLPAKA", "proteinSequenz10");
         SmithWaterman sw = new SmithWaterman(seq1, seq2, testDefaultScorer);
-        System.out.println(sw.linearScore());
-        System.out.println(sw.getAlignmentScore());
-        assertEquals(sw.linearScore(), sw.getAlignmentScore());
+        SmithWaterman sw2 = new SmithWaterman(seq1, seq2, testDefaultScorer);
+        System.out.println(sw.linearScore()); //später löschen
+        System.out.println(sw2.getOptimalAlignment().getScore()); //später löschen
+        assertEquals(sw.linearScore(), sw2.getOptimalAlignment().getScore());
     }
 
 }
