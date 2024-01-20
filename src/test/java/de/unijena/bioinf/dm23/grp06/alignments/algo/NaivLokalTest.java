@@ -157,7 +157,7 @@ public class NaivLokalTest {
     }
 
     @Test
-    public void OneEmptyString() {
+    public void OneEmptyString() { // funktioniert nur bei ascii
         sequence1 = new AsciiSequence("AB", "leereSequenz 1");
         sequence2 = new AsciiSequence("", "leereSequenz 2");
         naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);

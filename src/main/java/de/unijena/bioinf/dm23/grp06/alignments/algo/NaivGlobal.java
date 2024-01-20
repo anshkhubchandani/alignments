@@ -2,6 +2,8 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
@@ -37,6 +39,18 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence
         // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
         //con : StringBuilder is not thread-safe
         public void enumeration(ArrayList<AlignmentImpl> alignments) { //New alignments are created by adding characters or gaps, and the corresponding scores are updated.
+
+            if (sequence1.getSequence().isEmpty() && sequence2.getSequence().isEmpty()) {
+                alignments.add(new AlignmentImpl("", "", 0));
+                return;
+            }
+            if (sequence1.getSequence().isEmpty() || sequence1 == null || sequence2 == null || sequence2.getSequence().isEmpty()) {
+                throw new MissingInputsException();
+            }
+            if (sequence1 == null || sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+                throw new MissingInputsException();
+            }
+
             int position1;
             int position2;
             boolean added;  //Indicates whether new alignments have been added.

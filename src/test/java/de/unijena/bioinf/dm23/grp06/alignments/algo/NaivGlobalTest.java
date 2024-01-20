@@ -24,7 +24,7 @@ public class NaivGlobalTest {
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
 
     @Test
-    public void testNaivGlobalEinfacheSequence() {
+    public void EinfacheSequence() {
         sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
         sequence2 = new AsciiSequence("AC", "einfacheSequenz 2");
         expectedScore = 0;
@@ -58,7 +58,7 @@ public class NaivGlobalTest {
 
     //Sonderfälle
     @Test
-    public void testNaivGlobalLeeresequenz() {
+    public void EmptyString() {
         sequence1 = new AsciiSequence("", "leereSequenz 1");
         sequence2 = new AsciiSequence("", "leereSequenz 2");
         naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
@@ -150,16 +150,26 @@ public class NaivGlobalTest {
             });
         }*/
 
-        /*@Test
+        @Test
         public void testInvalidCharacters () {
-            sequence1= new AminoacidSequence("!","INVALID");
-            sequence2= new AminoacidSequence("AC", "Sequence2");
-            naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
+            sequence1 = new AsciiSequence("AC", "leereSequenz 1");
+            sequence2 = new AsciiSequence("!", "leereSequenz 2");
+            naivGlobal = new NaivGlobal(sequence1,sequence2,testDefaultScorer);
 
-            // assertThrows for JUnit 5
-            assertThrows(InvalidCharactersException.class, () -> { //expected exception, EXECUTABLE throw the exception
-                naivGlobal.enumeration(alignments);
-                Alignment result = naivGlobal.getOptimalAlignment();}, "Invalid Characters");
+            assertThrows(InvalidCharactersException.class,()-> {naivGlobal.enumeration(alignments);
+                Alignment result = naivGlobal.getOptimalAlignment();});
 
-    }*/
+
+        }
+        @Test
+        public void OneEmptyString() { // funktioniert nur bei ascii
+            sequence1 = new AsciiSequence("AC", "leereSequenz 1");
+            sequence2 = new AsciiSequence("", "leereSequenz 2");
+            naivGlobal = new NaivGlobal(sequence1,sequence2,testDefaultScorer);
+
+            assertThrows(MissingInputsException.class,()-> {naivGlobal.enumeration(alignments);
+                Alignment result = naivGlobal.getOptimalAlignment();},"Missing Input");
+
+
+        }
 }
