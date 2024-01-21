@@ -17,14 +17,21 @@ public class NeedlemanWunschTest {
         seq1 = new AsciiSequence("ACG", "einfacheSequenz 1");
         seq2 = new AsciiSequence("", "einfacheSequenz 2");
         NeedlemanWunsch nw = new NeedlemanWunsch(seq1,seq2,testDefaultScorer);
-
+        System.out.println("\n"+"Sequence1 = " + nw.getSequence1() + "\nSequence2 = " + nw.getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
             nw.getOptimalAlignment();
         });
 
-//        System.out.println("\n" + "Sequence1 = " + nw.getOptimalAlignment().getSequence1() + "\nSequence2 = " + nw.getOptimalAlignment().getSequence2() + "\nscore = " + nw.getAlignmentScore() + "\n");
-
-        assertEquals("Error: Your file seems to be missing input!", e.getMessage());
+    }
+    @Test
+    public void testEmptySequences() {
+        seq1 = new AsciiSequence("", "emptySequence");
+        seq2 = new AsciiSequence("", "emptySequence");
+        NeedlemanWunsch nw = new NeedlemanWunsch(seq1,seq2,testDefaultScorer);
+        System.out.println("\n"+"Sequence1 = " + nw.getSequence1() + "\nSequence2 = " + nw.getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
+        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+            nw.getOptimalAlignment();
+        });
 
     }
     @Test
@@ -32,7 +39,7 @@ public class NeedlemanWunschTest {
         //seq1 = new AminoacidSequence("!", "INVALID");
         seq2 = new AminoacidSequence("AC", "Sequence2");
         NeedlemanWunsch nw = new NeedlemanWunsch(seq1, seq2, testDefaultScorer);
-
+        System.out.println("\n"+"Sequence1 = " + nw.getSequence1() + "\nSequence2 = " + nw.getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
         // assertThrows for JUnit 5 : //expected exception, EXECUTABLE throw the exception
         InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class, () -> {
             seq1 = new AminoacidSequence("!", "INVALID");
@@ -45,6 +52,7 @@ public class NeedlemanWunschTest {
         seq1 = new AsciiSequence("AAA", "einfacheSequenz 1");
         seq2 = new AsciiSequence("A", "einfacheSequenz 2");
         NeedlemanWunsch nw = new NeedlemanWunsch(seq1,seq2,testDefaultScorer);
+        System.out.println("\n"+"Sequence1 = " + nw.getSequence1() + "\nSequence2 = " + nw.getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
         assertEquals("AA" , nw.getOptimalAlignment().getSequence1());
         assertEquals("-A" , nw.getOptimalAlignment().getSequence2());
         assertEquals(0, nw.getAlignmentScore());
