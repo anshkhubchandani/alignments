@@ -10,11 +10,11 @@ import java.util.HashMap;
 public class Scorer {
 
     protected boolean defaultScores;
-    private int match = 1; // Defa
-    // ult Scores können auch geändert werden, je nach dem, was Sinn macht
+    private int match = 3; // Default Scores können auch geändert werden, je nach dem, was Sinn macht
     private int mismatch = -1;
     protected int gap = -1;
     private HashMap<String,Integer> customScores;
+    String path;
 
     /**
      * Creates a Scorer object with default scores.
@@ -25,6 +25,7 @@ public class Scorer {
 
     public Scorer(String path) {
         getScoresFromFile(path);
+        this.path = path;
         defaultScores = false;
     }
 
@@ -114,6 +115,17 @@ public class Scorer {
             catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public String getScoresAsString () {
+        if (defaultScores) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Default scores: \nMatch: ").append(match).append("; Mismatch: ").append(mismatch).append("; Gap: ").append(gap);
+            return sb.toString();
+        }
+        else {
+            return "Scores:\nUser input scores from file " + path;
         }
     }
     //Andere Idee um Scores aus einer Datei einzulesen
