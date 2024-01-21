@@ -1,4 +1,4 @@
-package de.unijena.bioinf.dm23.grp06.alignments.cli;
+/*package de.unijena.bioinf.dm23.grp06.alignments.cli;
 
 import picocli.CommandLine;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ class AlignerOptions implements Runnable {
     @CommandLine.Option(names = {"-o", "--output"}, description = "Saves results in an output file.")
     String outputFileNameOrPath;
 
-    // TODO Exceptions einfügen
+
 
     @Override
     public void run() {
@@ -98,3 +98,4 @@ class AlignerOptions implements Runnable {
         }
     }
 }
+*/

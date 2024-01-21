@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
-
+/*
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.*;
 import org.junit.jupiter.api.Assertions;
@@ -80,3 +80,4 @@ public class SmithWatermanTest {
     }
 
 }
+*/

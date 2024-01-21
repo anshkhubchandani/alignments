@@ -20,7 +20,7 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
     }
     void missingInput(S sequence1, S sequence2) {
         if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-            throw new MissingInputsException();
+            throw new MissingInputsException("");
         }}
     /**
      * Method implementation for alignment enumeration.
@@ -38,10 +38,10 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
             return;
         }
         if (sequence1 == null || sequence2 == null) {
-            throw new MissingInputsException();
+            throw new MissingInputsException("");
         }
         if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-            throw new MissingInputsException();
+            throw new MissingInputsException("");
         }
 
         int arrayPos = 0;

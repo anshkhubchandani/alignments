@@ -151,13 +151,13 @@ public class NaivLokalTest {
         sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
         naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
 
-        InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class,() -> {
-            sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
-        });
-
-        /*MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+        /*InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class,() -> {
             sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
         });*/
+
+        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+            sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
+        });
 
     }
 

@@ -2,7 +2,7 @@ package de.unijena.bioinf.dm23.grp06.alignments;
 
 //import de.unijena.bioinf.dm23.grp06.algo.AlignerMethods;
 //import de.unijena.bioinf.dm23.grp06.algo.NeedlemanWunsch;
-import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
+//import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;

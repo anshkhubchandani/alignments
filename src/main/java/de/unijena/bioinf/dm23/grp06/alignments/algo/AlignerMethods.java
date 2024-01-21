@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
-
+/*
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentCharacters;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
@@ -273,3 +273,4 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         return secondSequence;
     }
 }
+*/

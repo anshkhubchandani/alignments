@@ -45,11 +45,11 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence
                 return;
             }
             if (sequence1.getSequence().isEmpty() || sequence1 == null || sequence2 == null || sequence2.getSequence().isEmpty()) {
-                throw new MissingInputsException();
+                throw new MissingInputsException("");
             }
 
             if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-                throw new MissingInputsException();
+                throw new MissingInputsException("");
             }
 
 

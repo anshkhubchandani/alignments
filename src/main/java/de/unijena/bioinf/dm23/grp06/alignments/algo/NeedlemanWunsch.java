@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
-
+/*
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
@@ -46,3 +46,5 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
 //    System.out.println("Best Alignment Score: " + aligner.getAlignmentScore());
 //    }
 }
+
+ */
