@@ -7,6 +7,7 @@ import de.unijena.bioinf.dm23.grp06.alignments.algo.NaivLokal;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
@@ -162,9 +163,9 @@ public class NaivLokalTest {
         sequence2 = new AsciiSequence("", "leereSequenz 2");
         naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
 
-        assertThrows(MissingInputsException.class,()-> {naivLokal.enumeration(alignments);
-            Alignment result = naivLokal.getOptimalAlignment();},"Missing Input");
-
+        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+            naivLokal.missingInput(sequence1, sequence2);
+        });
 
     }
 }
