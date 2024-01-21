@@ -146,18 +146,18 @@ public class NaivGlobalTest {
                 naivGlobal.enumeration(alignments);
             });
         }
-/*
+
         @Test
         public void testInvalidCharacters () {
-            sequence1 = new AsciiSequence("AC", "leereSequenz 1");
-            sequence2 = new AsciiSequence("!", "leereSequenz 2");
+            sequence1 = new AminoacidSequence("AC", "leereSequenz 1");
+            sequence2 = new AminoacidSequence("!", "leereSequenz 2");
             naivGlobal = new NaivGlobal(sequence1,sequence2,testDefaultScorer);
 
-            assertThrows(InvalidCharactersException.class,()-> {naivGlobal.enumeration(alignments);
-                Alignment result = naivGlobal.getOptimalAlignment();});
+            InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class, () -> {
+                sequence2 = new AsciiSequence("!", "leereSequenz 2");
+            });
+    }
 
-
-        }
         @Test
         public void OneEmptyString() { // funktioniert nur bei ascii
             sequence1 = new AsciiSequence("AC", "leereSequenz 1");
@@ -168,5 +168,5 @@ public class NaivGlobalTest {
                 Alignment result = naivGlobal.getOptimalAlignment();},"Missing Input");
 
 
-        }*/
+        }
 }
