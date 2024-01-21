@@ -18,7 +18,10 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
         super(sequence1, sequence2, scorer);
         this.aligned = false;
     }
-
+    void missingInput(S sequence1, S sequence2) {
+        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+            throw new MissingInputsException();
+        }}
     /**
      * Method implementation for alignment enumeration.
      *
