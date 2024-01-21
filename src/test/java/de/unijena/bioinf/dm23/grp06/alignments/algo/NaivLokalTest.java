@@ -156,7 +156,7 @@ public class NaivLokalTest {
         });*/
 
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
-            sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
+            sequence1 = new AminoacidSequence(null," NULL sequence");;
         });
 
     }
