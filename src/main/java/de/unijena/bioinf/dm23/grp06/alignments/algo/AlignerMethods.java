@@ -34,11 +34,14 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         this.aligned = false;
 
     }
-    void missingInput(S sequence1, S sequence2) {
-        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-            throw new MissingInputsException();
-        }
-    }
+//    void missingInput(S sequence1, S sequence2) {
+//        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+//            throw new MissingInputsException();
+//        }
+//        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+//            throw new MissingInputsException();
+//        }
+//    }
     void initializeAlignmentMatrix() {
         scores = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];
         backtrackingDirections = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];
@@ -127,6 +130,9 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
     }
 
     public Alignment getOptimalAlignment() {
+        if (firstSequence.getSequence().isEmpty() || secondSequence.getSequence().isEmpty()) {
+            throw new MissingInputsException();
+        }
         initializeAlignmentMatrix();
         align();
 
