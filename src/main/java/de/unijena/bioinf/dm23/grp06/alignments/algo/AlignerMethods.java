@@ -3,13 +3,14 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentCharacters;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
 
 //public class AlignerMethods<T> implements Aligner {
-public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
+public class AlignerMethods<S extends Sequence> implements Aligner<S> {
     S firstSequence;
     S secondSequence;
     int bestScore;
@@ -24,9 +25,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
     ArrayList<Integer> maxPositions;
 
     public AlignerMethods(S sequence1, S sequence2, Scorer scorer, String algorithm) {
-        if(sequence1 == null || sequence2 == null || sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()){
-            System.out.println("ERROR: No valid sequence.");
-        }
+
         this.firstSequence = sequence1;
         this.secondSequence = sequence2;
         this.alignmentScorer = scorer;
@@ -34,7 +33,11 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
 
 
     }
-
+    void missingInput(S sequence1, S sequence2) {
+        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+            throw new MissingInputsException();
+        }
+    }
     void initializeAlignmentMatrix() {
         scores = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];
         backtrackingDirections = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];

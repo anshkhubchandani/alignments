@@ -1,10 +1,15 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
+import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.testng.AssertJUnit.fail;
 
 
 public class SmithWatermanTest {
@@ -14,11 +19,17 @@ public class SmithWatermanTest {
     Scorer testDefaultScorer = new Scorer();
 
     @Test
-    public void testOneEmptySequence(){
-        seq1 = new AsciiSequence("ACG", "einfacheSequenz 1");
-        seq2 = new AsciiSequence("", "einfacheSequenz 2");
+    public void testOneEmptySequence() throws MissingInputsException{
+        seq1 = new AsciiSequence("", "leereSequenz");
+        seq2 = new AsciiSequence("ACG", "einfacheSequenz");
         SmithWaterman sw = new SmithWaterman(seq1,seq2, testDefaultScorer);
-        System.out.println("ERROR: No valid sequence.");
+
+        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+            sw.missingInput(seq1, seq2);
+        });
+
+        assertEquals("Error: Your file seems to be missing input!", e.getMessage());
+
     }
     @Test
     public void testNoSameSequenceLength() {
