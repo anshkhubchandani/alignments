@@ -23,6 +23,7 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
 
     int maxScore;
     ArrayList<Integer> maxPositions;
+    boolean aligned;
 
     public AlignerMethods(S sequence1, S sequence2, Scorer scorer, String algorithm) {
 
@@ -30,7 +31,7 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         this.secondSequence = sequence2;
         this.alignmentScorer = scorer;
         this.algorithm = algorithm; //Added algo
-
+        this.aligned = false;
 
     }
     void missingInput(S sequence1, S sequence2) {
@@ -98,6 +99,7 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
                 fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
             }
         }
+        aligned = true;
         //Return alignment matrix
         return scores;
     }
@@ -193,7 +195,14 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
     public int getAlignmentScore() {
         //System.out.println("The best score is")
         //Boolean-Flag erstellen
-        return bestScore;
+        //return bestScore;
+        if (aligned) {
+            return bestScore;
+        }
+        else {
+            bestScore = linearScore();
+            return bestScore;
+        }
     }
 
     // public String getAlgorithm ()
@@ -202,7 +211,6 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
     // }
 
     public int linearScore () {
-        // linearer Speicher
         int[] previousRow = new int[secondSequence.getSequence().length() + 1];
         int[] currentRow = new int[secondSequence.getSequence().length() + 1];
 
