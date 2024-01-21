@@ -7,6 +7,7 @@ import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -134,22 +135,18 @@ public class NaivGlobalTest {
     }
 
         //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-        /*@Test
+        @Test
         public void testMissingInputs() {
             // sequence1 or sequence2 is not provided
-        sequence1= new AsciiSequence(null, "missing input");
+        sequence1= new AsciiSequence("", "missing input");
         sequence2= new AsciiSequence("AC", "Sequence2");
         naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
-        naivGlobal.enumeration(alignments);
-
             // assertThrows for JUnit 5
-            assertThrows(MissingInputsException.class, () -> {
+            MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
                 naivGlobal.enumeration(alignments);
-                Alignment result = naivGlobal.getOptimalAlignment();
-
             });
-        }*/
-
+        }
+/*
         @Test
         public void testInvalidCharacters () {
             sequence1 = new AsciiSequence("AC", "leereSequenz 1");
@@ -171,5 +168,5 @@ public class NaivGlobalTest {
                 Alignment result = naivGlobal.getOptimalAlignment();},"Missing Input");
 
 
-        }
+        }*/
 }

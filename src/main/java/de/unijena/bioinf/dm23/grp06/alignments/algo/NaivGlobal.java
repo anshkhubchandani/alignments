@@ -34,11 +34,6 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence
          * @param alignments The list to store alignment strings.
          */
 
-        void missingInput(S sequence1, S sequence2) {
-            if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-                throw new MissingInputsException();
-            }
-        }
 
         //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
         // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
@@ -52,7 +47,8 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence
             if (sequence1.getSequence().isEmpty() || sequence1 == null || sequence2 == null || sequence2.getSequence().isEmpty()) {
                 throw new MissingInputsException();
             }
-            if (sequence1 == null || sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+
+            if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
                 throw new MissingInputsException();
             }
 

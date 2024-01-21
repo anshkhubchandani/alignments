@@ -2,6 +2,7 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 import java.util.ArrayList;
@@ -27,6 +28,11 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
     public AbstractNaivAligner() {
         super();
     }
+
+    /*void missingInput(S sequence1, S sequence2) {
+        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
+            throw new MissingInputsException();
+        }}*/
 
     /**
      * Using a scoring matrix, this method creates an optimal global alignment of two sequences.
@@ -71,13 +77,12 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
 
     protected void enumeration(ArrayList<AlignmentImpl> alignments) {}
 
-
-    /**
-     * Finds the alignment with the highest score from the provided list.
-     *
-     *
-     * @return The alignment with the highest score, or null if the list is empty.
-     */
+            /**
+             * Finds the alignment with the highest score from the provided list.
+             *
+             *
+             * @return The alignment with the highest score, or null if the list is empty.
+             */
 
 
     private void setHighestScoreObject() {

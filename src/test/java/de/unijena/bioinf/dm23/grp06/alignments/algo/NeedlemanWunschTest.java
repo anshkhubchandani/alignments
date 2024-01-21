@@ -13,7 +13,7 @@ public class NeedlemanWunschTest {
     Scorer testDefaultScorer = new Scorer();
 
     @Test
-    public void testOneEmptySequence(){
+    public void testOneEmptySequence(){ //Missing input
         seq1 = new AsciiSequence("ACG", "einfacheSequenz 1");
         seq2 = new AsciiSequence("", "einfacheSequenz 2");
         NeedlemanWunsch nw = new NeedlemanWunsch(seq1,seq2,testDefaultScorer);

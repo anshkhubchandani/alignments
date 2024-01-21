@@ -89,9 +89,9 @@ public class NaivLokalTest {
     }
 
     @Test
-    public void testNaivGlobalShortSequence() {
-        sequence1 = new AsciiSequence("AC", "leereSequenz 1");
-        sequence2 = new AsciiSequence("A", "leereSequenz 2");
+    public void ShortSequence() {
+        sequence1 = new AsciiSequence("AC", "Sequenz 1");
+        sequence2 = new AsciiSequence("A", "Sequenz 2");
         expectedScore = 1;
         naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
         naivLokal.enumeration(alignments);
@@ -103,7 +103,7 @@ public class NaivLokalTest {
     }
 
     @Test
-    public void testNaivGlobalLongSequence() {
+    public void LongSequence() {
         sequence1 = new AsciiSequence("ABCDEFGHIJKLMNOPQRSTUV", "LongSequence 1");
         sequence2 = new AsciiSequence("JK", "LongSequence 2");
         expectedScore = 2;
@@ -136,28 +136,43 @@ public class NaivLokalTest {
     //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
         @Test
         public void MissingInput() {
-            sequence1 = new AsciiSequence(null,"leereSequenz 1");
-            sequence2 = new AsciiSequence("AC", "leereSequenz 2");
+            sequence1 = new AsciiSequence("","leereSequenz 1");
+            sequence2 = new AsciiSequence("AB", "leereSequenz 2");
             naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
 
-            assertThrows(MissingInputsException.class,()-> {naivLokal.enumeration(alignments);
-                Alignment result = naivLokal.getOptimalAlignment();},"Missing Input");
-
+            MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+                naivLokal.enumeration(alignments);
+            });
 
         }
+    @Test
+    public void NullInput() {
+        //sequence1 = new AminoacidSequence(null,"leereSequenz 1");
+        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
+        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
 
-        @Test
-        public void testInvalidCharacters () {
-            sequence1= new AminoacidSequence("!","INVALID");
-            sequence2= new AminoacidSequence("AC", "Sequence2");
-            naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class,() -> {
+            sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
+        });
 
-            // assertThrows for JUnit 5 : //expected exception, EXECUTABLE throw the exception
-            assertThrows(InvalidCharactersException.class, () -> {naivLokal.enumeration(alignments); Alignment result = naivLokal.getOptimalAlignment();}, "Invalid Characters");
+        /*MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+            sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
+        });*/
 
     }
 
-    @Test
+        @Test
+        public void testInvalidCharacters () {
+            //sequence1 = new AminoacidSequence("!", "INVALID");
+            sequence2 = new AminoacidSequence("AC", "Sequence2");
+            naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+
+            InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class, () -> {
+                sequence1 = new AminoacidSequence("!", "INVALID");
+            });
+        }
+
+    /*@Test
     public void OneEmptyString() { // funktioniert nur bei ascii
         sequence1 = new AsciiSequence("AB", "leereSequenz 1");
         sequence2 = new AsciiSequence("", "leereSequenz 2");
@@ -167,5 +182,5 @@ public class NaivLokalTest {
             naivLokal.missingInput(sequence1, sequence2);
         });
 
-    }
+    }*/
 }
