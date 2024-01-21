@@ -65,9 +65,16 @@ class AlignerOptions implements Runnable {
     @Override
     public void run() {
         RenameLater userRequest;
+        String function = "";
+        if (group.score) {
+            function = "score";
+        }
+        else if (group.alignment) {
+            function = "alignment";
+        }
 
         if (inputSequences2 == null) {
-            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences1, scorerFileNameOrPath, sequenceType);
+            userRequest = new RenameLater(algorithm, inputSequences1, scorerFileNameOrPath, sequenceType);
         }
         else {
             userRequest = new RenameLater(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath, sequenceType);
@@ -76,10 +83,12 @@ class AlignerOptions implements Runnable {
         if (group.score) {
             userRequest.printScores();
         }
-        // score oder alignment
+        if (group.alignment) {
+            userRequest.printOptimalAlignmentsAndScores();
+        }
 
         if (outputFileNameOrPath != null) {
-            //userRequest.saveResults(outputFileNameOrPath);
+            userRequest.saveResults(outputFileNameOrPath, function);
             System.out.println("\nResults saved in file " + outputFileNameOrPath);
         }
 

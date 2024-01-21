@@ -33,29 +33,16 @@ public class RenameLater {
     public RenameLater(String algorithm, ArrayList<String> inputSeq1, ArrayList<String> inputSeq2, String scorerPath, String sequenceType) {
         this.algo = algorithm;
         setScorer(scorerPath);
-        createAlignerObjects(inputSeq1, inputSeq2, sequenceType);
+        createAlignerObjects(inputSeq1, inputSeq2, sequenceType, false);
+    }
+    public RenameLater(String algorithm, ArrayList<String> inputSeq1, String scorerPath, String sequenceType) {
+        this.algo = algorithm;
+        setScorer(scorerPath);
+        createAlignerObjects(inputSeq1, inputSeq1, sequenceType, true);
     }
 
-
-    private void createAlignerObjects (ArrayList<String> input1, ArrayList<String> input2, String sequenceType) {
+    private void createAlignerObjects (ArrayList<String> input1, ArrayList<String> input2, String sequenceType, boolean sameSequences) {
         alignerObjects = new ArrayList<>();
-
-        /*for (String i : input1) {
-            for (String k : input2) {
-                if (algo.equals("NG")) {
-                    alignerObjects.add(new NaivGlobal(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
-                }
-                else if (algo.equals("NL")) {
-                    alignerObjects.add(new NaivLokal(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
-                }
-                else if (algo.equals("NW")) {
-                    alignerObjects.add(new NeedlemanWunsch(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
-                }
-                else if (algo.equals("SW")) {
-                    alignerObjects.add(new SmithWaterman(readFastaToSequence(i, sequenceType), readFastaToSequence(k, sequenceType), alignmentScorer));
-                }
-            }
-        }*/
 
         int j = 0;
         for (int i = 0; i < input1.size(); i++) {
@@ -73,7 +60,9 @@ public class RenameLater {
                     alignerObjects.add(new SmithWaterman(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
                 }
             }
-            j++;
+            if (sameSequences) {
+                j++;
+            }
         }
 
     }
@@ -91,8 +80,8 @@ public class RenameLater {
                 System.err.println("ERROR: Error while reading input sequence.");
             }
         }
-
-        return createSequenceObject("User input sequence: " + sequenceOrPath.substring(0, Math.min(10, sequenceOrPath.length())) + "...", sequenceOrPath, type);
+        String endString = sequenceOrPath.length() > 10 ? "..." : "";
+        return createSequenceObject("User input sequence: " + sequenceOrPath.substring(0, Math.min(10, sequenceOrPath.length())) + endString, sequenceOrPath, type);
     }
 
     private Sequence createSequenceObject (String header, String sequence, String type) {
@@ -114,26 +103,6 @@ public class RenameLater {
         return inputSequence;
     }
 
-    private String readString (String sequenceOrPath) { // Other SearchResult-Methode nutzen?
-        // FastaReader
-
-        String sequence;
-        File sequenceFile = new File(sequenceOrPath);
-        if (sequenceFile.isFile()) {
-
-            try {
-                Fasta sequenceFasta = FastaReader.getFastaFromFile(sequenceOrPath);
-                sequence = sequenceFasta.getSeq();
-                return sequence;
-            }
-            catch (IOException e) {
-                System.err.println("ERROR: Error while reading input sequence.");
-            }
-        }
-        return sequenceOrPath;
-    }
-
-
     private void setScorer (String scorerFilePath) {
         if (scorerFilePath == null) {
             this.alignmentScorer = new Scorer();
@@ -147,7 +116,7 @@ public class RenameLater {
         System.out.println(createResultString("score"));
     }
 
-    protected void printOptimalAlignments () {
+    protected void printOptimalAlignmentsAndScores () {
         System.out.println(createResultString("alignment"));
     }
 
@@ -179,6 +148,7 @@ public class RenameLater {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Alignment results:\n");
+        sb.append(alignmentScorer.getScoresAsString());
 
         for (Aligner a : alignerObjects) {
             sb.append("Sequence 1: ").append(a.getSequence1().getName()).append("\n");
@@ -187,7 +157,8 @@ public class RenameLater {
                 sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
             }
             else if (function.equals("alignment")) {
-                sb.append("Optimal alignment: ").append(a.getOptimalAlignment()).append("\n");
+                sb.append("Optimal alignment:\n").append(a.getOptimalAlignment().toString()).append("\n");
+                sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
             }
         }
 
@@ -223,12 +194,12 @@ public class RenameLater {
             int index;
             for (String s : sequenceObjects) { // Ordnet jeder Sequenz ein Index zu (beginnt bei 1)
                 index = sequenceObjects.indexOf(s) + 1;
-                bw.write(Integer.toString(index) + " " + s + "\n");
+                bw.write(Integer.toString(index) + ": " + s + "\n");
             }
 
-            bw.write("    "); // erste Zeile
+            bw.write("\n    "); // erste Zeile
             for (int i = 1; i <= sequenceObjects.size(); i++) {
-                bw.write(Integer.toString(i) + "   ");
+                bw.write(Integer.toString(i) + "    ");
             }
             bw.write("\n");
 
@@ -242,7 +213,7 @@ public class RenameLater {
 
             int j = 1;
             for (int[] reihe : distances) {
-                bw.write(Integer.toString(j) + " " + Arrays.toString(reihe) + "\n");
+                bw.write(Integer.toString(j) + Arrays.toString(reihe).replaceAll("\\[", " ").replaceAll("[],]*", " ") + "\n");
                 j++;
             }
 
