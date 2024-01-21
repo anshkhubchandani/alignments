@@ -146,7 +146,7 @@ public class NaivLokalTest {
 
         }
     @Test
-    public void NullInput() {
+    public void NullInput() { //Null pointer exception
         //sequence1 = new AminoacidSequence(null,"leereSequenz 1");
         sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
         naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
@@ -155,8 +155,8 @@ public class NaivLokalTest {
             sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
         });*/
 
-        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
-            sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
+        NullPointerException e = Assertions.assertThrows(NullPointerException.class, () -> {
+            sequence1 = new AminoacidSequence(null," NULL sequence");;
         });
 
     }
