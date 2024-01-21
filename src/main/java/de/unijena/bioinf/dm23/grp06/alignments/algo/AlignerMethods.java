@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
-/*
+
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentCharacters;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
@@ -42,6 +42,10 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
 //            throw new MissingInputsException();
 //        }
 //    }
+
+    /**
+     * This method initializes different matrices for each algorithm.
+     */
     void initializeAlignmentMatrix() {
         scores = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];
         backtrackingDirections = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];
@@ -71,6 +75,11 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         }
     }
 
+    /**
+     * This method fills in the array with custom or default scores.
+     *
+     * @return 2-dimensional array scores, which contains all scores calculated.
+     */
     //Erstellen einer Matrix, die mit den jeweiligen Scores ausgefüllt wird
     public int[][] align() {
         for (int i = 1; i < firstSequence.getSequence().length() + 1; i++) {
@@ -107,9 +116,15 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         return scores;
     }
 
-    // void oder List<Character>?
-    //i und j müssen nicht reduziert werden
-    //Bioinfonotizen
+    /**
+     * This method fills in a Backtracematrix, which can be used for getting one optimal Alignment.
+     *
+     * @param i Position in array.
+     * @param j Position in array.
+     * @param diagonalScore includes the information, that the score came from the diagonal.
+     * @param gapUpScore includes the information, that the score came from the top.
+     * @param gapLeftScore includes the information, that the score came from the left.
+     */
     public void fillBacktracearray(int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore) {
         //Getting the bestScore from the 3 options
         bestScore = scores[i][j];
@@ -129,6 +144,11 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         }
     }
 
+    /**
+     * This method generates an optimal Alignment.
+     *
+     * @return Alignment, which contains aligned sequences.
+     */
     public Alignment getOptimalAlignment() {
         if (firstSequence.getSequence().isEmpty() || secondSequence.getSequence().isEmpty()) {
             throw new MissingInputsException();
@@ -198,6 +218,12 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
 //        return 0;
 //    }
 //
+
+    /**
+     * This method is used to check if an Alignmentscore already exists.
+     * If no the method linearScore will be executed.
+     * @return
+     */
     public int getAlignmentScore() {
         //System.out.println("The best score is")
         //Boolean-Flag erstellen
@@ -216,6 +242,10 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
     //     return algorithm;
     // }
 
+    /**
+     * Calculates the Score in linear storage space and is only used for calculating only the score and not the alignment.
+     * @return
+     */
     public int linearScore () {
         int[] previousRow = new int[secondSequence.getSequence().length() + 1];
         int[] currentRow = new int[secondSequence.getSequence().length() + 1];
@@ -273,4 +303,3 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         return secondSequence;
     }
 }
-*/
