@@ -13,12 +13,12 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
     /**
      * Creates a Needleman-Wunsch objekt with two input sequences and sc.
      *
-     * @param seq1 first sequence
+     * @param sequence1 first sequence
      * @param seq2 second sequence
      * @param sc   scorer
      */
-    public NeedlemanWunsch(S seq1, S seq2, Scorer sc) {
-        super(seq1, seq2, sc, "NW");
+    public NeedlemanWunsch(S sequence1, S seq2, Scorer sc) {
+        super(sequence1, seq2, sc, "NW");
         this.algorithm = "NW";
         // this.alignmentScorer = new Scorer(true);
 
@@ -34,7 +34,7 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
     }
 
     public void setAlignmentScore() {
-        this.bestScore = this.scores[firstSequence.getSequence().length() - 1][secondSequence.getSequence().length() - 1];
+        this.bestScore = this.scores[sequence1.getSequence().length() - 1][sequence2.getSequence().length() - 1];
     }
 
     @Override

@@ -17,7 +17,7 @@ public class SmithWaterman<S extends Sequence> extends AlignerMethods<S> {
     }
 
     public void setAlignmentScore () {
-        this.bestScore = this.scores[firstSequence.getSequence().length()-1][secondSequence.getSequence().length()-1];
+        this.bestScore = this.scores[ sequence1.getSequence().length()-1][ sequence2.getSequence().length()-1];
     }
 
 }
