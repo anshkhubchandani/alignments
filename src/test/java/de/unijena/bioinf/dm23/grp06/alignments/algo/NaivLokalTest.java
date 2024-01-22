@@ -156,7 +156,7 @@ public class NaivLokalTest {
         });*/
 
         NullPointerException e = Assertions.assertThrows(NullPointerException.class, () -> {
-            sequence1 = new AminoacidSequence(null," NULL sequence");;
+            sequence1 = new AsciiSequence(null," NULL sequence");;
         });
 
     }
@@ -168,7 +168,7 @@ public class NaivLokalTest {
             naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
 
             InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class, () -> {
-                sequence1 = new AminoacidSequence("!", "INVALID");
+                sequence1 = new AminoacidSequence("ö", "INVALID");
             });
         }
 
