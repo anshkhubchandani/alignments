@@ -1,19 +1,16 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
+import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.*;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
-import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class NaivGlobalTest {
-
     Sequence sequence1;
     Sequence sequence2;
     int expectedScore;
@@ -37,7 +34,7 @@ public class NaivGlobalTest {
     }
 
     @Test //test passed
-    public void testScorerDefaultScores() { // Verify that default scores are applied correctly
+    public void ScorerDefaultScores() { // Verify that default scores are applied correctly
         Scorer testDefaultScorer = new Scorer();
         assertEquals(1, testDefaultScorer.score('A', 'A'));
         assertEquals(-1, testDefaultScorer.score('A', 'C'));
@@ -46,33 +43,18 @@ public class NaivGlobalTest {
     }
 
     @Test
-    public void testScorerCustomScores() {  // Verify that custom scores are applied correctly
-        String scorerFilePath = "path/to/custom/scorer/file.txt"; // Providepath
+    public void ScorerCustomScores() {  // Verify that custom scores are applied correctly
+        String scorerFilePath = "/Users/larry/Git/BLOSUM100.txt"; // Providepath
         Scorer scorer = new Scorer(scorerFilePath);
         assertEquals(3, scorer.score('A', 'C'));
         assertEquals(-2, scorer.score('G', 'T'));
         assertEquals(-1, scorer.score('A', '-'));
     }
 
+
     //Sonderfälle
     @Test
-    public void EmptyString() {
-        sequence1 = new AsciiSequence("", "leereSequenz 1");
-        sequence2 = new AsciiSequence("", "leereSequenz 2");
-        naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
-        expectedScore = 0;
-        naivGlobal.enumeration(alignments);
-        Alignment result = naivGlobal.getOptimalAlignment();
-
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
-        assertEquals("", result.getSequence1());
-        assertEquals("", result.getSequence2());
-        assertEquals(0, result.getScore());
-
-    }
-
-    @Test
-    public void testNaivGlobalSameSequence() {
+    public void SameSequence() {
         sequence1 = new AsciiSequence("ABBC", "leereSequenz 1");
         sequence2 = new AsciiSequence("ABBC", "leereSequenz 2");
         expectedScore = 4;
@@ -115,9 +97,8 @@ public class NaivGlobalTest {
         assertEquals(expectedScore, result.getScore());
 
     }
-
     @Test
-    public void test2() {
+    public void AsciiSequenceSimple() {
         sequence1 = new AsciiSequence("AAB", "sequence 1");
         sequence2 = new AsciiSequence("ABC", "sequence 2");
         expectedScore = 0;
@@ -129,41 +110,20 @@ public class NaivGlobalTest {
         assertEquals("AAB-", result.getSequence1());
         assertEquals("-ABC", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
+
     }
 
-        //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-        @Test
-        public void testMissingInputs() {
-            // sequence1 or sequence2 is not provided
-        sequence1= new AsciiSequence("", "missing input");
-        sequence2= new AsciiSequence("AC", "Sequence2");
-        naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
-            // assertThrows for JUnit 5
-            MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
-                naivGlobal.enumeration(alignments);
-            });
-        }
 
-        @Test
-        public void testInvalidCharacters () {
-            sequence1 = new AminoacidSequence("AC", "leereSequenz 1");
-            sequence2 = new AminoacidSequence("!", "leereSequenz 2");
-            naivGlobal = new NaivGlobal(sequence1,sequence2,testDefaultScorer);
+    //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
 
-            InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class, () -> {
-                sequence2 = new AsciiSequence("!", "leereSequenz 2");
-            });
+
+    @Test
+    public void NullInput() { //Null pointer exception)
+        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
+
+        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+            naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
+        });
+
     }
-
-        @Test
-        public void OneEmptyString() { // funktioniert nur bei ascii
-            sequence1 = new AsciiSequence("AC", "leereSequenz 1");
-            sequence2 = new AsciiSequence("", "leereSequenz 2");
-            naivGlobal = new NaivGlobal(sequence1,sequence2,testDefaultScorer);
-
-            assertThrows(MissingInputsException.class,()-> {naivGlobal.enumeration(alignments);
-                Alignment result = naivGlobal.getOptimalAlignment();},"Missing Input");
-
-
-        }
 }

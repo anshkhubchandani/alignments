@@ -14,11 +14,11 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
      * Creates a Needleman-Wunsch objekt with two input sequences and sc.
      *
      * @param sequence1 first sequence
-     * @param seq2 second sequence
+     * @param sequence2 second sequence
      * @param sc   scorer
      */
-    public NeedlemanWunsch(S sequence1, S seq2, Scorer sc) {
-        super(sequence1, seq2, sc, "NW");
+    public NeedlemanWunsch(S sequence1, S sequence2, Scorer sc) {
+        super(sequence1, sequence2, sc, "NW");
         this.algorithm = "NW";
         // this.alignmentScorer = new Scorer(true);
 

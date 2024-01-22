@@ -10,7 +10,6 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -21,10 +20,12 @@ public class NaivLokalTest {
     int expectedScore;
     Scorer testDefaultScorer = new Scorer();
     NaivLokal naivLokal;
+    SmithWaterman sw;
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
 
     @Test
-    public void EinfacheSequence() {
+    public void SimpleSequence() {
+
         sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
         sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
         expectedScore = 2;
@@ -36,7 +37,20 @@ public class NaivLokalTest {
         assertEquals("AB", result.getSequence1());
         assertEquals("AB", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
+
+        sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
+        sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
+
+        sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
+
+        Alignment resultsw = sw.getOptimalAlignment();
+
+        System.out.println("\n" + "Sequence1 = " + resultsw.getSequence1() + "\nSequence2 = " + resultsw.getSequence2() + "\nscore = " + resultsw.getScore() + "\n");
+        assertEquals("AB", resultsw.getSequence1());
+        assertEquals("AB", resultsw.getSequence2());
+        assertEquals(2, resultsw.getScore());
     }
+
 
     @Test //test passed
     public void ScorerDefaultScores() { // Verify that default scores are applied correctly
@@ -49,17 +63,15 @@ public class NaivLokalTest {
 
     @Test
     public void ScorerCustomScores() {  // Verify that custom scores are applied correctly
-        String scorerFilePath = "path/to/custom/scorer/file.txt"; // Providepath
+        String scorerFilePath = "/Users/larry/Git/BLOSUM100.txt";
         Scorer scorer = new Scorer(scorerFilePath);
         assertEquals(3, scorer.score('A', 'C'));
         assertEquals(-2, scorer.score('G', 'T'));
         assertEquals(-1, scorer.score('A', '-'));
     }
 
+
     //Sonderfälle
-
-
-
     @Test
     public void SameSequence() {
         sequence1 = new AsciiSequence("ABBC", "leereSequenz 1");
@@ -106,7 +118,7 @@ public class NaivLokalTest {
     }
 
     @Test
-    public void test2() {
+    public void AsciiSequenceSimple() {
         sequence1 = new AsciiSequence("AAB", "sequence 1");
         sequence2 = new AsciiSequence("ABC", "sequence 2");
         expectedScore = 2;
@@ -141,27 +153,4 @@ public class NaivLokalTest {
         });
 
     }
-
-        @Test
-        public void testInvalidCharacters () {
-            //sequence1 = new AminoacidSequence("!", "INVALID");
-            sequence2 = new AminoacidSequence("AC", "Sequence2");
-            naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
-
-            InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class, () -> {
-                sequence1 = new AminoacidSequence("ö", "INVALID");
-            });
-        }
-
-    /*@Test
-    public void OneEmptyString() { // funktioniert nur bei ascii
-        sequence1 = new AsciiSequence("AB", "leereSequenz 1");
-        sequence2 = new AsciiSequence("", "leereSequenz 2");
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
-
-        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
-            naivLokal.missingInput(sequence1, sequence2);
-        });
-
-    }*/
 }

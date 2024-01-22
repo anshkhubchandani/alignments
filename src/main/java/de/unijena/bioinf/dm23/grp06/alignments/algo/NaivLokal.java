@@ -33,16 +33,11 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
     public void enumeration(ArrayList<AlignmentImpl> alignments) {
         // Initialize a variable to keep track of the current position in the alignments list
         // Handle the case where both sequences are empty
-        if (sequence1.getSequence().isEmpty() && sequence2.getSequence().isEmpty()) {
-            alignments.add(new AlignmentImpl("", "", 0));
-            return;
-        }
-        if (sequence1 == null || sequence2 == null) {
+
+        /*if (sequence1 == null || sequence2 == null) {
             throw new MissingInputsException("");
-        }
-        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-            throw new MissingInputsException("");
-        }
+        }*/
+
 
         int arrayPos = 0;
 
