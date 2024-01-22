@@ -40,19 +40,6 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence
         //con : StringBuilder is not thread-safe
         public void enumeration(ArrayList<AlignmentImpl> alignments) { //New alignments are created by adding characters or gaps, and the corresponding scores are updated.
 
-            if (sequence1.getSequence().isEmpty() && sequence2.getSequence().isEmpty()) {
-                alignments.add(new AlignmentImpl("", "", 0));
-                return;
-            }
-            if (sequence1.getSequence().isEmpty() || sequence1 == null || sequence2 == null || sequence2.getSequence().isEmpty()) {
-                throw new MissingInputsException("");
-            }
-
-            if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-                throw new MissingInputsException("");
-            }
-
-
             int position1;
             int position2;
             boolean added;  //Indicates whether new alignments have been added.

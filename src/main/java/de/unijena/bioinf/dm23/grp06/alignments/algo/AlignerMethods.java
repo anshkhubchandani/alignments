@@ -29,7 +29,10 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         this.alignmentScorer = scorer;
         this.algorithm = algorithm; //Added algo
         this.aligned = false;
-
+        if (sequence1 == null)
+            throw new MissingInputsException("Sequence 1 must not be null");
+        if (sequence2 == null)
+            throw new MissingInputsException("Sequence 2 must not be null");
     }
 //    void missingInput(S sequence1, S sequence2) {
 //        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
@@ -147,9 +150,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
      * @return Alignment, which contains aligned sequences.
      */
     public Alignment getOptimalAlignment() {
-        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-            throw new MissingInputsException("");
-        }
+
         initializeAlignmentMatrix();
         align();
 

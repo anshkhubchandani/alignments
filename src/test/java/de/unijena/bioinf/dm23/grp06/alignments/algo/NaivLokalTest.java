@@ -1,17 +1,15 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.InvalidCharactersException;
+
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
-import de.unijena.bioinf.dm23.grp06.alignments.algo.NaivLokal;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class NaivLokalTest {
@@ -29,11 +27,11 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
         sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
         expectedScore = 2;
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
+        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("AB", result.getSequence1());
         assertEquals("AB", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
@@ -77,11 +75,11 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("ABBC", "leereSequenz 1");
         sequence2 = new AsciiSequence("ABBC", "leereSequenz 2");
         expectedScore = 4;
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
+        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("ABBC", result.getSequence1());
         assertEquals("ABBC", result.getSequence2());
         assertEquals(4, result.getScore());
@@ -92,11 +90,11 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("AC", "Sequenz 1");
         sequence2 = new AsciiSequence("A", "Sequenz 2");
         expectedScore = 1;
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
+        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("A", result.getSequence1());
         assertEquals("A", result.getSequence2());
     }
@@ -106,11 +104,11 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("ABCDEFGHIJKLMNOPQRSTUV", "LongSequence 1");
         sequence2 = new AsciiSequence("JK", "LongSequence 2");
         expectedScore = 2;
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
+        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("JK", result.getSequence1());
         assertEquals("JK", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
@@ -122,7 +120,7 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("AAB", "sequence 1");
         sequence2 = new AsciiSequence("ABC", "sequence 2");
         expectedScore = 2;
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
+        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
@@ -133,17 +131,8 @@ public class NaivLokalTest {
     }
 
     //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-        @Test
-        public void MissingInput() {
-            sequence1 = new AsciiSequence("","leereSequenz 1");
-            sequence2 = new AsciiSequence("AB", "leereSequenz 2");
-            naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
 
-            MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
-                naivLokal.enumeration(alignments);
-            });
 
-        }
     @Test
     public void NullInput() { //Null pointer exception)
         sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
