@@ -8,10 +8,12 @@ public class SmithWaterman<S extends Sequence> extends AlignerMethods<S> {
     public SmithWaterman (S sequence1, S sequence2, Scorer scorer) {
         super(sequence1, sequence2, scorer, "SW");
         this.algorithm = "SW";
-        //this.alignmentScorer = new Scorer(true);
-
 
     }
+
+    /**
+     * Calls initializeAlignmentMatrix-method in abstract class {@link AlignerMethods}
+     */
     protected void initializeAlignmentMatrix() {
         super.initializeAlignmentMatrix();
     }

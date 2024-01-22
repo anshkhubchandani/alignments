@@ -1,16 +1,13 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
-//import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentCharacters;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
-//import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
 
-//public class AlignerMethods<T> implements Aligner {
-public class AlignerMethods<S extends Sequence> implements Aligner<S> {
+public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
     S sequence1;
     S sequence2;
     int bestScore;
@@ -179,26 +176,19 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         StringBuilder firstAlignmentLine = new StringBuilder();
         StringBuilder secondAlignmentLine = new StringBuilder();
 
-        //Geändert weil ungleiche Sequenzlängen möglich
         while (backtrackingDirections[i][j] != 0){
-        //while (i > 0 || j > 0) {
+
             int dir = backtrackingDirections[i][j];
             if ((dir & 1) != 0) {
-                //seq1List.add(sequence1.charAt(i - 1));
-                //seq2List.add(sequence2.charAt(j - 1));
                 firstAlignmentLine.append(sequence1.charAt(i - 1));
                 secondAlignmentLine.append(sequence2.charAt(j - 1));
                 i--;
                 j--;
             } else if ((dir & 2) != 0) {
-                //seq1List.add(sequence1.charAt(i - 1));
-                //seq2List.add('-'); // Gap in sequence2
                 firstAlignmentLine.append(sequence1.charAt(i - 1));
                 secondAlignmentLine.append("-");
                 i--;
             } else if ((dir & 4) != 0) {
-                //seq1List.add('-'); // Gap in sequence1
-                //seq2List.add(sequence2.charAt(j - 1));
                 firstAlignmentLine.append("-");
                 secondAlignmentLine.append(sequence2.charAt(j - 1));
                 j--;
@@ -207,17 +197,8 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         firstAlignmentLine.reverse();
         secondAlignmentLine.reverse();
 
-        // Teammate hat die folgenden zwei Zeilen auskommentiert
-        //optimalAlignment.setSequences(seq1List,seq2List);
-        //return optimalAlignment;
-        // .toString()-Methode des StringBuilders, um Alignment-Sequenzen weiterzugeben
         return new AlignmentImpl(firstAlignmentLine.toString(), secondAlignmentLine.toString(), bestScore);
     }
-
-    //    int returnBestScoreAtPosition (int i, int j) {
-//        return 0;
-//    }
-//
 
     /**
      * This method is used to check if an Alignmentscore already exists.
@@ -236,11 +217,6 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
             return bestScore;
         }
     }
-
-    // public String getAlgorithm ()
-    // {
-    //     return algorithm;
-    // }
 
     /**
      * Calculates the Score in linear storage space and is only used for calculating the score and not the alignment.
@@ -275,14 +251,10 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
                     //Berechnung des Maximums -> Beste Scores
                     currentRow[j] = Math.max(diagonalScore, Math.max(gapUpScore, gapLeftScore));
                 }
-                // MaxScore für lokales Alignment
+
                 if (algorithm.equals("SW") && currentRow[j] > maxScore) {
-                    // maxPositions = new ArrayList<>();
                     maxScore = currentRow[j];
-                    // maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
-                    // maxPositions.add(j); // Position j
                 }
-                //fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
             }
 
             // Kopiere currentRow in previousRow für die nächste Iteration

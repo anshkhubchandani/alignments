@@ -46,9 +46,11 @@ public class NaivGlobalTest {
     public void ScorerCustomScores() {  // Verify that custom scores are applied correctly
         String scorerFilePath = "/Users/larry/Git/BLOSUM100.txt"; // Providepath
         Scorer scorer = new Scorer(scorerFilePath);
-        assertEquals(3, scorer.score('A', 'C'));
-        assertEquals(-2, scorer.score('G', 'T'));
-        assertEquals(-1, scorer.score('A', '-'));
+        assertEquals(-2, scorer.score('A', 'C'));
+        assertEquals(-5, scorer.score('G', 'T'));
+        assertEquals(-10, scorer.score('A', '-'));
+        assertEquals(1, scorer.score('-', '-'));
+        assertEquals(-10, scorer.score('A', '*'));
     }
 
 

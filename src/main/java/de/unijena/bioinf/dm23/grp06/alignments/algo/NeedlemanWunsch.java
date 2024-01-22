@@ -11,7 +11,7 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
     //Output: Kosten des optimalen Alignments (Minimum)
 
     /**
-     * Creates a Needleman-Wunsch objekt with two input sequences and sc.
+     * Creates a Needleman-Wunsch objekt with two input sequences and a scorer.
      *
      * @param sequence1 first sequence
      * @param sequence2 second sequence
@@ -20,17 +20,13 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
     public NeedlemanWunsch(S sequence1, S sequence2, Scorer sc) {
         super(sequence1, sequence2, sc, "NW");
         this.algorithm = "NW";
-        // this.alignmentScorer = new Scorer(true);
-
-
     }
 
     /**
-     * Calls initializeAlignmentMatrix-method in abstract class AlignerMethods
+     * Calls initializeAlignmentMatrix-method in abstract class {@link AlignerMethods}
      */
     protected void initializeAlignmentMatrix() {
         super.initializeAlignmentMatrix();
-        // Additional Needleman-Wunsch specific initialization if needed
     }
 
     public void setAlignmentScore() {

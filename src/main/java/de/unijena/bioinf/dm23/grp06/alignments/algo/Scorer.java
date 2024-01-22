@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-//TO DO
-//Throw InvalidCharactersException AND MissingInputsException
 public class Scorer {
 
     protected boolean defaultScores;
@@ -23,6 +21,10 @@ public class Scorer {
         defaultScores = true;
     }
 
+    /**
+     * Creates a Scorer object with scores read from the scorer input file
+     * @param path
+     */
     public Scorer(String path) {
         getScoresFromFile(path);
         this.path = path;
@@ -57,6 +59,13 @@ public class Scorer {
     }
 
     private int scorerByInputScheme (char firstChar, char secondChar) {
+
+        if (firstChar == '-') {
+            firstChar = '*';
+        }
+        if (secondChar == '-') {
+            secondChar = '*';
+        }
 
         String charPair = Character.toString(firstChar).concat(Character.toString(secondChar));
         String charPairRev = new StringBuilder(charPair).reverse().toString();
@@ -118,6 +127,11 @@ public class Scorer {
         }
     }
 
+    /**
+     * Creates and returns a string of the scores used by this Scorer object.
+     * @return String of default scores if default scores are used, filepath of scorer file if user input
+     * scores are used.
+     */
     public String getScoresAsString () {
         if (defaultScores) {
             StringBuilder sb = new StringBuilder();
@@ -128,63 +142,4 @@ public class Scorer {
             return "Scores:\nUser input scores from file " + path;
         }
     }
-    //Andere Idee um Scores aus einer Datei einzulesen
-    /*public static HashMap<String, Integer> readScorerFile(String filePath) {
-        HashMap<String, Integer> scorerMap = new HashMap<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-
-            String line;
-            boolean readScores = false;
-
-            while ((line = reader.readLine()) != null) {
-                //line = line.trim();
-
-
-                if (line.isEmpty() || line.startsWith("#")) {
-                    // Ignore empty lines or lines starting with "#"
-                    System.out.println(line);
-                    continue;
-                }
-
-                // Use a regular expression to check if the line starts with an amino acid
-                Pattern pattern = Pattern.compile("^[ARNDCQEGHILKMFPSTWYVBZX*]");
-                Matcher matcher = pattern.matcher(line);
-
-                if (matcher.find()) {
-                    System.out.println("hi1");
-                    // Start reading scores
-                    readScores = true;
-                }
-
-                if (readScores) {
-                    System.out.println("hi2");
-                    // Process lines with scores
-                    String[] parts = line.split("\n");
-
-                    if (parts.length > 1) {
-                        String aminoAcid = parts[0];
-                        System.out.println(aminoAcid);
-                        for (int i = 1; i < parts.length; i++) {
-                            String key = aminoAcid + parts[i];
-                            int score = Integer.parseInt(parts[i]);
-                            scorerMap.put(key, score);
-
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return scorerMap;
-    }
-
-    // Idee Ende
-    public static void main(String[] args) throws IOException {
-        String path = "/Users/larry/Git/BLOSUM100.txt";
-
-        readScorerFile(path);
-    }*/
 }
