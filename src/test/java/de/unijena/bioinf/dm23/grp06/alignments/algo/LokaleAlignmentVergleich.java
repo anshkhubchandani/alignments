@@ -56,9 +56,8 @@ public class LokaleAlignmentVergleich {
     @Test
     public void randomSequence() { //VERGLEICHEN
         System.out.println("Naiv Local Algorithm: ");
-        sequence1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTYLYINMHFHA", "proteinSequenz100");
-        sequence2 = new AsciiSequence("SEDTTLPAKA", "proteinSequenz10");
-        expectedScore = 4;
+        sequence1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTY", "proteinSequenz100");
+        sequence2 = new AsciiSequence("GL", "proteinSequenz10");
 
         System.out.println("\n Given sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
 
@@ -69,7 +68,7 @@ public class LokaleAlignmentVergleich {
 
 
         sequence1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTYLYINMHFHA", "proteinSequenz100");
-        sequence2 = new AsciiSequence("SEDTTLPAKA", "proteinSequenz10");
+        sequence2 = new AsciiSequence("GL", "proteinSequenz10");
 
         sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
         Alignment resultsw = sw.getOptimalAlignment();

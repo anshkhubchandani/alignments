@@ -142,4 +142,19 @@ public class NaivLokalTest {
         });
 
     }
-}
+    @Test
+    public void randomSequence() { //VERGLEICHEN
+        System.out.println("Naiv Local Algorithm: ");
+        sequence1 = new AsciiSequence("MFGLPHHA", "proteinSequenz100");
+        sequence2 = new AsciiSequence("GL", "proteinSequenz10");
+        expectedScore = 2;
+        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal.enumeration(alignments);
+        Alignment result = naivLokal.getOptimalAlignment();
+
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        assertEquals("AB", result.getSequence1());
+        assertEquals("AB", result.getSequence2());
+        assertEquals(expectedScore, result.getScore());
+    }
+    }
