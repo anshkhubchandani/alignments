@@ -21,13 +21,13 @@ public class LokaleAlignmentVergleich {
     NaivLokal naivLokal;
     SmithWaterman sw;
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
-/*
+
     @Test
     public void simpleSequence() {
 
         System.out.println("Naiv Local Algorithm: ");
         sequence1 = new AsciiSequence("ABBC", "simpleSequence 1");
-        sequence2 = new AsciiSequence("AB", "simpleSequence 2");
+        sequence2 = new AsciiSequence("GBC", "simpleSequence 2");
         expectedScore = 2;
         System.out.println("\n Given sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
 
@@ -36,15 +36,14 @@ public class LokaleAlignmentVergleich {
         Alignment result = naivLokal.getOptimalAlignment();
 
         System.out.println("Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
-        assertEquals("AB", result.getSequence1());
-        assertEquals("AB", result.getSequence2());
+        assertEquals("BC", result.getSequence1());
+        assertEquals("BC", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
 
         sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
+        sequence2 = new AsciiSequence("BC", "einfacheSequenz 2");
 
         sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
-
         Alignment resultsw = sw.getOptimalAlignment();
         System.out.println("SW Algorithm: ");
         System.out.println("Sequence1 = " + resultsw.getSequence1() + "\nSequence2 = " + resultsw.getSequence2() + "\nscore = " + resultsw.getScore() + "\n");
