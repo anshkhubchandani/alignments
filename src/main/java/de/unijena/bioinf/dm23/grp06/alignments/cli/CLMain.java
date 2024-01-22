@@ -13,6 +13,7 @@ public class CLMain {
      * Main method to read and execute command line arguments.
      */
     public static void main (String[] args) {
+
         AlignerOptions options = new AlignerOptions();
         CommandLine alignerCli = new CommandLine(options);
         CommandLine.ParseResult result = alignerCli.parseArgs(args);
