@@ -35,7 +35,7 @@ dependencies {
 apply plugin: 'application'
 application {
     mainClassName = "de.fsu.example.Test"
-    applicationDefaultJvmArgs = ["-Xmx4G"]
+    applicationDefaultJvmArgs = ["-Xmx200G"]
 }
 
 test {
