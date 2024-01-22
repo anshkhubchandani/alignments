@@ -1,6 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.alignments.cli;
 
-//import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.*;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.Fasta;
 import de.unijena.bioinf.dm23.grp06.exactsearch.io.FastaReader;
@@ -8,7 +7,6 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.NucleotideSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
-//import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,21 +17,37 @@ import java.util.Arrays;
 
 public class RequestHandler {
 
-    String algo;
-    Scorer alignmentScorer;
+    private String algo;
 
-    // Liste speichert alle Objekte, die mit den Sequenzpaaren erstellt werden, um sie zu alignieren
-    // So kann man auf diese Objekte in anderen Methoden zugreifen ohne zu wissen, wieviele Objekte das sind
-    ArrayList<Aligner> alignerObjects;
+    /**
+     * Scorer to be used by Aligner objects to score character pairs during sequence alignment.
+     */
+    public Scorer alignmentScorer;
+    private ArrayList<Aligner> alignerObjects;
 
-    // AUsgabe + Check, welchen Typ die Sequenz hat
-    // Print-Methode für Alignments
-
+    /**
+     * Creates a RequestHandler object with two groups of input sequences, and calls methods to
+     * create Scorer and Aligner objects for sequence alignment.
+     * @param algorithm Algorithm to be used for alignment
+     * @param inputSeq1 First group of input sequences
+     * @param inputSeq2 Second group of input sequences
+     * @param scorerPath Filepath of input file for Scorer of null if default scores should be used
+     * @param sequenceType Type of input sequences
+     */
     public RequestHandler(String algorithm, ArrayList<String> inputSeq1, ArrayList<String> inputSeq2, String scorerPath, String sequenceType) {
         this.algo = algorithm;
         setScorer(scorerPath);
         createAlignerObjects(inputSeq1, inputSeq2, sequenceType, false);
     }
+
+    /**
+     * Creates a RequestHandler objects with one group of input sequences and calls methods to
+     * create Scorer and Aligner objects for sequence alignment.
+     * @param algorithm Algorithm to be used for alignment
+     * @param inputSeq1 Group of input sequences
+     * @param scorerPath Filepath of input file for Scorer of null if default scores should be used
+     * @param sequenceType Type of input sequences
+     */
     public RequestHandler(String algorithm, ArrayList<String> inputSeq1, String scorerPath, String sequenceType) {
         this.algo = algorithm;
         setScorer(scorerPath);
@@ -119,6 +133,7 @@ public class RequestHandler {
         System.out.println(createResultString("alignment"));
     }
 
+
     protected void saveResults (String outputFileNameOrPath, String function) {
         // Ergebnisse (Scores oder Alignments) in File speichern
 
@@ -164,13 +179,7 @@ public class RequestHandler {
         return sb.toString();
     }
 
-    protected void generateDistanceMatrix (String outputFileNameOrPath) {
-        // Methode, die die AlignmentScores in einer Distanzmatrix speichert
-        //- Den Sequenzen Zahlen zuordnen
-        //- Zuordnung ausgeben
-        //- Tabelle mit den Zahlen erstellen
-
-        System.out.println(alignerObjects.size());
+    protected void saveDistanceMatrix(String outputFileNameOrPath) {
 
         ArrayList<String> sequenceObjects = new ArrayList<>();
 
@@ -228,7 +237,6 @@ public class RequestHandler {
                 e.printStackTrace();
             }
         }
-
 
     }
 
