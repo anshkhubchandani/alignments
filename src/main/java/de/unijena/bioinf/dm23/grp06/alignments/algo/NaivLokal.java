@@ -106,7 +106,16 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
                 // Update the position for the next iteration to start from the end of the current alignments
                 arrayPos = alignments.size();
             }
-        }
+//vielleicht?
+        int bestScore = Integer.MIN_VALUE;
+            for (AlignmentImpl alignment : alignments){
+                if (alignment.getScore() > bestScore){
+                    bestScore= alignment.getScore();
+                }
+
+                }
+            }
+
     }
 
     @Override
