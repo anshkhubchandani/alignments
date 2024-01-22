@@ -60,6 +60,7 @@ public class RequestHandler {
         int j = 0;
         for (int i = 0; i < input1.size(); i++) {
             for (int k = j; k < input2.size(); k++) {
+
                 if (algo.equals("NG")) {
                     alignerObjects.add(new NaivGlobal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
                 }
@@ -73,6 +74,7 @@ public class RequestHandler {
                     alignerObjects.add(new SmithWaterman(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
                 }
             }
+
             if (sameSequences) {
                 j++;
             }
