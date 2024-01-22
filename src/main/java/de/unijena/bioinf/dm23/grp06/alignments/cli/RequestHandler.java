@@ -14,11 +14,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RenameLater {
+public class RequestHandler {
 
     String algo;
     Scorer alignmentScorer;
@@ -30,12 +29,12 @@ public class RenameLater {
     // AUsgabe + Check, welchen Typ die Sequenz hat
     // Print-Methode für Alignments
 
-    public RenameLater(String algorithm, ArrayList<String> inputSeq1, ArrayList<String> inputSeq2, String scorerPath, String sequenceType) {
+    public RequestHandler(String algorithm, ArrayList<String> inputSeq1, ArrayList<String> inputSeq2, String scorerPath, String sequenceType) {
         this.algo = algorithm;
         setScorer(scorerPath);
         createAlignerObjects(inputSeq1, inputSeq2, sequenceType, false);
     }
-    public RenameLater(String algorithm, ArrayList<String> inputSeq1, String scorerPath, String sequenceType) {
+    public RequestHandler(String algorithm, ArrayList<String> inputSeq1, String scorerPath, String sequenceType) {
         this.algo = algorithm;
         setScorer(scorerPath);
         createAlignerObjects(inputSeq1, inputSeq1, sequenceType, true);
