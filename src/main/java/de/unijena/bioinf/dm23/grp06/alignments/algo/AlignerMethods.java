@@ -22,6 +22,9 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
     ArrayList<Integer> maxPositions;
     boolean aligned;
 
+    private long startTime;
+    private long endTime;
+
     public AlignerMethods(S sequence1, S sequence2, Scorer scorer, String algorithm) {
 
         this.sequence1 = sequence1;
@@ -150,6 +153,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
      * @return Alignment, which contains aligned sequences.
      */
     public Alignment getOptimalAlignment() {
+        startTime = System.nanoTime();
 
         initializeAlignmentMatrix();
         align();
@@ -198,6 +202,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         firstAlignmentLine.reverse();
         secondAlignmentLine.reverse();
 
+        endTime = System.nanoTime();
         return new AlignmentImpl(firstAlignmentLine.toString(), secondAlignmentLine.toString(), bestScore);
     }
 
@@ -224,6 +229,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
      * @return
      */
     public int linearScore () {
+        startTime = System.nanoTime();
         int[] previousRow = new int[sequence2.getSequence().length() + 1];
         int[] currentRow = new int[sequence2.getSequence().length() + 1];
 
@@ -262,7 +268,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
             System.arraycopy(currentRow, 0, previousRow, 0, currentRow.length);
 
         }
-
+        endTime = System.nanoTime();
         return algorithm.equals("NW") ? currentRow[sequence2.getSequence().length()] : maxScore;
     }
 
@@ -274,5 +280,10 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
     @Override
     public S getSequence2() {
         return sequence2;
+    }
+
+
+    public long getRuntime () {
+        return endTime - startTime;
     }
 }

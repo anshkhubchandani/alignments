@@ -174,6 +174,7 @@ public class RequestHandler {
                 sb.append("Optimal alignment:\n").append(a.getOptimalAlignment().toString()).append("\n");
                 sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
             }
+            sb.append("Runtime: ").append(a.getRuntime()).append("\n");
         }
 
         return sb.toString();
