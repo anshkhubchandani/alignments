@@ -15,7 +15,7 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
     Alignment alignment;
     boolean aligned;
     ArrayList<AlignmentImpl> alignments;
-    AlignmentImpl highestScore;
+    AlignmentImpl bestScore;
     Alignment testAlignment;
 
     public AbstractNaivAligner(S sequence1, S sequence2, Scorer scorer) {
@@ -23,6 +23,10 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
         this.sequence2 = sequence2;
         this.scorer = scorer;
         this.aligned = false;
+        if (sequence1 == null)
+            throw new MissingInputsException("Sequence 1 must not be null");
+        if (sequence2 == null)
+            throw new MissingInputsException("Sequence 2 must not be null");
     }
 
     public AbstractNaivAligner() {
@@ -46,26 +50,26 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
         //ArrayList<AlignmentString> alignments = new ArrayList<>();
         this.alignments = new ArrayList<>();
         enumeration(alignments);
-        setHighestScoreObject();
+        setbestScoreObject();
 
         //It iterates through the alignments to find the one with the highest score.
-        // AlignmentString highestScore = getAlignmentScore(alignments);
+        // AlignmentString bestScore = getAlignmentScore(alignments);
 
         // Create a new instance of the specified Sequence class for alignment
-        if (highestScore != null) {
+        if (bestScore != null) {
 
-            String alignedSequence1 = highestScore.getSequence1();
-            String alignedSequence2 = highestScore.getSequence2();
+            String alignedSequence1 = bestScore.getSequence1();
+            String alignedSequence2 = bestScore.getSequence2();
 
                 /*T alignedSequence1Instance = createSequenceInstance(alignedSequence1, "Aligned Sequence 1", sequence1);
                 T alignedSequence2Instance = createSequenceInstance(alignedSequence2, "Aligned Sequence 2", sequence2);
 
                 // Create a new Alignment object
-                alignment = new AlignmentImpl<T>(alignedSequence1Instance, alignedSequence2Instance, highestScore.getScore());
+                alignment = new AlignmentImpl<T>(alignedSequence1Instance, alignedSequence2Instance, bestScore.getScore());
                  */
 
             //  Teammate probiert etwas aus
-            testAlignment = new AlignmentImpl(highestScore.getSequence1(), highestScore.getSequence2(), highestScore.getScore());
+            testAlignment = new AlignmentImpl(bestScore.getSequence1(), bestScore.getSequence2(), bestScore.getScore());
 
             // Set the aligned flag to true
             aligned = true;
@@ -85,13 +89,13 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
              */
 
 
-    private void setHighestScoreObject() {
+    private void setbestScoreObject() {
 
-        this.highestScore = alignments.get(0);
+        this.bestScore = alignments.get(0);
 
         for(int i = 1; i < alignments.size(); i++) {
-            if(alignments.get(i).getScore() > this.highestScore.getScore()) {
-                this.highestScore = alignments.get(i);
+            if(alignments.get(i).getScore() > this.bestScore.getScore()) {
+                this.bestScore = alignments.get(i);
             }
         }
     }
@@ -101,9 +105,9 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
             return 0;
         }
 
-        return this.highestScore.getScore();*/
+        return this.bestScore.getScore();*/
         if (aligned) {
-            return this.highestScore.getScore();
+            return this.bestScore.getScore();
         }
         else {
             return getOptimalAlignment().getScore();

@@ -12,7 +12,7 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
     private Alignment alignment;
     private boolean aligned;
     ArrayList<AlignmentImpl> alignments;
-    AlignmentImpl highestScore;
+    AlignmentImpl bestScore;
 
     public NaivLokal(S sequence1, S sequence2, Scorer scorer) {
         super(sequence1, sequence2, scorer);

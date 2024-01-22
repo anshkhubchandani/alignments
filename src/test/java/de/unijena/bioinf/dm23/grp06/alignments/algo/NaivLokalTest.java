@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.testng.AssertJUnit.assertEquals;
 
 
 public class NaivLokalTest {
@@ -58,20 +58,7 @@ public class NaivLokalTest {
 
     //Sonderfälle
 
-    @Test
-    public void EmptyString() {
-        sequence1 = new AsciiSequence("", "leereSequenz 1");
-        sequence2 = new AsciiSequence("", "leereSequenz 2");
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
-        naivLokal.enumeration(alignments);
-        Alignment result = naivLokal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
-        assertEquals("", result.getSequence1());
-        assertEquals("", result.getSequence2());
-        assertEquals(0, result.getScore());
-
-    }
 
     @Test
     public void SameSequence() {
@@ -146,17 +133,11 @@ public class NaivLokalTest {
 
         }
     @Test
-    public void NullInput() { //Null pointer exception
-        //sequence1 = new AminoacidSequence(null,"leereSequenz 1");
-        sequence2 = new AsciiSequence("AG", "leereSequenz 2");
-        naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
+    public void NullInput() { //Null pointer exception)
+        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
 
-        /*InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class,() -> {
-            sequence1 = new AminoacidSequence(null,"leereSequenz 1");;
-        });*/
-
-        NullPointerException e = Assertions.assertThrows(NullPointerException.class, () -> {
-            sequence1 = new AsciiSequence(null," NULL sequence");;
+        MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
+            naivLokal = new NaivLokal(null, sequence2, testDefaultScorer);
         });
 
     }

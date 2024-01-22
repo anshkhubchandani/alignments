@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 //public class AlignerMethods<T> implements Aligner {
 public class AlignerMethods<S extends Sequence> implements Aligner<S> {
-    S firstSequence;
-    S secondSequence;
+    S sequence1;
+    S sequence2;
     int bestScore;
     Scorer alignmentScorer;
     String algorithm;
@@ -27,8 +27,8 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
 
     public AlignerMethods(S sequence1, S sequence2, Scorer scorer, String algorithm) {
 
-        this.firstSequence = sequence1;
-        this.secondSequence = sequence2;
+        this.sequence1 = sequence1;
+        this.sequence2 = sequence2;
         this.alignmentScorer = scorer;
         this.algorithm = algorithm; //Added algo
         this.aligned = false;
@@ -47,29 +47,29 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
      * This method initializes different matrices for each algorithm.
      */
     void initializeAlignmentMatrix() {
-        scores = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];
-        backtrackingDirections = new int[firstSequence.getSequence().length() + 1][secondSequence.getSequence().length() + 1];
+        scores = new int[sequence1.getSequence().length() + 1][sequence2.getSequence().length() + 1];
+        backtrackingDirections = new int[sequence1.getSequence().length() + 1][sequence2.getSequence().length() + 1];
 
         // int[Zeilen][Spalten] -> erste Sequenz senkrecht, zweite Sequenz waagerecht
 
 
         if (algorithm.equals("NW")) {
             scores[0][0] = 0; //obere linke Ecke
-            for (int i = 1; i < firstSequence.getSequence().length() + 1; i++) {
+            for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
                 scores[i][0] = scores[i - 1][0] + this.alignmentScorer.gap;
                 backtrackingDirections[i][0] = 2; // 2 steht für Up
             }
-            for (int j = 1; j < secondSequence.getSequence().length() + 1; j++) {
+            for (int j = 1; j < sequence2.getSequence().length() + 1; j++) {
                 scores[0][j] = scores[0][j - 1] + this.alignmentScorer.gap;
                 backtrackingDirections[0][j] = 4; // 4 steht für left
             }
             //Initialization with 0
         } else if (algorithm.equals("SW")) {
-            for (int i = 1; i < firstSequence.getSequence().length() + 1; i++) {
+            for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
                 scores[i][0] = 0;
 
             }
-            for (int j = 1; j < secondSequence.getSequence().length() + 1; j++) {
+            for (int j = 1; j < sequence2.getSequence().length() + 1; j++) {
                 scores[0][j] = 0;
             }
         }
@@ -82,9 +82,9 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
      */
     //Erstellen einer Matrix, die mit den jeweiligen Scores ausgefüllt wird
     public int[][] align() {
-        for (int i = 1; i < firstSequence.getSequence().length() + 1; i++) {
-            for (int j = 1; j < secondSequence.getSequence().length() + 1; j++) {
-                int diagonalScore = scores[i - 1][j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
+        for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
+            for (int j = 1; j < sequence2.getSequence().length() + 1; j++) {
+                int diagonalScore = scores[i - 1][j - 1] + alignmentScorer.score(sequence1.charAt(i - 1), sequence2.charAt(j - 1));
                 int gapUpScore = scores[i - 1][j] + alignmentScorer.gap;
                 int gapLeftScore = scores[i][j - 1] + alignmentScorer.gap;
                 if (algorithm.equals("SW")) {
@@ -150,7 +150,7 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
      * @return Alignment, which contains aligned sequences.
      */
     public Alignment getOptimalAlignment() {
-        if (firstSequence.getSequence().isEmpty() || secondSequence.getSequence().isEmpty()) {
+        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
             throw new MissingInputsException("");
         }
         initializeAlignmentMatrix();
@@ -167,9 +167,9 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
 
         }
         if (algorithm.equals("NW")) {
-            i = firstSequence.getSequence().length();
-            j = secondSequence.getSequence().length();
-            //firstSequence.length() and secondSequence.length() -> start
+            i = sequence1.getSequence().length();
+            j = sequence2.getSequence().length();
+            //sequence1.length() and sequence2.length() -> start
         }
         //AlignmentImpl<T> optimalAlignment = new AlignmentImpl<T>();
         //AlignmentCharacters optimalAlignment = new AlignmentCharacters();
@@ -184,23 +184,23 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
         //while (i > 0 || j > 0) {
             int dir = backtrackingDirections[i][j];
             if ((dir & 1) != 0) {
-                //seq1List.add(firstSequence.charAt(i - 1));
-                //seq2List.add(secondSequence.charAt(j - 1));
-                firstAlignmentLine.append(firstSequence.charAt(i - 1));
-                secondAlignmentLine.append(secondSequence.charAt(j - 1));
+                //seq1List.add(sequence1.charAt(i - 1));
+                //seq2List.add(sequence2.charAt(j - 1));
+                firstAlignmentLine.append(sequence1.charAt(i - 1));
+                secondAlignmentLine.append(sequence2.charAt(j - 1));
                 i--;
                 j--;
             } else if ((dir & 2) != 0) {
-                //seq1List.add(firstSequence.charAt(i - 1));
+                //seq1List.add(sequence1.charAt(i - 1));
                 //seq2List.add('-'); // Gap in sequence2
-                firstAlignmentLine.append(firstSequence.charAt(i - 1));
+                firstAlignmentLine.append(sequence1.charAt(i - 1));
                 secondAlignmentLine.append("-");
                 i--;
             } else if ((dir & 4) != 0) {
                 //seq1List.add('-'); // Gap in sequence1
-                //seq2List.add(secondSequence.charAt(j - 1));
+                //seq2List.add(sequence2.charAt(j - 1));
                 firstAlignmentLine.append("-");
-                secondAlignmentLine.append(secondSequence.charAt(j - 1));
+                secondAlignmentLine.append(sequence2.charAt(j - 1));
                 j--;
             }
         }
@@ -247,22 +247,22 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
      * @return
      */
     public int linearScore () {
-        int[] previousRow = new int[secondSequence.getSequence().length() + 1];
-        int[] currentRow = new int[secondSequence.getSequence().length() + 1];
+        int[] previousRow = new int[sequence2.getSequence().length() + 1];
+        int[] currentRow = new int[sequence2.getSequence().length() + 1];
 
         for (int k = 1; k < previousRow.length; k++) {
             previousRow[k] = previousRow[k-1] + alignmentScorer.gap;
         }
 
-        for (int i = 1; i < firstSequence.getSequence().length() + 1; i++) {
-            for (int j = 0; j < secondSequence.getSequence().length() + 1; j++) {
+        for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
+            for (int j = 0; j < sequence2.getSequence().length() + 1; j++) {
 
                 if (j == 0) {
                     currentRow[j] = previousRow[j] + alignmentScorer.gap;
                 }
                 else {
 
-                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(firstSequence.charAt(i - 1), secondSequence.charAt(j - 1));
+                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(sequence1.charAt(i - 1), sequence2.charAt(j - 1));
                     int gapUpScore = previousRow[j] + alignmentScorer.gap;
                     int gapLeftScore = currentRow[j - 1] + alignmentScorer.gap;
 
@@ -290,16 +290,16 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
 
         }
 
-        return algorithm.equals("NW") ? currentRow[secondSequence.getSequence().length()] : maxScore;
+        return algorithm.equals("NW") ? currentRow[sequence2.getSequence().length()] : maxScore;
     }
 
     @Override
     public S getSequence1() {
-        return firstSequence;
+        return sequence1;
     }
 
     @Override
     public S getSequence2() {
-        return secondSequence;
+        return sequence2;
     }
 }

@@ -47,4 +47,4 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
 //    }
 }
 
- */
+*/

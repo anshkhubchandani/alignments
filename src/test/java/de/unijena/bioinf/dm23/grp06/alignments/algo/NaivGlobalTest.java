@@ -1,19 +1,16 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.InvalidCharactersException;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.*;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.testng.AssertJUnit.assertEquals;
 
 public class NaivGlobalTest {
 

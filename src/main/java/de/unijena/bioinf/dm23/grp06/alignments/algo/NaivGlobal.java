@@ -13,7 +13,7 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAligner<Sequence
     private Alignment alignment;
     private boolean aligned;
     ArrayList<AlignmentImpl> alignments;
-    AlignmentImpl highestScore;
+    AlignmentImpl bestScore;
 
         /**
          * Constructs a NaivGlobal instance with two input sequences and a scorer.
