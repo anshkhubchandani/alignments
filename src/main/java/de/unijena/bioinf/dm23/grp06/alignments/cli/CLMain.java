@@ -3,8 +3,14 @@ package de.unijena.bioinf.dm23.grp06.alignments.cli;
 import picocli.CommandLine;
 import java.util.ArrayList;
 
+/**
+ * Main class to read and execute command line arguments.
+ */
 public class CLMain {
 
+    /**
+     * Main method to read and execute command line arguments.
+     */
     public static void main (String[] args) {
         AlignerOptions options = new AlignerOptions();
         CommandLine alignerCli = new CommandLine(options);
@@ -30,7 +36,7 @@ class AlignerOptions implements Runnable {
             "Local alignments:\nGL - Naive algorithm\nSW - Smith-Waterman algorithm")
     String algorithm;
 
-    @CommandLine.Option(names = {"-t", "--type"})
+    @CommandLine.Option(names = {"-t", "--type"}, description = "Type of input sequences (DNA, RNA, AA for aminoacid, ASCII).\n")
     String sequenceType;
 
     @CommandLine.Option(names = {"-c"})
@@ -48,7 +54,7 @@ class AlignerOptions implements Runnable {
     }
 
     // Input 1 wird mit Input 2 verglichen
-    @CommandLine.Option(names = {"-i", "--input"}, split = " ", arity = "1...*", required = true)
+    @CommandLine.Option(names = {"-i", "--input"}, split = " ", arity = "1...*")
     ArrayList<String> inputSequences1;
 
     @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*")
@@ -60,11 +66,9 @@ class AlignerOptions implements Runnable {
     @CommandLine.Option(names = {"-o", "--output"}, description = "Saves results in an output file.")
     String outputFileNameOrPath;
 
-
-
     @Override
     public void run() {
-        RenameLater userRequest;
+        RequestHandler userRequest;
         String function = "";
         if (group.score) {
             function = "score";
@@ -74,10 +78,10 @@ class AlignerOptions implements Runnable {
         }
 
         if (inputSequences2 == null) {
-            userRequest = new RenameLater(algorithm, inputSequences1, scorerFileNameOrPath, sequenceType);
+            userRequest = new RequestHandler(algorithm, inputSequences1, scorerFileNameOrPath, sequenceType);
         }
         else {
-            userRequest = new RenameLater(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath, sequenceType);
+            userRequest = new RequestHandler(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath, sequenceType);
         }
 
         if (group.score) {
@@ -93,7 +97,7 @@ class AlignerOptions implements Runnable {
         }
 
         if (distFileNameOrPath != null) {
-            userRequest.generateDistanceMatrix(distFileNameOrPath);
+            userRequest.saveDistanceMatrix(distFileNameOrPath);
             System.out.println("\nDistance matrix saved in file " + distFileNameOrPath);
         }
     }
