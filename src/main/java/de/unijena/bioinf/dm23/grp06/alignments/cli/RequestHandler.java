@@ -60,8 +60,10 @@ public class RequestHandler {
         int j = 0;
         for (int i = 0; i < input1.size(); i++) {
             for (int k = j; k < input2.size(); k++) {
-
-                if (algo.equals("NG")) {
+                if (sameSequences && i == k) {
+                    // do nothing
+                }
+                else if (algo.equals("NG")) {
                     alignerObjects.add(new NaivGlobal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("NL")) {
@@ -74,7 +76,6 @@ public class RequestHandler {
                     alignerObjects.add(new SmithWaterman(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
                 }
             }
-
             if (sameSequences) {
                 j++;
             }
@@ -128,10 +129,12 @@ public class RequestHandler {
     }
 
     protected void printScores () {
+        System.out.println(alignmentScorer.getScoresAsString() + " ");
         System.out.println(createResultString("score"));
     }
 
     protected void printOptimalAlignmentsAndScores () {
+        System.out.println(alignmentScorer.getScoresAsString() + " ");
         System.out.println(createResultString("alignment"));
     }
 
@@ -163,8 +166,23 @@ public class RequestHandler {
     private String createResultString (String function) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Alignment results:\n");
-        sb.append(alignmentScorer.getScoresAsString());
+        sb.append("Algorithm: ");
+        if (algo.equals("NG")) {
+            sb.append("Naive global");
+        }
+        else if (algo.equals("NL")) {
+            sb.append("Naive local");
+        }
+        else if (algo.equals("NW")) {
+            sb.append("Needleman-Wunsch");
+        }
+        else if (algo.equals("SW")) {
+            sb.append("Smith-Waterman");
+        }
+
+        sb.append("\nAlignment results:\n");
+
+        // sb.append(alignmentScorer.getScoresAsString()).append("\n");
 
         for (Aligner a : alignerObjects) {
             sb.append("Sequence 1: ").append(a.getSequence1().getName()).append("\n");

@@ -102,9 +102,9 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
                 if (algorithm.equals("SW") && scores[i][j] > maxScore) {
                     maxPositions = new ArrayList<>();
                     maxScore = scores[i][j];
+
                     maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
                     maxPositions.add(j); // Position j
-
                 }
                 if (algorithm.equals("SW") && scores[i][j] < 0) {
                     scores[i][j] = 0;
@@ -114,6 +114,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
                 fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
             }
         }
+
         aligned = true;
         //Return alignment matrix
         return scores;
@@ -145,6 +146,10 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         if (bestScore == gapLeftScore) {
             backtrackingDirections[i][j] += 4;
         }
+
+        if (algorithm.equals("SW") && scores[i][j] == 0) {
+            backtrackingDirections[i][j] = 0;
+        }
     }
 
     /**
@@ -165,8 +170,6 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
         if (algorithm.equals("SW")) {
             i = maxPositions.get(0);
             j = maxPositions.get(1);
-
-
         }
         if (algorithm.equals("NW")) {
             i = sequence1.getSequence().length();

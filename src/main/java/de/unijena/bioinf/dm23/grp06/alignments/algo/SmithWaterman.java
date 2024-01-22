@@ -18,9 +18,9 @@ public class SmithWaterman<S extends Sequence> extends AlignerMethods<S> {
         super.initializeAlignmentMatrix();
     }
 
-    public void setAlignmentScore () {
+    /*public void setAlignmentScore () {
         this.bestScore = this.scores[ sequence1.getSequence().length()-1][ sequence2.getSequence().length()-1];
-    }
+    }*/
 
 }
 
