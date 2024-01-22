@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-/*
+
 ////Hier kommt ein Vergleich zwischen Lokal naiv und Smith-Waterman-Algorithmus
 
 public class LokaleAlignmentVergleich {
@@ -32,4 +32,3 @@ public class LokaleAlignmentVergleich {
 
 }
 
-*/

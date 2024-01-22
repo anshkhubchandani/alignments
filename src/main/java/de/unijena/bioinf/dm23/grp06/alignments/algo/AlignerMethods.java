@@ -243,7 +243,7 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
     // }
 
     /**
-     * Calculates the Score in linear storage space and is only used for calculating only the score and not the alignment.
+     * Calculates the Score in linear storage space and is only used for calculating the score and not the alignment.
      * @return
      */
     public int linearScore () {
