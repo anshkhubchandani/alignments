@@ -18,6 +18,9 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
     AlignmentImpl bestScore;
     Alignment testAlignment;
 
+    private long startTime;
+    private long endTime;
+
     public AbstractNaivAligner(S sequence1, S sequence2, Scorer scorer) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
@@ -44,6 +47,7 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
      * @return the existing global Alignment, if the sequences are already aligned
      */
     public Alignment getOptimalAlignment() {
+        startTime = System.nanoTime();
         if (aligned) {
             return alignment;
         }
@@ -75,7 +79,7 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
             aligned = true;
         }
 
-
+        endTime = System.nanoTime();
         return testAlignment;
     }
 
@@ -108,10 +112,13 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
         return this.bestScore.getScore();*/
         if (aligned) {
             return this.bestScore.getScore();
-        }
-        else {
+        } else {
             return getOptimalAlignment().getScore();
         }
+    }
+
+    public long getRuntime () {
+        return endTime - startTime;
     }
 
 }
