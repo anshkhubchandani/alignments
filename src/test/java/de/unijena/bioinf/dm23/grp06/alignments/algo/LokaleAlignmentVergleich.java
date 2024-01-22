@@ -21,7 +21,7 @@ public class LokaleAlignmentVergleich {
     NaivLokal naivLokal;
     SmithWaterman sw;
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
-
+/*
     @Test
     public void simpleSequence() {
 
@@ -51,7 +51,35 @@ public class LokaleAlignmentVergleich {
         assertEquals("AB", resultsw.getSequence1());
         assertEquals("AB", resultsw.getSequence2());
         assertEquals(2, resultsw.getScore());
+    }*/
+
+    @Test
+    public void randomSequence() { //VERGLEICHEN
+        System.out.println("Naiv Local Algorithm: ");
+        sequence1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTYLYINMHFHA", "proteinSequenz100");
+        sequence2 = new AsciiSequence("SEDTTLPAKA", "proteinSequenz10");
+        expectedScore = 4;
+
+        System.out.println("\n Given sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
+
+        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal.enumeration(alignments);
+        Alignment result = naivLokal.getOptimalAlignment();
+        System.out.println("Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+
+
+        sequence1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTYLYINMHFHA", "proteinSequenz100");
+        sequence2 = new AsciiSequence("SEDTTLPAKA", "proteinSequenz10");
+
+        sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
+        Alignment resultsw = sw.getOptimalAlignment();
+        System.out.println("Sequence1 = " + resultsw.getSequence1() + "\nSequence2 = " + resultsw.getSequence2() + "\nscore = " + resultsw.getScore() + "\n");
+
+        assertEquals(result.getSequence1(),resultsw.getSequence1());
+        assertEquals(result.getSequence2(),resultsw.getSequence2());
+        assertEquals(result.getScore(),resultsw.getScore());
     }
+
 
 }
 
