@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
-/*
+
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -52,11 +52,10 @@ public class NeedlemanWunschTest {
         seq1 = new AsciiSequence("AAA", "einfacheSequenz 1");
         seq2 = new AsciiSequence("A", "einfacheSequenz 2");
         NeedlemanWunsch nw = new NeedlemanWunsch(seq1,seq2,testDefaultScorer);
-        System.out.println("\n"+"Sequence1 = " + nw.getSequence1() + "\nSequence2 = " + nw.getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
-        assertEquals("AA" , nw.getOptimalAlignment().getSequence1());
-        assertEquals("-A" , nw.getOptimalAlignment().getSequence2());
-        assertEquals(0, nw.getAlignmentScore());
+        System.out.println("\nSequence1 = " + nw.getOptimalAlignment().getSequence1() + "\nSequence2 = " + nw.getOptimalAlignment().getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
+        assertEquals("AAA" , nw.getOptimalAlignment().getSequence1());
+        assertEquals("--A" , nw.getOptimalAlignment().getSequence2());
+        assertEquals(-1, nw.getAlignmentScore());
     }
 
 }
-*/

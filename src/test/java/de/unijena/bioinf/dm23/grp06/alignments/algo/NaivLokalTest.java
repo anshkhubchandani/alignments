@@ -148,7 +148,7 @@ public class NaivLokalTest {
     @Test
     public void NullInput() { //Null pointer exception
         //sequence1 = new AminoacidSequence(null,"leereSequenz 1");
-        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
+        sequence2 = new AsciiSequence("AG", "leereSequenz 2");
         naivLokal = new NaivLokal(sequence1,sequence2,testDefaultScorer);
 
         /*InvalidCharactersException e = Assertions.assertThrows(InvalidCharactersException.class,() -> {

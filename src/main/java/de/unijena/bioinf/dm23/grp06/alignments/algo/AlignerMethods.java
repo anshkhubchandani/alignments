@@ -151,7 +151,7 @@ public class AlignerMethods<S extends Sequence> implements Aligner<S> {
      */
     public Alignment getOptimalAlignment() {
         if (firstSequence.getSequence().isEmpty() || secondSequence.getSequence().isEmpty()) {
-            throw new MissingInputsException();
+            throw new MissingInputsException("");
         }
         initializeAlignmentMatrix();
         align();
