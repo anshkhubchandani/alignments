@@ -52,4 +52,22 @@ public class NeedlemanWunschTest {
         assertEquals(-1, nw.getAlignmentScore());
     }
 
+
+    //TEST 4:
+    // Aligniert 2 zufällig erzeugte Sequenzen in mit geeigneten zufälligen Längen. Validieren Sie, dass beide Varianten
+    // (linearer/quadratischer Speicher) ihrer Needleman-Wunsch Implementierung den gleichen Score
+    // und schließlich das gleiche Ergebnis liefern
+    @Test
+    public void RandomLengthComparison() { //VERGLEICHEN
+        sequence1 = new AsciiSequence("ABBAC", "proteinSequenz100");
+        sequence2 = new AsciiSequence("ABCABBBCA", "proteinSequenz10");
+        nw = new NeedlemanWunsch(sequence1, sequence2,testDefaultScorer);
+        System.out.println("\n" + "Sequence1 = " + nw.getOptimalAlignment().getSequence1() + "\nSequence2 = " + nw.getOptimalAlignment().getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
+
+        NeedlemanWunsch nw2 = new NeedlemanWunsch(sequence1, sequence2, testDefaultScorer);
+        System.out.println("\n" + "Sequence1 = " + nw2.getOptimalAlignment().getSequence1() + "\nSequence2 = " + nw2.getOptimalAlignment().getSequence2() + "\nscore = " + nw2.getOptimalAlignment().getScore() + "\n");
+
+        assertEquals(nw.linearScore(), nw2.getOptimalAlignment().getScore());
+    }
+
 }
