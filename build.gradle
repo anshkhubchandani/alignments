@@ -35,7 +35,7 @@ dependencies {
 }
 apply plugin: 'application'
 application {
-    mainClassName = 'de.unijena.bioinf.dm2024.grp06.alignments.cli.CLMain'
+    mainClassName = 'de.unijena.bioinf.dm23.grp06.alignments.cli.CLMain'
     applicationDefaultJvmArgs = ["-Xmx200G"]
 }
 
