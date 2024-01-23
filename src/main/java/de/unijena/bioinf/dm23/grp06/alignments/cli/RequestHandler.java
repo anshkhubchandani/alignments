@@ -182,8 +182,6 @@ public class RequestHandler {
 
         sb.append("\nAlignment results:\n");
 
-        // sb.append(alignmentScorer.getScoresAsString()).append("\n");
-
         for (Aligner a : alignerObjects) {
             sb.append("Sequence 1: ").append(a.getSequence1().getName()).append("\n");
             sb.append("Sequence 2: ").append(a.getSequence2().getName()).append("\n");
@@ -191,10 +189,11 @@ public class RequestHandler {
                 sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
             }
             else if (function.equals("alignment")) {
-                sb.append("Optimal alignment:\n").append(a.getOptimalAlignment().toString()).append("\n");
+                sb.append("\nOptimal alignment:\n").append(a.getOptimalAlignment().toString()).append("\n");
                 sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
             }
-            sb.append("Runtime: ").append(a.getRuntime()).append("\n");
+            sb.append("Runtime: ").append(a.getRuntime()).append("ns (Equialent to ").
+                    append((float) (float) a.getRuntime() / 1000000000).append(" s\n");
         }
 
         return sb.toString();
