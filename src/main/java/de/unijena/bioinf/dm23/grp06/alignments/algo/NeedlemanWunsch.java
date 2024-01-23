@@ -15,7 +15,7 @@ public class NeedlemanWunsch<S extends Sequence> extends AbstractEfficientAlgori
      *
      * @param sequence1 first sequence
      * @param sequence2 second sequence
-     * @param sc   scorer
+     * @param sc scorer
      */
     public NeedlemanWunsch(S sequence1, S sequence2, Scorer sc) {
         super(sequence1, sequence2, sc, "NW");
