@@ -22,21 +22,25 @@ public class GlobalAlignmentVergleich {
     public void simpleSequence() {
         sequence1 = new AsciiSequence("ABBC", "simpleSequence 1");
         sequence2 = new AsciiSequence("GBC", "simpleSequence 2");
-        System.out.println("\n Given sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
+        System.out.println("\nGiven sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
 
-        System.out.println("Naiv Local Algorithm: ");
         naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
         naivGlobal.enumeration(alignments);
         Alignment result = naivGlobal.getOptimalAlignment();
-        System.out.println("Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("Naiv Local Algorithm \n Sequence1 = " + result.getSequence1() + "\n Sequence2 = " + result.getSequence2() + "\n score = " + result.getScore() );
+        System.out.println("Naiv Local runtime: " + naivGlobal.getRuntime() + " ns -> equivalent to "+ (double) naivGlobal.getRuntime()/1000000000 +" seconds"+"\n");
 
 
         nw = new NeedlemanWunsch(sequence1, sequence2, testDefaultScorer);
         Alignment resultnw = nw.getOptimalAlignment();
-        System.out.println("SW Algorithm: ");
-        System.out.println("Sequence1 = " + resultnw.getSequence1() + "\nSequence2 = " + resultnw.getSequence2() + "\nscore = " + resultnw.getScore() + "\n");
+        System.out.println("Smith Waterman \n Sequence1 = " + resultnw.getSequence1() + "\n Sequence2 = " + resultnw.getSequence2() + "\n score = " + resultnw.getScore());
+        System.out.println("Smith Waterman Runtime " + nw.getRuntime() + " ns -> equivalent to " + (double) nw.getRuntime() / 1000000000 + " seconds" + "\n");
+
         assertEquals(result.getSequence1(), resultnw.getSequence1());
         assertEquals(result.getSequence2(), resultnw.getSequence2());
         assertEquals(result.getScore(),resultnw.getScore());
+        double totalTime= naivGlobal.getRuntime() + nw.getRuntime();
+        System.out.println("**Total Runtime **: " + totalTime + "ns > equivalent to " + totalTime/ 1000000000 + " seconds" + "\n");
+
     }
 }

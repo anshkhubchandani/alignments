@@ -5,9 +5,10 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.*;
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
 
 
 public class NaivGlobalTest {
@@ -19,7 +20,7 @@ public class NaivGlobalTest {
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
 
     @Test
-    public void EinfacheSequence() {
+    public void SimpleSequence() {
         sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
         sequence2 = new AsciiSequence("AC", "einfacheSequenz 2");
         expectedScore = 0;
@@ -27,10 +28,11 @@ public class NaivGlobalTest {
         naivGlobal.enumeration(alignments);
         Alignment result = naivGlobal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("ABBC", result.getSequence1());
         assertEquals("A--C", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
+        System.out.println("**RUNTIME**: " + naivGlobal.getRuntime() + " ns -> equivalent to " + (double) naivGlobal.getRuntime() / 1000000000 + " seconds" + "\n");
     }
 
     @Test //test passed
@@ -64,10 +66,11 @@ public class NaivGlobalTest {
         naivGlobal.enumeration(alignments);
         Alignment result = naivGlobal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("ABBC", result.getSequence1());
         assertEquals("ABBC", result.getSequence2());
         assertEquals(4, result.getScore());
+        System.out.println("**RUNTIME**: " + naivGlobal.getRuntime() + " ns -> equivalent to " + (double) naivGlobal.getRuntime() / 1000000000 + " seconds" + "\n");
     }
 
     @Test
@@ -79,13 +82,14 @@ public class NaivGlobalTest {
         naivGlobal.enumeration(alignments);
         Alignment result = naivGlobal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("AC", result.getSequence1());
         assertEquals("A-", result.getSequence2());
+        System.out.println("**RUNTIME**: " + naivGlobal.getRuntime() + " ns -> equivalent to " + (double) naivGlobal.getRuntime() / 1000000000 + " seconds" + "\n");
     }
 
     @Test
-    public void testNaivGlobalLongSequence() {
+    public void LongSequence() {
         sequence1 = new AsciiSequence("ABCDEFGHIJKLMNOPQRSTUV", "LongSequence 1");
         sequence2 = new AsciiSequence("JK", "LongSequence 2");
         expectedScore = -18;
@@ -93,14 +97,16 @@ public class NaivGlobalTest {
         naivGlobal.enumeration(alignments);
         Alignment result = naivGlobal.getOptimalAlignment();
 
-        System.out.println("\n"+"Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
+        System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("ABCDEFGHIJKLMNOPQRSTUV", result.getSequence1());
         assertEquals("---------JK-----------", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
+        System.out.println("**RUNTIME**: " + naivGlobal.getRuntime() + " ns -> equivalent to " + (double) naivGlobal.getRuntime() / 1000000000 + " seconds" + "\n");
 
     }
+
     @Test
-    public void AsciiSequenceSimple() {
+    public void AsciiSequence() {
         sequence1 = new AsciiSequence("AAB", "sequence 1");
         sequence2 = new AsciiSequence("ABC", "sequence 2");
         expectedScore = 0;
@@ -112,20 +118,17 @@ public class NaivGlobalTest {
         assertEquals("AAB-", result.getSequence1());
         assertEquals("-ABC", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
-
+        System.out.println("**RUNTIME**: " + naivGlobal.getRuntime() + " ns -> equivalent to " + (double) naivGlobal.getRuntime() / 1000000000 + " seconds" + "\n");
     }
 
 
     //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-
-
     @Test
-    public void NullInput() { //Null pointer exception)
+    public void MissingInput() { //Null input)
         sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
 
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
             naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
         });
-
     }
 }

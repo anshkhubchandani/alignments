@@ -32,12 +32,6 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAligner <Sequenc
     //con : StringBuilder is not thread-safe
     public void enumeration(ArrayList<AlignmentImpl> alignments) {
         // Initialize a variable to keep track of the current position in the alignments list
-        // Handle the case where both sequences are empty
-
-        /*if (sequence1 == null || sequence2 == null) {
-            throw new MissingInputsException("");
-        }*/
-
 
         int arrayPos = 0;
         int bestScore = Integer.MIN_VALUE;

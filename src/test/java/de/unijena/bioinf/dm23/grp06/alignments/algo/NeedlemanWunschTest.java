@@ -29,6 +29,7 @@ public class NeedlemanWunschTest {
         assertEquals("ABBC", result.getSequence1());
         assertEquals("A-B-", result.getSequence2());
         assertEquals(0, result.getScore());
+        System.out.println("**RUNTIME**: " + nw.getRuntime() + " ns -> equivalent to " + (double) nw.getRuntime() / 1000000000 + " seconds" + "\n");
     }
 
     @Test
@@ -50,6 +51,7 @@ public class NeedlemanWunschTest {
         assertEquals("AAA" , nw.getOptimalAlignment().getSequence1());
         assertEquals("--A" , nw.getOptimalAlignment().getSequence2());
         assertEquals(-1, nw.getAlignmentScore());
+        System.out.println("**RUNTIME**: " + nw.getRuntime() + " ns -> equivalent to " + (double) nw.getRuntime() / 1000000000 + " seconds" + "\n");
     }
 
 
@@ -66,8 +68,12 @@ public class NeedlemanWunschTest {
 
         NeedlemanWunsch nw2 = new NeedlemanWunsch(sequence1, sequence2, testDefaultScorer);
         System.out.println("\n" + "Sequence1 = " + nw2.getOptimalAlignment().getSequence1() + "\nSequence2 = " + nw2.getOptimalAlignment().getSequence2() + "\nscore = " + nw2.getOptimalAlignment().getScore() + "\n");
-
         assertEquals(nw.linearScore(), nw2.getOptimalAlignment().getScore());
+        System.out.println("Runtime linearScore: " + nw.getRuntime() + " ns -> equivalent to " + (double) nw.getRuntime() / 1000000000 + " seconds");
+        System.out.println("            Runtime: " + nw2.getRuntime() + " ns -> equivalent to " + (double) nw2.getRuntime() / 1000000000 + " seconds");
+        double total= nw.getRuntime() + nw2.getRuntime();
+        System.out.println("**Total Runtime **: " + total + "ns > equivalent to " + total/ 1000000000 + " seconds" + "\n");
+
     }
 
 }

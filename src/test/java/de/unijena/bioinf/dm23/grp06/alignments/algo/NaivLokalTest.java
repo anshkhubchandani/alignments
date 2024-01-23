@@ -35,18 +35,7 @@ public class NaivLokalTest {
         assertEquals("AB", result.getSequence1());
         assertEquals("AB", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
-
-        sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
-
-        sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
-
-        Alignment resultsw = sw.getOptimalAlignment();
-
-        System.out.println("\n" + "Sequence1 = " + resultsw.getSequence1() + "\nSequence2 = " + resultsw.getSequence2() + "\nscore = " + resultsw.getScore() + "\n");
-        assertEquals("AB", resultsw.getSequence1());
-        assertEquals("AB", resultsw.getSequence2());
-        assertEquals(2, resultsw.getScore());
+        System.out.println("**RUNTIME**: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
     }
 
 
@@ -83,6 +72,7 @@ public class NaivLokalTest {
         assertEquals("ABBC", result.getSequence1());
         assertEquals("ABBC", result.getSequence2());
         assertEquals(4, result.getScore());
+        System.out.println("**RUNTIME**: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
     }
 
     @Test
@@ -97,6 +87,7 @@ public class NaivLokalTest {
         System.out.println("\n" + "Sequence1 = " + result.getSequence1() + "\nSequence2 = " + result.getSequence2() + "\nscore = " + result.getScore() + "\n");
         assertEquals("A", result.getSequence1());
         assertEquals("A", result.getSequence2());
+        System.out.println("**RUNTIME**: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
     }
 
     @Test
@@ -112,7 +103,7 @@ public class NaivLokalTest {
         assertEquals("JK", result.getSequence1());
         assertEquals("JK", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
-
+        System.out.println("**RUNTIME**: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
     }
 
     @Test
@@ -128,11 +119,10 @@ public class NaivLokalTest {
         assertEquals("AB", result.getSequence1());
         assertEquals("AB", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
+        System.out.println("**RUNTIME**: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
     }
 
     //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
-
-
     @Test
     public void NullInput() { //Null pointer exception)
         sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
@@ -140,7 +130,6 @@ public class NaivLokalTest {
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
             naivLokal = new NaivLokal(null, sequence2, testDefaultScorer);
         });
-
     }
     @Test
     public void randomSequence() { //VERGLEICHEN
@@ -156,5 +145,6 @@ public class NaivLokalTest {
         assertEquals("LP", result.getSequence1());
         assertEquals("LP", result.getSequence2());
         assertEquals(expectedScore, result.getScore());
+        System.out.println("**RUNTIME**: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
     }
     }

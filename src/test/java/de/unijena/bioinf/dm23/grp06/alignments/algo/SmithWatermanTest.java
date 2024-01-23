@@ -28,6 +28,8 @@ public class SmithWatermanTest {
         assertEquals("AB", result.getSequence1());
         assertEquals("AB", result.getSequence2());
         assertEquals(2, result.getScore());
+        System.out.println("**RUNTIME**: " + sw.getRuntime() + " ns -> equivalent to " + (double) sw.getRuntime() / 1000000000 + " seconds" + "\n");
+
     }
     @Test
     public void nullInput() { //Null pointer exception)
@@ -48,6 +50,8 @@ public class SmithWatermanTest {
         assertEquals("A", sw.getOptimalAlignment().getSequence1());
         assertEquals("A", sw.getOptimalAlignment().getSequence2());
         assertEquals(1, sw.getAlignmentScore());
+        System.out.println("**RUNTIME**: " + sw.getRuntime() + " ns -> equivalent to " + (double) sw.getRuntime() / 1000000000 + " seconds" + "\n");
+
     }
 
     @Test
@@ -56,9 +60,13 @@ public class SmithWatermanTest {
         sequence2 = new AsciiSequence("SEDTTLPAKA", "proteinSequenz10");
         sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
         SmithWaterman sw2 = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
-        System.out.println("\n" + "Sequence1 = " + sw.getSequence1() + "\nSequence2 = " + sw.getSequence2() + "\nscore = " + sw.getOptimalAlignment().getScore() + "\n");
-
+        System.out.println("\n" + "Sequence1 = " + sw.getOptimalAlignment().getSequence1() + "\nSequence2 = " + sw.getOptimalAlignment().getSequence2() + "\nscore = " + sw.getOptimalAlignment().getScore() + "\n");
         assertEquals(sw.linearScore(), sw2.getOptimalAlignment().getScore());
+        System.out.println("Runtime linearScore: " + sw.getRuntime() + " ns -> equivalent to " + (double) sw.getRuntime() / 1000000000 + " seconds");
+        System.out.println("            Runtime: " + sw2.getRuntime() + " ns -> equivalent to " + (double) sw2.getRuntime() / 1000000000 + " seconds");
+        double totalTime= sw.getRuntime() + sw2.getRuntime();
+        System.out.println("**Total Runtime **: " + totalTime + "ns > equivalent to " + totalTime/ 1000000000 + " seconds" + "\n");
+
     }
 
 }

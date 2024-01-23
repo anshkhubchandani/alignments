@@ -32,14 +32,6 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
             throw new MissingInputsException("Sequence 2 must not be null");
     }
 
-    public AbstractNaivAligner() {
-        super();
-    }
-
-    /*void missingInput(S sequence1, S sequence2) {
-        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-            throw new MissingInputsException();
-        }}*/
 
     /**
      * Using a scoring matrix, this method creates an optimal global alignment of two sequences.
