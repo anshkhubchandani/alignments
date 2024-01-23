@@ -180,7 +180,7 @@ public class RequestHandler {
             sb.append("Smith-Waterman");
         }
 
-        sb.append("\nAlignment results:\n");
+        sb.append("\n\nAlignment results:\n");
 
         for (Aligner a : alignerObjects) {
             sb.append("Sequence 1: ").append(a.getSequence1().getName()).append("\n");
@@ -192,8 +192,8 @@ public class RequestHandler {
                 sb.append("\nOptimal alignment:\n").append(a.getOptimalAlignment().toString()).append("\n");
                 sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
             }
-            sb.append("Runtime: ").append(a.getRuntime()).append("ns (Equialent to ").
-                    append((float) (float) a.getRuntime() / 1000000000).append(" s\n");
+            sb.append("Runtime: ").append(a.getRuntime()).append(" ns (Equivalent to ").
+                    append((float) a.getRuntime() / 1000000000).append(" s)\n");
         }
 
         return sb.toString();
