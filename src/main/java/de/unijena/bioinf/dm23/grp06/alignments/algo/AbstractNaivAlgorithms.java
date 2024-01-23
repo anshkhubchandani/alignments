@@ -4,11 +4,15 @@ import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
-
 import java.util.ArrayList;
 
-public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner<S> {
+/**
+ * An abstract class representing a naive sequence aligner.
+ *
+ * @param <S> The type of Sequence to be aligned.
+ */
 
+public abstract class AbstractNaivAlgorithms <S extends Sequence> implements Aligner<S> {
     S sequence1;
     S sequence2;
     Scorer scorer;
@@ -21,7 +25,15 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
     private long startTime;
     private long endTime;
 
-    public AbstractNaivAligner(S sequence1, S sequence2, Scorer scorer) {
+    /**
+     * Constructs a new AbstractNaivAligner with the specified sequences and scorer.
+     *
+     * @param sequence1 The first sequence to be aligned.
+     * @param sequence2 The second sequence to be aligned.
+     * @param scorer    The scorer used for alignment.
+     * @throws MissingInputsException If either sequence1 or sequence2 is null.
+     */
+    public AbstractNaivAlgorithms(S sequence1, S sequence2, Scorer scorer) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.scorer = scorer;
@@ -57,14 +69,6 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
             String alignedSequence1 = bestScore.getSequence1();
             String alignedSequence2 = bestScore.getSequence2();
 
-                /*T alignedSequence1Instance = createSequenceInstance(alignedSequence1, "Aligned Sequence 1", sequence1);
-                T alignedSequence2Instance = createSequenceInstance(alignedSequence2, "Aligned Sequence 2", sequence2);
-
-                // Create a new Alignment object
-                alignment = new AlignmentImpl<T>(alignedSequence1Instance, alignedSequence2Instance, bestScore.getScore());
-                 */
-
-            //  Teammate probiert etwas aus
             testAlignment = new AlignmentImpl(bestScore.getSequence1(), bestScore.getSequence2(), bestScore.getScore());
 
             // Set the aligned flag to true
@@ -75,16 +79,19 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
         return testAlignment;
     }
 
-    protected void enumeration(ArrayList<AlignmentImpl> alignments) {}
-
-            /**
-             * Finds the alignment with the highest score from the provided list.
-             *
-             *
-             * @return The alignment with the highest score, or null if the list is empty.
-             */
+    /**
+     * Template method for alignment enumeration. Subclasses implement this method.
+     *
+     * @param alignments The list to store enumerated alignments.
+     */
+    protected abstract void enumeration(ArrayList<AlignmentImpl> alignments);
 
 
+    /**
+     * Finds the alignment with the highest score from the provided list.
+     *
+     * @return The alignment with the highest score, or null if the list is empty.
+     */
     private void setbestScoreObject() {
 
         this.bestScore = alignments.get(0);
@@ -95,6 +102,12 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
             }
         }
     }
+
+    /**
+     * Gets the alignment score.
+     *
+     * @return The alignment score, or 0 if not aligned.
+     */
     public int getAlignmentScore () {
         // baseCase
         /*if (alignments.isEmpty()) {
@@ -109,8 +122,12 @@ public abstract class AbstractNaivAligner<S extends Sequence> implements Aligner
         }
     }
 
+    /**
+     * Gets the runtime of the alignment process.
+     *
+     * @return The runtime in nanoseconds.
+     */
     public long getRuntime () {
         return endTime - startTime;
     }
-
 }
