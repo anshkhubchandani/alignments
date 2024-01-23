@@ -7,7 +7,7 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
  *
  * @param <S> specific sequence object from exact-search.
  */
-public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
+public class NeedlemanWunsch<S extends Sequence> extends AbstractEfficientAlgorithms<S> {
     //Output: Kosten des optimalen Alignments (Minimum)
 
     /**
@@ -23,7 +23,7 @@ public class NeedlemanWunsch<S extends Sequence> extends AlignerMethods<S> {
     }
 
     /**
-     * Calls initializeAlignmentMatrix-method in abstract class {@link AlignerMethods}
+     * Calls initializeAlignmentMatrix-method in abstract class {@link AbstractEfficientAlgorithms}
      */
     protected void initializeAlignmentMatrix() {
         super.initializeAlignmentMatrix();

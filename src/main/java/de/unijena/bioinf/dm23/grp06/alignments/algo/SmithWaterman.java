@@ -2,7 +2,7 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
-public class SmithWaterman<S extends Sequence> extends AlignerMethods<S> {
+public class SmithWaterman<S extends Sequence> extends AbstractEfficientAlgorithms<S> {
     //Output: Ähnlichlkeit des optimalen Alignments (Maximum)
 
     public SmithWaterman (S sequence1, S sequence2, Scorer scorer) {
@@ -12,7 +12,7 @@ public class SmithWaterman<S extends Sequence> extends AlignerMethods<S> {
     }
 
     /**
-     * Calls initializeAlignmentMatrix-method in abstract class {@link AlignerMethods}
+     * Calls initializeAlignmentMatrix-method in abstract class {@link AbstractEfficientAlgorithms}
      */
     protected void initializeAlignmentMatrix() {
         super.initializeAlignmentMatrix();

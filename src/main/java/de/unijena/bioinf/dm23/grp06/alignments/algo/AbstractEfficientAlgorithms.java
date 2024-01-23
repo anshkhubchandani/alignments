@@ -7,7 +7,7 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 import java.util.ArrayList;
 
-public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
+public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements Aligner<S> {
     S sequence1;
     S sequence2;
     int bestScore;
@@ -25,7 +25,7 @@ public abstract class AlignerMethods<S extends Sequence> implements Aligner<S> {
     private long startTime;
     private long endTime;
 
-    public AlignerMethods(S sequence1, S sequence2, Scorer scorer, String algorithm) {
+    public AbstractEfficientAlgorithms(S sequence1, S sequence2, Scorer scorer, String algorithm) {
 
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
