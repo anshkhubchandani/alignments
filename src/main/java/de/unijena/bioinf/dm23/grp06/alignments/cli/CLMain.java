@@ -61,8 +61,8 @@ class AlignerOptions implements Runnable {
     @CommandLine.Option(names = {"-i", "--input"}, split = " ", arity = "1...*", description = "First group of input sequences (at least two sequences or filepaths of FASTA-files separated by space).")
     ArrayList<String> inputSequences1;
 
-    @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*", description = "Second group of input sequences (one or more sequences or filepaths of FASTA-files separated by space).")
-    ArrayList<String> inputSequences2;
+    //@CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*", description = "Second group of input sequences (one or more sequences or filepaths of FASTA-files separated by space).")
+    //ArrayList<String> inputSequences2;
 
     @CommandLine.Option(names = {"-d", "--distance"}, description = "Saves distance matrix in an output file.")
     String distFileNameOrPath;
@@ -94,12 +94,12 @@ class AlignerOptions implements Runnable {
             function = "score";
         }
 
-        if (inputSequences2 == null) {
+        //if (inputSequences2 == null) {
             userRequest = new RequestHandler(algorithm, inputSequences1, scorerFileNameOrPath, sequenceType);
-        }
-        else {
-            userRequest = new RequestHandler(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath, sequenceType);
-        }
+        //}
+        //else {
+        //    userRequest = new RequestHandler(algorithm, inputSequences1, inputSequences2, scorerFileNameOrPath, sequenceType);
+        //}
 
         if (score) {
             userRequest.printScores();
@@ -120,19 +120,19 @@ class AlignerOptions implements Runnable {
     }
 
     private boolean checkIfAdequateInput () {
-        if (inputSequences2 == null) {
+        //if (inputSequences2 == null) {
             if (inputSequences1 == null || inputSequences1.size() < 2) {
                 return false;
             }
-        }
-        else if (inputSequences1 == null) {
-            if (inputSequences2 == null || inputSequences2.size() < 2) {
-                return false;
-            }
-        }
-        else if (inputSequences1.size() < 1 && inputSequences2.size() < 1) {
-            return false;
-        }
+        //}
+        //else if (inputSequences1 == null) {
+        //    if (inputSequences2 == null || inputSequences2.size() < 2) {
+        //        return false;
+        //    }
+        //}
+        //else if (inputSequences1.size() < 1 && inputSequences2.size() < 1) {
+        //    return false;
+        //}
         return true;
     }
 }
