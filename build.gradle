@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'application' //vielleicht?
 }
-
 group = 'de.unijena.bioinf.dm23.grp06'
 version = '1.0-SNAPSHOT'
 
@@ -37,6 +36,13 @@ apply plugin: 'application'
 application {
     mainClassName = 'de.unijena.bioinf.dm23.grp06.alignments.cli.CLMain'
     applicationDefaultJvmArgs = ["-Xmx200G"]
+}
+
+jar {
+    // baseName = 'alignmentsTool'
+    manifest {
+        attributes 'Main-Class': 'de.unijena.bioinf.dm23.grp06.alignments.cli.CLMain'
+        }
 }
 
 test {

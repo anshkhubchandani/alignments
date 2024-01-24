@@ -59,11 +59,13 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
         if (algorithm.equals("NW")) {
             scores[0][0] = 0; //obere linke Ecke
             for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
-                scores[i][0] = scores[i - 1][0] + this.alignmentScorer.gap;
+                //scores[i][0] = scores[i - 1][0] + this.alignmentScorer.gap;
+                scores[i][0] = scores[i - 1][0] + this.alignmentScorer.score(sequence1.charAt(i-1),'*');
                 backtrackingDirections[i][0] = 2; // 2 steht für Up
             }
             for (int j = 1; j < sequence2.getSequence().length() + 1; j++) {
-                scores[0][j] = scores[0][j - 1] + this.alignmentScorer.gap;
+                //scores[0][j] = scores[0][j - 1] + this.alignmentScorer.gap;
+                scores[0][j] = scores[0][j - 1] + this.alignmentScorer.score('*',sequence2.charAt(j-1));
                 backtrackingDirections[0][j] = 4; // 4 steht für left
             }
             //Initialization with 0
@@ -88,8 +90,11 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
         for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
             for (int j = 1; j < sequence2.getSequence().length() + 1; j++) {
                 int diagonalScore = scores[i - 1][j - 1] + alignmentScorer.score(sequence1.charAt(i - 1), sequence2.charAt(j - 1));
-                int gapUpScore = scores[i - 1][j] + alignmentScorer.gap;
-                int gapLeftScore = scores[i][j - 1] + alignmentScorer.gap;
+                //int gapUpScore = scores[i - 1][j] + alignmentScorer.gap;
+                int gapUpScore = scores[i - 1][j] + alignmentScorer.score('*', sequence2.charAt(j-1));
+                //int gapLeftScore = scores[i][j - 1] + alignmentScorer.gap;
+                int gapLeftScore = scores[i][j - 1] + alignmentScorer.score(sequence1.charAt(i-1), '*');
+
                 if (algorithm.equals("SW")) {
                     diagonalScore = Math.max(diagonalScore, 0);
                     gapUpScore = Math.max(gapUpScore, 0);
@@ -176,10 +181,6 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
             j = sequence2.getSequence().length();
             //sequence1.length() and sequence2.length() -> start
         }
-        //AlignmentImpl<T> optimalAlignment = new AlignmentImpl<T>();
-        //AlignmentCharacters optimalAlignment = new AlignmentCharacters();
-        // ArrayList<Character> seq1List = new ArrayList<>();
-        // ArrayList<Character> seq2List = new ArrayList<>();
 
         StringBuilder firstAlignmentLine = new StringBuilder();
         StringBuilder secondAlignmentLine = new StringBuilder();

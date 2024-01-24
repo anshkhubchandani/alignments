@@ -34,8 +34,8 @@ class AlignerOptions implements Runnable {
     protected boolean helpRequested;
 
     @CommandLine.Option(names = {"-a", "--algo"}, description = "Algorithm to be used for alignment.\n" +
-            "Global alignments:\nGN - Naive algorithm\nNW - Needleman-Wunsch algorithm\n" +
-            "Local alignments:\nGL - Naive algorithm\nSW - Smith-Waterman algorithm")
+            "Global alignments:\nNG - Naive algorithm\nNW - Needleman-Wunsch algorithm\n" +
+            "Local alignments:\nNL - Naive algorithm\nSW - Smith-Waterman algorithm")
     String algorithm;
 
     @CommandLine.Option(names = {"-t", "--type"}, description = "Type of input sequences (DNA, RNA, AA (for amino acid) or ASCII).")
