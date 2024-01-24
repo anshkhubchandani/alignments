@@ -45,7 +45,7 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAlgorithms <Sequ
                 int position2;
 
                 // Create a new Scorer object for scoring alignments
-                Scorer scorer = new Scorer();
+                //Scorer scorer = new Scorer();
 
                 // Add an empty alignment to the list initially
                 alignments.add(new AlignmentImpl("", "", 0));

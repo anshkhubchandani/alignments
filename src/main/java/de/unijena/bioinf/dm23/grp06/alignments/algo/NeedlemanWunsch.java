@@ -8,7 +8,6 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
  * @param <S> specific sequence object from exact-search.
  */
 public class NeedlemanWunsch<S extends Sequence> extends AbstractEfficientAlgorithms<S> {
-    //Output: Kosten des optimalen Alignments (Minimum)
 
     /**
      * Creates a Needleman-Wunsch objekt with two input sequences and a scorer.
@@ -29,14 +28,41 @@ public class NeedlemanWunsch<S extends Sequence> extends AbstractEfficientAlgori
         super.initializeAlignmentMatrix();
     }
 
-    public void setAlignmentScore() {
-        this.bestScore = this.scores[sequence1.getSequence().length() - 1][sequence2.getSequence().length() - 1];
+    public int linearScore () {
+        startTime = System.nanoTime();
+        int[] previousRow = new int[sequence2.getSequence().length() + 1];
+        int[] currentRow = new int[sequence2.getSequence().length() + 1];
+
+        for (int k = 1; k < previousRow.length; k++) {
+            previousRow[k] = previousRow[k-1] + alignmentScorer.score(sequence2.charAt(k-1),'*');
+        }
+
+        for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
+            for (int j = 0; j < sequence2.getSequence().length() + 1; j++) {
+
+                if (j == 0) {
+                    // currentRow[j] = previousRow[j] + alignmentScorer.gap;
+                    currentRow[j] = previousRow[j] + alignmentScorer.score(sequence1.charAt(i-1), '*');
+                }
+                else {
+
+                    int diagonalScore = previousRow[j - 1] + alignmentScorer.score(sequence1.charAt(i - 1), sequence2.charAt(j - 1));
+                    int gapUpScore = previousRow[j] + alignmentScorer.score('*', sequence2.charAt(j-1));
+                    int gapLeftScore = currentRow[j-1] + alignmentScorer.score(sequence1.charAt(i-1), '*');
+
+                    currentRow[j] = Math.max(diagonalScore, Math.max(gapUpScore, gapLeftScore));
+                }
+            }
+
+            System.arraycopy(currentRow, 0, previousRow, 0, currentRow.length);
+
+        }
+        endTime = System.nanoTime();
+        return currentRow[sequence2.getSequence().length()];
     }
 
-    @Override
-    public int getAlignmentScore() {
-
-        return bestScore;
+    public void setAlignmentScore() {
+        this.bestScore = this.scores[sequence1.getSequence().length() - 1][sequence2.getSequence().length() - 1];
     }
 
 }

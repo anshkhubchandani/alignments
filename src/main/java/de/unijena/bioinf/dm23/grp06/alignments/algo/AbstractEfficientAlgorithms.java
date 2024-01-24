@@ -18,19 +18,19 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
 
     int[][] backtrackingDirections;
 
-    int maxScore;
+    // int maxScore;
     ArrayList<Integer> maxPositions;
     boolean aligned;
 
-    private long startTime;
-    private long endTime;
+    protected long startTime;
+    protected long endTime;
 
     public AbstractEfficientAlgorithms(S sequence1, S sequence2, Scorer scorer, String algorithm) {
 
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.alignmentScorer = scorer;
-        this.algorithm = algorithm; //Added algo
+        this.algorithm = algorithm;
         this.aligned = false;
         if (sequence1 == null)
             throw new MissingInputsException("Sequence 1 must not be null");
@@ -54,7 +54,6 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
         backtrackingDirections = new int[sequence1.getSequence().length() + 1][sequence2.getSequence().length() + 1];
 
         // int[Zeilen][Spalten] -> erste Sequenz senkrecht, zweite Sequenz waagerecht
-
 
         if (algorithm.equals("NW")) {
             scores[0][0] = 0; //obere linke Ecke
@@ -85,7 +84,6 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
      *
      * @return 2-dimensional array scores, which contains all scores calculated.
      */
-    //Erstellen einer Matrix, die mit den jeweiligen Scores ausgefüllt wird
     public int[][] align() {
         for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
             for (int j = 1; j < sequence2.getSequence().length() + 1; j++) {
@@ -104,9 +102,9 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
                 scores[i][j] = Math.max(diagonalScore, (Math.max(gapUpScore, gapLeftScore)));
 
                 // MaxScore für lokales Alignment
-                if (algorithm.equals("SW") && scores[i][j] > maxScore) {
+                if (algorithm.equals("SW") && scores[i][j] > bestScore) {
                     maxPositions = new ArrayList<>();
-                    maxScore = scores[i][j];
+                    bestScore = scores[i][j];
 
                     maxPositions.add(i); // Listen, die die Positionen speichern, an denen Backtracking beginnen soll (position i)
                     maxPositions.add(j); // Position j
@@ -136,19 +134,19 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
      */
     public void fillBacktracearray(int i, int j, int diagonalScore, int gapUpScore, int gapLeftScore) {
         //Getting the bestScore from the 3 options
-        bestScore = scores[i][j];
-        if (algorithm.equals("SW")) {
-            bestScore = maxScore;
-        }
+        int currentScore = scores[i][j];
+        // if (algorithm.equals("SW")) {
+        //    bestScore = maxScore;
+        // }
         backtrackingDirections[i][j] = 0;
         //int score = scores[i][j];
-        if (bestScore == diagonalScore) {
+        if (currentScore == diagonalScore) {
             backtrackingDirections[i][j] += 1;
         }
-        if (bestScore == gapUpScore) {
+        if (currentScore == gapUpScore) {
             backtrackingDirections[i][j] += 2;
         }
-        if (bestScore == gapLeftScore) {
+        if (currentScore == gapLeftScore) {
             backtrackingDirections[i][j] += 4;
         }
 
@@ -179,6 +177,7 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
         if (algorithm.equals("NW")) {
             i = sequence1.getSequence().length();
             j = sequence2.getSequence().length();
+            this.bestScore = this.scores[sequence1.getSequence().length()][sequence2.getSequence().length()];
             //sequence1.length() and sequence2.length() -> start
         }
 
@@ -232,13 +231,15 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
      * Calculates the Score in linear storage space and is only used for calculating the score and not the alignment.
      * @return
      */
-    public int linearScore () {
+    protected abstract int linearScore ();
+    /* public int linearScore () {
         startTime = System.nanoTime();
         int[] previousRow = new int[sequence2.getSequence().length() + 1];
         int[] currentRow = new int[sequence2.getSequence().length() + 1];
 
         for (int k = 1; k < previousRow.length; k++) {
-            previousRow[k] = previousRow[k-1] + alignmentScorer.gap;
+            // previousRow[k] = previousRow[k-1] + alignmentScorer.gap;
+            previousRow[k] = previousRow[k-1] + alignmentScorer.score(sequence2.charAt(k-1),'*');
         }
 
         for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
@@ -246,6 +247,7 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
 
                 if (j == 0) {
                     currentRow[j] = previousRow[j] + alignmentScorer.gap;
+                    //currentRow[j] = previousRow[j] + alignmentScorer.score(sequence1.charAt(), );
                 }
                 else {
 
@@ -263,8 +265,8 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
                     currentRow[j] = Math.max(diagonalScore, Math.max(gapUpScore, gapLeftScore));
                 }
 
-                if (algorithm.equals("SW") && currentRow[j] > maxScore) {
-                    maxScore = currentRow[j];
+                if (algorithm.equals("SW") && currentRow[j] > bestScore) {
+                    bestScore = currentRow[j];
                 }
             }
 
@@ -273,8 +275,8 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
 
         }
         endTime = System.nanoTime();
-        return algorithm.equals("NW") ? currentRow[sequence2.getSequence().length()] : maxScore;
-    }
+        return algorithm.equals("NW") ? currentRow[sequence2.getSequence().length()] : bestScore;
+    } */
 
     @Override
     public S getSequence1() {
