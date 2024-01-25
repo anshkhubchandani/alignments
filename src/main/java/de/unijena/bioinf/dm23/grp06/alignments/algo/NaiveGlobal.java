@@ -6,7 +6,7 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 import java.util.ArrayList;
 
-public class NaiveGlobal<S extends Sequence> extends AbstractNaivAlgorithms<Sequence> {
+public class NaiveGlobal<S extends Sequence> extends AbstractNaiveAlgorithms<Sequence> {
 
     private Alignment alignment;
     private boolean aligned;

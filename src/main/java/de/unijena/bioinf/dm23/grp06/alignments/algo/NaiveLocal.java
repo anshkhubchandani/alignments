@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * This class represents a naive local alignment algorithm.
  */
-public class NaiveLocal<S extends Sequence> extends AbstractNaivAlgorithms <Sequence>  {
+public class NaiveLocal<S extends Sequence> extends AbstractNaiveAlgorithms<Sequence> {
     private Alignment alignment;
     private boolean aligned;
     ArrayList<AlignmentImpl> alignments;

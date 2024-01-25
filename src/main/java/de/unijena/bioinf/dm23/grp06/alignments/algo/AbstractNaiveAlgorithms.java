@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @param <S> The type of Sequence to be aligned.
  */
 
-public abstract class AbstractNaivAlgorithms <S extends Sequence> implements Aligner<S> {
+public abstract class AbstractNaiveAlgorithms<S extends Sequence> implements Aligner<S> {
     protected S sequence1;
     protected S sequence2;
     protected Scorer scorer;
@@ -31,7 +31,7 @@ public abstract class AbstractNaivAlgorithms <S extends Sequence> implements Ali
      * @param scorer    The scorer used for alignment.
      * @throws MissingInputsException If either sequence1 or sequence2 is null.
      */
-    public AbstractNaivAlgorithms(S sequence1, S sequence2, Scorer scorer) {
+    public AbstractNaiveAlgorithms(S sequence1, S sequence2, Scorer scorer) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.scorer = scorer;
