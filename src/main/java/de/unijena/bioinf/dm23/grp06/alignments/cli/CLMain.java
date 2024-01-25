@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Main class to read and execute command line arguments.
  */
-public class CLMain {
+public class CLMain extends AlignerOptions {
 
     /**
      * Main method to read and execute command line arguments.
@@ -38,41 +38,41 @@ class AlignerOptions implements Runnable {
     @CommandLine.Option(names = {"-a", "--algo"}, description = "REQUIRED: Algorithm to be used for alignment.\n" +
             "Global alignments:\nNG - Global naive algorithm\nNW - Needleman-Wunsch algorithm\n" +
             "Local alignments:\nNL - Local naive algorithm\nSW - Smith-Waterman algorithm")
-    String algorithm;
+    private String algorithm;
 
     @CommandLine.Option(names = {"-t", "--type"}, description = "REQUIRED: Type of input sequences (DNA, RNA, AA (for amino acid) or ASCII).")
-    String sequenceType;
+    private String sequenceType;
 
     @CommandLine.Option(names = {"-c"}, description = "OPTIONAL: File with scores to be used for scoring.\n" +
             "Default scores are used if not otherwise specified: Match = 1, Mismatch or gap = -1.")
-    String scorerFileNameOrPath;
+    private String scorerFileNameOrPath;
 
     @CommandLine.Option(names = {"-s", "--score"}, description = "OPTIONAL: Use this command to show only alignment scores without the optimal alignment (saves storage space).")
-    boolean score;
+    private boolean score;
 
     @CommandLine.Option(names = {"-i", "--input"}, split = " ", arity = "1...*",
             description = "REQUIRED: Input sequences (sequences or filepaths of FASTA-files separated by space).\n" +
                     "Use this command to specify one group of input sequences (each sequence will be aligned with every other sequence of this group) or" +
                     " use -i and -i2 to specify two distinct groups of input sequences (each sequence of the first group will be aligned with each sequence of the second group).\n" +
                     "At least two sequences are required.")
-    ArrayList<String> inputSequences1;
+    private ArrayList<String> inputSequences1;
 
     @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*",
             description = "OPTIONAL: Second group of input sequences (sequences or filepaths of FASTA-files separated by space).")
-    ArrayList<String> inputSequences2;
+    private ArrayList<String> inputSequences2;
 
     @CommandLine.Option(names = {"-d", "--distance"}, description = "OPTIONAL: Saves distance matrix in an output file.")
-    String distFileNameOrPath;
+    private String distFileNameOrPath;
 
     @CommandLine.Option(names = {"-o", "--output"}, description = "OPTIONAL: Saves results in an output file.")
-    String outputFileNameOrPath;
+    private String outputFileNameOrPath;
 
     @Override
     public void run() {
         RequestHandler userRequest;
         String function = "alignment";
 
-        if (!checkIfAdequateInput()) {
+        if (!checkIfCorrectInput()) {
             throw new MissingInputsException("At least two input sequences are required.");
         }
 
@@ -105,7 +105,7 @@ class AlignerOptions implements Runnable {
         }
     }
 
-    private boolean checkIfAdequateInput () {
+    private boolean checkIfCorrectInput() {
         if (inputSequences2 == null) {
             if (inputSequences1 == null || inputSequences1.size() < 2) {
                 return false;
