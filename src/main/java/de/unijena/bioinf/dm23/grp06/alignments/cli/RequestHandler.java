@@ -18,20 +18,17 @@ import java.util.Arrays;
 public class RequestHandler {
 
     private String algo;
-
-    /**
-     * Scorer to be used by Aligner objects to score character pairs during sequence alignment.
-     */
-    public Scorer alignmentScorer;
+    private Scorer alignmentScorer;
     private ArrayList<Aligner> alignerObjects;
 
     /**
      * Creates a RequestHandler object with two groups of input sequences, and calls methods to
      * create Scorer and Aligner objects for sequence alignment.
-     * @param algorithm Algorithm to be used for alignment
-     * @param inputSeq1 First group of input sequences
-     * @param inputSeq2 Second group of input sequences
-     * @param scorerPath Filepath of input file for Scorer of null if default scores should be used
+     *
+     * @param algorithm    Algorithm to be used for alignment
+     * @param inputSeq1    First group of input sequences
+     * @param inputSeq2    Second group of input sequences
+     * @param scorerPath   Filepath of input file for Scorer of null if default scores should be used
      * @param sequenceType Type of input sequences
      */
     public RequestHandler(String algorithm, ArrayList<String> inputSeq1, ArrayList<String> inputSeq2, String scorerPath, String sequenceType) {
@@ -43,9 +40,10 @@ public class RequestHandler {
     /**
      * Creates a RequestHandler objects with one group of input sequences and calls methods to
      * create Scorer and Aligner objects for sequence alignment.
-     * @param algorithm Algorithm to be used for alignment
-     * @param inputSeq1 Group of input sequences
-     * @param scorerPath Filepath of input file for Scorer of null if default scores should be used
+     *
+     * @param algorithm    Algorithm to be used for alignment
+     * @param inputSeq1    Group of input sequences
+     * @param scorerPath   Filepath of input file for Scorer of null if default scores should be used
      * @param sequenceType Type of input sequences
      */
     public RequestHandler(String algorithm, ArrayList<String> inputSeq1, String scorerPath, String sequenceType) {
@@ -54,7 +52,7 @@ public class RequestHandler {
         createAlignerObjects(inputSeq1, inputSeq1, sequenceType, true);
     }
 
-    private void createAlignerObjects (ArrayList<String> input1, ArrayList<String> input2, String sequenceType, boolean sameSequences) {
+    private void createAlignerObjects(ArrayList<String> input1, ArrayList<String> input2, String sequenceType, boolean sameSequences) {
         alignerObjects = new ArrayList<>();
 
         int j = 0;
@@ -100,7 +98,7 @@ public class RequestHandler {
         return createSequenceObject("User input sequence: " + sequenceOrPath.substring(0, Math.min(10, sequenceOrPath.length())) + endString, sequenceOrPath, type);
     }
 
-    private Sequence createSequenceObject (String header, String sequence, String type) {
+    private Sequence createSequenceObject(String header, String sequence, String type) {
         Sequence inputSequence;
 
         if (type.equals("DNA")) {
@@ -119,7 +117,7 @@ public class RequestHandler {
         return inputSequence;
     }
 
-    private void setScorer (String scorerFilePath) {
+    private void setScorer(String scorerFilePath) {
         if (scorerFilePath == null) {
             this.alignmentScorer = new Scorer();
         }
@@ -128,19 +126,18 @@ public class RequestHandler {
         }
     }
 
-    protected void printScores () {
+    protected void printScores() {
         System.out.println(alignmentScorer.getScoresAsString() + " ");
         System.out.println(createResultString("score"));
     }
 
-    protected void printOptimalAlignmentsAndScores () {
+    protected void printOptimalAlignmentsAndScores() {
         System.out.println(alignmentScorer.getScoresAsString() + " ");
         System.out.println(createResultString("alignment"));
     }
 
 
-    protected void saveResults (String outputFileNameOrPath, String function) {
-        // Ergebnisse (Scores oder Alignments) in File speichern
+    protected void saveResults(String outputFileNameOrPath, String function) {
 
         BufferedWriter resultWriter = null;
 
@@ -163,7 +160,7 @@ public class RequestHandler {
 
     }
 
-    private String createResultString (String function) {
+    private String createResultString(String function) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Algorithm: ");
@@ -183,7 +180,7 @@ public class RequestHandler {
         sb.append("\n\nAlignment results:\n");
 
         for (Aligner a : alignerObjects) {
-            sb.append("Sequence 1: ").append(a.getSequence1().getName()).append("\n");
+            sb.append("\nSequence 1: ").append(a.getSequence1().getName()).append("\n");
             sb.append("Sequence 2: ").append(a.getSequence2().getName()).append("\n");
             if (function.equals("score")) {
                 sb.append("Score: ").append(a.getAlignmentScore()).append("\n");
@@ -225,7 +222,7 @@ public class RequestHandler {
                 bw.write(Integer.toString(index) + ": " + s + "\n");
             }
 
-            bw.write("\n    "); // erste Zeile
+            bw.write("\n   "); // erste Zeile
             for (int i = 1; i <= sequenceObjects.size(); i++) {
                 bw.write(Integer.toString(i) + "    ");
             }
@@ -236,12 +233,12 @@ public class RequestHandler {
             for (Aligner i : alignerObjects) {
                 i.getOptimalAlignment();
                 distances[sequenceObjects.indexOf(i.getSequence1().getName())][sequenceObjects.indexOf(i.getSequence2().getName())] =
-                    i.getAlignmentScore();
+                        i.getAlignmentScore();
             }
 
             int j = 1;
             for (int[] reihe : distances) {
-                bw.write(Integer.toString(j) + Arrays.toString(reihe).replaceAll("\\[", " ").replaceAll("[],]*", " ") + "\n");
+               bw.write(Integer.toString(j) + " " + Arrays.toString(reihe).replaceAll("\\[", " ").replaceAll("[]]", " ").replaceAll(",", " ") + "\n");
                 j++;
             }
 
@@ -257,7 +254,6 @@ public class RequestHandler {
                 e.printStackTrace();
             }
         }
-
     }
 
 }
