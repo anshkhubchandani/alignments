@@ -24,8 +24,8 @@ public class NaiveLocalTest {
     @Test
     public void SimpleSequence() {
 
-        sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
+        sequence1 = new AsciiSequence("ABBC", "Sequence 1");
+        sequence2 = new AsciiSequence("AB", "Sequence 2");
         expectedScore = 2;
         naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
@@ -61,8 +61,8 @@ public class NaiveLocalTest {
     //Sonderfälle
     @Test
     public void SameSequence() {
-        sequence1 = new AsciiSequence("ABBC", "leereSequenz 1");
-        sequence2 = new AsciiSequence("ABBC", "leereSequenz 2");
+        sequence1 = new AsciiSequence("ABBC", "Sequence 1");
+        sequence2 = new AsciiSequence("ABBC", "Sequence 2");
         expectedScore = 4;
         naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
@@ -77,8 +77,8 @@ public class NaiveLocalTest {
 
     @Test
     public void ShortSequence() {
-        sequence1 = new AsciiSequence("AC", "Sequenz 1");
-        sequence2 = new AsciiSequence("A", "Sequenz 2");
+        sequence1 = new AsciiSequence("AC", "ShortSequence 1");
+        sequence2 = new AsciiSequence("A", "ShortSequence 2");
         expectedScore = 1;
         naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
@@ -93,7 +93,7 @@ public class NaiveLocalTest {
     @Test
     public void LongSequence() {
         sequence1 = new AsciiSequence("ABCDEFGHIJKLMNOPQRSTUV", "LongSequence 1");
-        sequence2 = new AsciiSequence("JK", "LongSequence 2");
+        sequence2 = new AsciiSequence("JK", "ShortSequence 2");
         expectedScore = 2;
         naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
@@ -108,8 +108,8 @@ public class NaiveLocalTest {
 
     @Test
     public void AsciiSequenceSimple() {
-        sequence1 = new AsciiSequence("AAB", "sequence 1");
-        sequence2 = new AsciiSequence("ABC", "sequence 2");
+        sequence1 = new AsciiSequence("AAB", "Sequence 1");
+        sequence2 = new AsciiSequence("ABC", "Sequence 2");
         expectedScore = 2;
         naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
@@ -125,7 +125,7 @@ public class NaiveLocalTest {
     //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
     @Test
     public void NullInput() { //Null pointer exception)
-        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
+        sequence2 = new AminoacidSequence("AG", "Sequence 2");
 
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
             naivLokal = new NaiveLocal(null, sequence2, testDefaultScorer);
@@ -134,8 +134,8 @@ public class NaiveLocalTest {
     @Test
     public void randomSequence() { //VERGLEICHEN
         System.out.println("Naiv Local Algorithm: ");
-        sequence1 = new AsciiSequence("MFGLPHSTV", "proteinSequenz100");
-        sequence2 = new AsciiSequence("SEDTTLP", "proteinSequenz10");
+        sequence1 = new AsciiSequence("MFGLPHSTV", "proteinSequence100");
+        sequence2 = new AsciiSequence("SEDTTLP", "proteinSequence10");
         expectedScore = 2;
         naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);

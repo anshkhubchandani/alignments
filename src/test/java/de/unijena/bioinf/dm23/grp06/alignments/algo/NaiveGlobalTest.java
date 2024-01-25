@@ -21,8 +21,8 @@ public class NaiveGlobalTest {
 
     @Test
     public void SimpleSequence() {
-        sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("AC", "einfacheSequenz 2");
+        sequence1 = new AsciiSequence("ABBC", "Sequence 1");
+        sequence2 = new AsciiSequence("AC", "Sequence 2");
         expectedScore = 0;
         naiveGlobal = new NaiveGlobal(sequence1, sequence2, testDefaultScorer);
         naiveGlobal.enumeration(alignments);
@@ -59,8 +59,8 @@ public class NaiveGlobalTest {
     //Sonderfälle
     @Test
     public void SameSequence() {
-        sequence1 = new AsciiSequence("ABBC", "leereSequenz 1");
-        sequence2 = new AsciiSequence("ABBC", "leereSequenz 2");
+        sequence1 = new AsciiSequence("ABBC", "Sequence 1");
+        sequence2 = new AsciiSequence("ABBC", "Sequence 2");
         expectedScore = 4;
         naiveGlobal = new NaiveGlobal(sequence1, sequence2, testDefaultScorer);
         naiveGlobal.enumeration(alignments);
@@ -75,8 +75,8 @@ public class NaiveGlobalTest {
 
     @Test
     public void testnaiveGlobalShortSequence() {
-        sequence1 = new AsciiSequence("AC", "leereSequenz 1");
-        sequence2 = new AsciiSequence("A", "leereSequenz 2");
+        sequence1 = new AsciiSequence("AC", "ShortSequence 1");
+        sequence2 = new AsciiSequence("A", "ShortSequence 2");
         expectedScore = 0;
         naiveGlobal = new NaiveGlobal(sequence1, sequence2, testDefaultScorer);
         naiveGlobal.enumeration(alignments);
@@ -107,8 +107,8 @@ public class NaiveGlobalTest {
 
     @Test
     public void AsciiSequence() {
-        sequence1 = new AsciiSequence("AAB", "sequence 1");
-        sequence2 = new AsciiSequence("ABC", "sequence 2");
+        sequence1 = new AsciiSequence("AAB", "Sequence 1");
+        sequence2 = new AsciiSequence("ABC", "Sequence 2");
         expectedScore = 0;
         naiveGlobal = new NaiveGlobal(sequence1, sequence2, testDefaultScorer);
         naiveGlobal.enumeration(alignments);
@@ -125,7 +125,7 @@ public class NaiveGlobalTest {
     //Fehlerfälle --> soll Fehlermeldungen generiert oder angemessen darauf reagiert
     @Test
     public void MissingInput() { //Null input)
-        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
+        sequence2 = new AminoacidSequence("AG", "Sequence 2");
 
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
             naiveGlobal = new NaiveGlobal(sequence1, sequence2, testDefaultScorer);

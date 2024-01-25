@@ -18,8 +18,8 @@ public class NeedlemanWunschTest {
 
     @Test
     public void simpleSequence() {
-        sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
+        sequence1 = new AsciiSequence("ABBC", "Sequence 1");
+        sequence2 = new AsciiSequence("AB", "Sequence 2");
 
         nw = new NeedlemanWunsch(sequence1, sequence2, testDefaultScorer);
 
@@ -34,7 +34,7 @@ public class NeedlemanWunschTest {
 
     @Test
     public void nullInput() { //Null pointer exception)
-        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
+        sequence2 = new AminoacidSequence("AG", "Sequence 2");
 
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
             nw = new NeedlemanWunsch<>(null, sequence2, testDefaultScorer);
@@ -44,8 +44,8 @@ public class NeedlemanWunschTest {
 
     @Test
     public void testNoSameSequenceLength() {
-        sequence1 = new AsciiSequence("AAA", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("A", "einfacheSequenz 2");
+        sequence1 = new AsciiSequence("AAA", "Sequence 1");
+        sequence2 = new AsciiSequence("A", "Sequence 2");
         nw = new NeedlemanWunsch(sequence1, sequence2,testDefaultScorer);
         System.out.println("\nSequence1 = " + nw.getOptimalAlignment().getSequence1() + "\nSequence2 = " + nw.getOptimalAlignment().getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
         assertEquals("AAA" , nw.getOptimalAlignment().getSequence1());
@@ -61,8 +61,8 @@ public class NeedlemanWunschTest {
     // und schließlich das gleiche Ergebnis liefern
     @Test
     public void RandomLengthComparison() { //VERGLEICHEN
-        sequence1 = new AsciiSequence("ABBAC", "proteinSequenz100");
-        sequence2 = new AsciiSequence("ABCABBBCA", "proteinSequenz10");
+        sequence1 = new AsciiSequence("ABBAC", "proteinSequence100");
+        sequence2 = new AsciiSequence("ABCABBBCA", "proteinSequence10");
         nw = new NeedlemanWunsch(sequence1, sequence2,testDefaultScorer);
         System.out.println("\n" + "Sequence1 = " + nw.getOptimalAlignment().getSequence1() + "\nSequence2 = " + nw.getOptimalAlignment().getSequence2() + "\nscore = " + nw.getOptimalAlignment().getScore() + "\n");
 

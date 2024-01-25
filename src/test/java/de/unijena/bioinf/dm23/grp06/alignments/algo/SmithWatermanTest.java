@@ -17,8 +17,8 @@ public class SmithWatermanTest {
 
     @Test
     public void simpleSequence() {
-        sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
+        sequence1 = new AsciiSequence("ABBC", "Sequence 1");
+        sequence2 = new AsciiSequence("AB", "Sequence 2");
 
         sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
 
@@ -33,7 +33,7 @@ public class SmithWatermanTest {
     }
     @Test
     public void nullInput() { //Null pointer exception)
-        sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
+        sequence2 = new AminoacidSequence("AG", "Sequence 2");
 
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
             sw = new SmithWaterman<>(null, sequence2, testDefaultScorer);
@@ -43,8 +43,8 @@ public class SmithWatermanTest {
 
     @Test
     public void testNoSameSequenceLength() {
-        sequence1 = new AsciiSequence("AAA", "einfacheSequenz 1");
-        sequence2 = new AsciiSequence("A", "einfacheSequenz 2");
+        sequence1 = new AsciiSequence("AAA", "Sequence 1");
+        sequence2 = new AsciiSequence("A", "Sequence 2");
         sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
         System.out.println("\n" + "Sequence1 = " + sw.getSequence1() + "\nSequence2 = " + sw.getSequence2() + "\nscore = " + sw.getOptimalAlignment().getScore() + "\n");
         assertEquals("A", sw.getOptimalAlignment().getSequence1());
@@ -56,8 +56,8 @@ public class SmithWatermanTest {
 
     @Test
     public void randomSequence() { //VERGLEICHEN
-        sequence1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTYLYINMHFHA", "proteinSequenz100");
-        sequence2 = new AsciiSequence("SEDTTLPAKA", "proteinSequenz10");
+        sequence1 = new AsciiSequence("MFGLPHSTVTYMIQKEKMCPFKHVTSHRFCGQHDWCEKFSHFDRRYNTSKTCQRTDKAELCFSIEEVWALWTWCEIMYPFSWKFIGLADTYLYINMHFHA", "proteinSequence100");
+        sequence2 = new AsciiSequence("SEDTTLPAKA", "proteinSequence10");
         sw = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
         SmithWaterman sw2 = new SmithWaterman(sequence1, sequence2, testDefaultScorer);
         System.out.println("\n" + "Sequence1 = " + sw.getOptimalAlignment().getSequence1() + "\nSequence2 = " + sw.getOptimalAlignment().getSequence2() + "\nscore = " + sw.getOptimalAlignment().getScore() + "\n");

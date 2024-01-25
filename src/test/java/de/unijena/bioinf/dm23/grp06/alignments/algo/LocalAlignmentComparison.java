@@ -55,8 +55,8 @@ public class LocalAlignmentComparison {
 
     @Test
     public void randomSequence() { //VERGLEICHEN
-        sequence1 = new AsciiSequence("MFGLPHSTV", "proteinSequenz100");
-        sequence2 = new AsciiSequence("SEDTTLP", "proteinSequenz10");
+        sequence1 = new AsciiSequence("MFGLPHSTV", "proteinSequence100");
+        sequence2 = new AsciiSequence("SEDTTLP", "proteinSequence10");
 
         System.out.println("\nGiven sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
 
