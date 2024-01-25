@@ -4,7 +4,7 @@ import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 public interface Aligner<S extends Sequence> {
-   int getAlignmentScore();
+    int getAlignmentScore();
     Alignment getOptimalAlignment(); //align
     long getRuntime ();
 

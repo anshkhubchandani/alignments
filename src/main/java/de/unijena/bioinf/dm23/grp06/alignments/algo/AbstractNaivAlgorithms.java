@@ -13,15 +13,13 @@ import java.util.ArrayList;
  */
 
 public abstract class AbstractNaivAlgorithms <S extends Sequence> implements Aligner<S> {
-    S sequence1;
-    S sequence2;
-    Scorer scorer;
-    Alignment alignment;
-    boolean aligned;
-    ArrayList<AlignmentImpl> alignments;
-    AlignmentImpl bestScore;
-    //Alignment testAlignment;
-
+    protected S sequence1;
+    protected S sequence2;
+    protected Scorer scorer;
+    private Alignment alignment;
+    private boolean aligned;
+    protected ArrayList<AlignmentImpl> alignments;
+    private AlignmentImpl bestScore;
     private long startTime;
     private long endTime;
 

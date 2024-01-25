@@ -17,8 +17,6 @@ public class SmithWaterman<S extends Sequence> extends AbstractEfficientAlgorith
      */
     public SmithWaterman (S sequence1, S sequence2, Scorer sc) {
         super(sequence1, sequence2, sc, "SW");
-        this.algorithm = "SW";
-
     }
 
     /**
@@ -35,10 +33,6 @@ public class SmithWaterman<S extends Sequence> extends AbstractEfficientAlgorith
 
         for (int i = 1; i < sequence1.getSequence().length() + 1; i++) {
             for (int j = 1; j < sequence2.getSequence().length() + 1; j++) {
-
-                // int diagonalScore = previousRow[j - 1] + alignmentScorer.score(sequence1.charAt(i - 1), sequence2.charAt(j - 1));
-                // int gapUpScore = previousRow[j] + alignmentScorer.score('*', sequence2.charAt(j-1));
-                // int gapLeftScore = currentRow[j-1] + alignmentScorer(sequence1.charAt(i-1), '*');
 
                 int diagonalScore = Math.max(previousRow[j - 1] + alignmentScorer.score(sequence1.charAt(i - 1), sequence2.charAt(j - 1)), 0);
                 int gapUpScore = Math.max(previousRow[j] + alignmentScorer.score('*', sequence2.charAt(j-1)), 0);
@@ -58,10 +52,6 @@ public class SmithWaterman<S extends Sequence> extends AbstractEfficientAlgorith
         endTime = System.nanoTime();
         return bestScore;
     }
-
-    /*public void setAlignmentScore () {
-        this.bestScore = this.scores[ sequence1.getSequence().length()-1][ sequence2.getSequence().length()-1];
-    }*/
 
 }
 

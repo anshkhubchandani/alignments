@@ -18,7 +18,6 @@ public class NeedlemanWunsch<S extends Sequence> extends AbstractEfficientAlgori
      */
     public NeedlemanWunsch(S sequence1, S sequence2, Scorer sc) {
         super(sequence1, sequence2, sc, "NW");
-        this.algorithm = "NW";
     }
 
     /**
