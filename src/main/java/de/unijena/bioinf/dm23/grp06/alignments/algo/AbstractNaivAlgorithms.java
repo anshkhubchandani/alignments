@@ -20,7 +20,7 @@ public abstract class AbstractNaivAlgorithms <S extends Sequence> implements Ali
     boolean aligned;
     ArrayList<AlignmentImpl> alignments;
     AlignmentImpl bestScore;
-    Alignment testAlignment;
+    //Alignment testAlignment;
 
     private long startTime;
     private long endTime;
@@ -69,14 +69,14 @@ public abstract class AbstractNaivAlgorithms <S extends Sequence> implements Ali
             String alignedSequence1 = bestScore.getSequence1();
             String alignedSequence2 = bestScore.getSequence2();
 
-            testAlignment = new AlignmentImpl(bestScore.getSequence1(), bestScore.getSequence2(), bestScore.getScore());
+            alignment = new AlignmentImpl(alignedSequence1, alignedSequence2, bestScore.getScore());
 
             // Set the aligned flag to true
             aligned = true;
         }
 
         endTime = System.nanoTime();
-        return testAlignment;
+        return alignment;
     }
 
     /**
@@ -109,12 +109,6 @@ public abstract class AbstractNaivAlgorithms <S extends Sequence> implements Ali
      * @return The alignment score, or 0 if not aligned.
      */
     public int getAlignmentScore () {
-        // baseCase
-        /*if (alignments.isEmpty()) {
-            return 0;
-        }
-
-        return this.bestScore.getScore();*/
         if (aligned) {
             return this.bestScore.getScore();
         } else {
