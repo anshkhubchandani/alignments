@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 ////Hier kommt ein Vergleich zwischen Lokal naiv und Smith-Waterman-Algorithmus
 
-public class LokalAlignmentVergleich {
+public class LocalAlignmentComparison {
     Sequence sequence1;
     Sequence sequence2;
     int expectedScore;
     Scorer testDefaultScorer = new Scorer();
-    NaivLokal naivLokal;
+    NaiveLocal naiveLocal;
     SmithWaterman sw;
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
 
@@ -29,11 +29,11 @@ public class LokalAlignmentVergleich {
         expectedScore = 2;
         System.out.println("\n Given sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
 
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
-        naivLokal.enumeration(alignments);
-        Alignment result = naivLokal.getOptimalAlignment();
+        naiveLocal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
+        naiveLocal.enumeration(alignments);
+        Alignment result = naiveLocal.getOptimalAlignment();
         System.out.println("Naiv Local Algorithm \n Sequence1 = " + result.getSequence1() + "\n Sequence2 = " + result.getSequence2() + "\n score = " + result.getScore() );
-        System.out.println("Naiv Local runtime: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
+        System.out.println("Naiv Local runtime: " + naiveLocal.getRuntime() + " ns -> equivalent to "+ (double) naiveLocal.getRuntime()/1000000000 +" seconds"+"\n");
 
         assertEquals("BC", result.getSequence1());
         assertEquals("BC", result.getSequence2());
@@ -48,7 +48,7 @@ public class LokalAlignmentVergleich {
         assertEquals("BC", resultsw.getSequence1());
         assertEquals("BC", resultsw.getSequence2());
         assertEquals(2, resultsw.getScore());
-        double totalTime= naivLokal.getRuntime() + sw.getRuntime();
+        double totalTime= naiveLocal.getRuntime() + sw.getRuntime();
         System.out.println("**Total Runtime **: " + totalTime + "ns > equivalent to " + totalTime/ 1000000000 + " seconds" + "\n");
 
     }
@@ -60,11 +60,11 @@ public class LokalAlignmentVergleich {
 
         System.out.println("\nGiven sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
 
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
-        naivLokal.enumeration(alignments);
-        Alignment result = naivLokal.getOptimalAlignment();
+        naiveLocal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
+        naiveLocal.enumeration(alignments);
+        Alignment result = naiveLocal.getOptimalAlignment();
         System.out.println("Naiv Local Algorithm \n Sequence1 = " + result.getSequence1() + "\n Sequence2 = " + result.getSequence2() + "\n score = " + result.getScore() );
-        System.out.println("Naiv Local runtime: " + naivLokal.getRuntime() + " ns -> equivalent to "+ (double) naivLokal.getRuntime()/1000000000 +" seconds"+"\n");
+        System.out.println("Naiv Local runtime: " + naiveLocal.getRuntime() + " ns -> equivalent to "+ (double) naiveLocal.getRuntime()/1000000000 +" seconds"+"\n");
 
 
 
@@ -78,7 +78,7 @@ public class LokalAlignmentVergleich {
         assertEquals(result.getSequence2(),resultsw.getSequence2());
         assertEquals(result.getScore(),resultsw.getScore());
 
-        double totalTime= naivLokal.getRuntime() + sw.getRuntime();
+        double totalTime= naiveLocal.getRuntime() + sw.getRuntime();
         System.out.println("**Total Runtime **: " + totalTime + "ns > equivalent to " + totalTime/ 1000000000 + " seconds" + "\n");
 
     }

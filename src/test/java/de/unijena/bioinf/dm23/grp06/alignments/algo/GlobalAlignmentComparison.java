@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GlobalAlignmentVergleich {
+public class GlobalAlignmentComparison {
     Sequence sequence1;
     Sequence sequence2;
     int expectedScore;
     Scorer testDefaultScorer = new Scorer();
-    NaivGlobal naivGlobal;
+    NaiveGlobal naiveGlobal;
     NeedlemanWunsch nw;
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
     @Test
@@ -24,11 +24,11 @@ public class GlobalAlignmentVergleich {
         sequence2 = new AsciiSequence("GBC", "simpleSequence 2");
         System.out.println("\nGiven sequences \n Sequence 1: "+ sequence1.getSequence() + "\n Sequence 2: " +sequence2.getSequence() + "\n");
 
-        naivGlobal = new NaivGlobal(sequence1, sequence2, testDefaultScorer);
-        naivGlobal.enumeration(alignments);
-        Alignment result = naivGlobal.getOptimalAlignment();
+        naiveGlobal = new NaiveGlobal(sequence1, sequence2, testDefaultScorer);
+        naiveGlobal.enumeration(alignments);
+        Alignment result = naiveGlobal.getOptimalAlignment();
         System.out.println("Naiv Local Algorithm \n Sequence1 = " + result.getSequence1() + "\n Sequence2 = " + result.getSequence2() + "\n score = " + result.getScore() );
-        System.out.println("Naiv Local runtime: " + naivGlobal.getRuntime() + " ns -> equivalent to "+ (double) naivGlobal.getRuntime()/1000000000 +" seconds"+"\n");
+        System.out.println("Naiv Local runtime: " + naiveGlobal.getRuntime() + " ns -> equivalent to "+ (double) naiveGlobal.getRuntime()/1000000000 +" seconds"+"\n");
 
 
         nw = new NeedlemanWunsch(sequence1, sequence2, testDefaultScorer);
@@ -39,7 +39,7 @@ public class GlobalAlignmentVergleich {
         assertEquals(result.getSequence1(), resultnw.getSequence1());
         assertEquals(result.getSequence2(), resultnw.getSequence2());
         assertEquals(result.getScore(),resultnw.getScore());
-        double totalTime= naivGlobal.getRuntime() + nw.getRuntime();
+        double totalTime= naiveGlobal.getRuntime() + nw.getRuntime();
         System.out.println("**Total Runtime **: " + totalTime + "ns > equivalent to " + totalTime/ 1000000000 + " seconds" + "\n");
 
     }

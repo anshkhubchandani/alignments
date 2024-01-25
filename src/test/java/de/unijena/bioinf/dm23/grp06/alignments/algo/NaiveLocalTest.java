@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class NaivLokalTest {
+public class NaiveLocalTest {
     Sequence sequence1;
     Sequence sequence2;
     int expectedScore;
     Scorer testDefaultScorer = new Scorer();
-    NaivLokal naivLokal;
+    NaiveLocal naivLokal;
     SmithWaterman sw;
     ArrayList<AlignmentImpl> alignments = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("ABBC", "einfacheSequenz 1");
         sequence2 = new AsciiSequence("AB", "einfacheSequenz 2");
         expectedScore = 2;
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
@@ -64,7 +64,7 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("ABBC", "leereSequenz 1");
         sequence2 = new AsciiSequence("ABBC", "leereSequenz 2");
         expectedScore = 4;
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
@@ -80,7 +80,7 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("AC", "Sequenz 1");
         sequence2 = new AsciiSequence("A", "Sequenz 2");
         expectedScore = 1;
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
@@ -95,7 +95,7 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("ABCDEFGHIJKLMNOPQRSTUV", "LongSequence 1");
         sequence2 = new AsciiSequence("JK", "LongSequence 2");
         expectedScore = 2;
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
@@ -111,7 +111,7 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("AAB", "sequence 1");
         sequence2 = new AsciiSequence("ABC", "sequence 2");
         expectedScore = 2;
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
@@ -128,7 +128,7 @@ public class NaivLokalTest {
         sequence2 = new AminoacidSequence("AG", "leereSequenz 2");
 
         MissingInputsException e = Assertions.assertThrows(MissingInputsException.class, () -> {
-            naivLokal = new NaivLokal(null, sequence2, testDefaultScorer);
+            naivLokal = new NaiveLocal(null, sequence2, testDefaultScorer);
         });
     }
     @Test
@@ -137,7 +137,7 @@ public class NaivLokalTest {
         sequence1 = new AsciiSequence("MFGLPHSTV", "proteinSequenz100");
         sequence2 = new AsciiSequence("SEDTTLP", "proteinSequenz10");
         expectedScore = 2;
-        naivLokal = new NaivLokal(sequence1, sequence2, testDefaultScorer);
+        naivLokal = new NaiveLocal(sequence1, sequence2, testDefaultScorer);
         naivLokal.enumeration(alignments);
         Alignment result = naivLokal.getOptimalAlignment();
 
