@@ -18,21 +18,16 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAlgorithms <Sequ
         super(sequence1, sequence2, scorer);
         this.aligned = false;
     }
-    void missingInput(S sequence1, S sequence2) {
-        if (sequence1.getSequence().isEmpty() || sequence2.getSequence().isEmpty()) {
-            throw new MissingInputsException("");
-        }}
+
     /**
      * Method implementation for alignment enumeration.
      *
      * @param alignments The list to store alignment strings.
      */
-    //using StringBuilder: bc when you concatenate strings using the + operator in Java, a new string is created, leading to potential memory overhead, especially when dealing with large sequences.
-    // StringBuilder avoids creating unnecessary intermediate string objects, which can be more memory-efficient, especially when dealing with large sequences.
-    //con : StringBuilder is not thread-safe
-    public void enumeration(ArrayList<AlignmentImpl> alignments) {
-        // Initialize a variable to keep track of the current position in the alignments list
 
+    public void enumeration(ArrayList<AlignmentImpl> alignments) {
+
+        // Initialize a variable to keep track of the current position in the alignments list
         int arrayPos = 0;
         int bestScore = Integer.MIN_VALUE;
 
@@ -108,16 +103,7 @@ public class NaivLokal <S extends Sequence> extends AbstractNaivAlgorithms <Sequ
 
                 }
             }
-//vielleicht?
-            /*int bestScore = Integer.MIN_VALUE;
-            for (AlignmentImpl alignment : alignments){
-                if (alignment.getScore() > bestScore){
-                    bestScore= alignment.getScore();
-                }
-
-            }*/
         }
-
     }
 
     @Override
