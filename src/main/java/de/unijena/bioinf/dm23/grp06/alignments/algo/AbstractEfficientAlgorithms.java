@@ -113,13 +113,12 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
                     scores[i][j] = 0;
                 }
 
-                // Dann in Smith-Waterman alignmentScore auf maxScore setzen und für Traceback Startposition(en) rauslesen
                 fillBacktracearray(i, j, diagonalScore, gapUpScore, gapLeftScore);
             }
         }
 
         aligned = true;
-        //Return alignment matrix
+
         return scores;
     }
 
@@ -178,7 +177,6 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
             i = sequence1.getSequence().length();
             j = sequence2.getSequence().length();
             this.bestScore = this.scores[sequence1.getSequence().length()][sequence2.getSequence().length()];
-            //sequence1.length() and sequence2.length() -> start
         }
 
         StringBuilder firstAlignmentLine = new StringBuilder();
@@ -215,9 +213,7 @@ public abstract class AbstractEfficientAlgorithms<S extends Sequence> implements
      * @return
      */
     public int getAlignmentScore() {
-        //System.out.println("The best score is")
-        //Boolean-Flag erstellen
-        //return bestScore;
+
         if (aligned) {
             return bestScore;
         }
