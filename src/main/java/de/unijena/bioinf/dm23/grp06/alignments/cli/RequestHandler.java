@@ -62,10 +62,10 @@ public class RequestHandler {
                     // do nothing
                 }
                 else if (algo.equals("NG")) {
-                    alignerObjects.add(new NaivGlobal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
+                    alignerObjects.add(new NaiveGlobal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("NL")) {
-                    alignerObjects.add(new NaivLokal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
+                    alignerObjects.add(new NaiveLocal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("NW")) {
                     alignerObjects.add(new NeedlemanWunsch(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));

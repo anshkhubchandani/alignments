@@ -2,7 +2,6 @@ package de.unijena.bioinf.dm23.grp06.alignments.algo;
 
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 //import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
@@ -10,20 +9,20 @@ import java.util.ArrayList;
 /**
  * This class represents a naive local alignment algorithm.
  */
-public class NaivLokal <S extends Sequence> extends AbstractNaivAlgorithms <Sequence>  {
+public class NaiveLocal<S extends Sequence> extends AbstractNaivAlgorithms <Sequence>  {
     private Alignment alignment;
     private boolean aligned;
     ArrayList<AlignmentImpl> alignments;
     AlignmentImpl bestScore;
 
     /**
-     * Constructs a NaivLokal instance with the given sequences and scorer.
+     * Constructs a NaiveLocal instance with the given sequences and scorer.
      *
      * @param sequence1 The first sequence for alignment.
      * @param sequence2 The second sequence for alignment.
      * @param scorer    The scorer used for alignment scoring.
      */
-    public NaivLokal(S sequence1, S sequence2, Scorer scorer) {
+    public NaiveLocal(S sequence1, S sequence2, Scorer scorer) {
         super(sequence1, sequence2, scorer);
         this.aligned = false;
     }
