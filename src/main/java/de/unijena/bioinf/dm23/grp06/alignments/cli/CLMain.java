@@ -35,35 +35,36 @@ class AlignerOptions implements Runnable {
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "Prints help message.")
     protected boolean helpRequested;
 
-    @CommandLine.Option(names = {"-a", "--algo"}, description = "Algorithm to be used for alignment.\n" +
+    @CommandLine.Option(names = {"-a", "--algo"}, description = "REQUIRED: Algorithm to be used for alignment.\n" +
             "Global alignments:\nNG - Global naive algorithm\nNW - Needleman-Wunsch algorithm\n" +
             "Local alignments:\nNL - Local naive algorithm\nSW - Smith-Waterman algorithm")
     String algorithm;
 
-    @CommandLine.Option(names = {"-t", "--type"}, description = "Type of input sequences (DNA, RNA, AA (for amino acid) or ASCII).")
+    @CommandLine.Option(names = {"-t", "--type"}, description = "REQUIRED: Type of input sequences (DNA, RNA, AA (for amino acid) or ASCII).")
     String sequenceType;
 
-    @CommandLine.Option(names = {"-c"}, description = "File with scores to be used for scoring.\n" +
+    @CommandLine.Option(names = {"-c"}, description = "OPTIONAL: File with scores to be used for scoring.\n" +
             "Default scores are used if not otherwise specified: Match = 1, Mismatch or gap = -1.")
     String scorerFileNameOrPath;
 
-    @CommandLine.Option(names = {"-s", "--score"}, description = "Use this command to show only alignment scores without the optimal alignment (saves storage space).")
+    @CommandLine.Option(names = {"-s", "--score"}, description = "OPTIONAL: Use this command to show only alignment scores without the optimal alignment (saves storage space).")
     boolean score;
 
     @CommandLine.Option(names = {"-i", "--input"}, split = " ", arity = "1...*",
-            description = "Input sequences (at least two sequences or filepaths of FASTA-files separated by space).\n" +
+            description = "REQUIRED: Input sequences (sequences or filepaths of FASTA-files separated by space).\n" +
                     "Use this command to specify one group of input sequences (each sequence will be aligned with every other sequence of this group) or" +
-                    " use -i and -i2 to specify two distinct groups of input sequences (each sequence of the first group will be aligned with each sequence of the second group).")
+                    " use -i and -i2 to specify two distinct groups of input sequences (each sequence of the first group will be aligned with each sequence of the second group).\n" +
+                    "At least two sequences are required.")
     ArrayList<String> inputSequences1;
 
     @CommandLine.Option(names = {"-i2", "--input2"}, split = " ", arity = "1...*",
-            description = "Second group of input sequences (one or more sequences or filepaths of FASTA-files separated by space).")
+            description = "OPTIONAL: Second group of input sequences (sequences or filepaths of FASTA-files separated by space).")
     ArrayList<String> inputSequences2;
 
-    @CommandLine.Option(names = {"-d", "--distance"}, description = "Saves distance matrix in an output file.")
+    @CommandLine.Option(names = {"-d", "--distance"}, description = "OPTIONAL: Saves distance matrix in an output file.")
     String distFileNameOrPath;
 
-    @CommandLine.Option(names = {"-o", "--output"}, description = "Saves results in an output file.")
+    @CommandLine.Option(names = {"-o", "--output"}, description = "OPTIONAL: Saves results in an output file.")
     String outputFileNameOrPath;
 
     @Override
