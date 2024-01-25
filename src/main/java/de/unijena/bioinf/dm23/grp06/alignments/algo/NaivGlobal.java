@@ -1,18 +1,14 @@
 package de.unijena.bioinf.dm23.grp06.alignments.algo;
-
 import de.unijena.bioinf.dm23.grp06.alignments.model.Alignment;
 import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentImpl;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
-//import de.unijena.bioinf.dm23.grp06.alignments.model.AlignmentString;
 
 import java.util.ArrayList;
-
 /**
  * This class represents a naive global alignment algorithm.
  */
 public class NaivGlobal<S extends Sequence> extends AbstractNaivAlgorithms<Sequence> {
+
     private Alignment alignment;
     private boolean aligned;
     ArrayList<AlignmentImpl> alignments;
@@ -30,15 +26,18 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAlgorithms<Seque
         this.aligned = false;
     }
 
-
     /**
      * Method implementation for alignment enumeration.
+     *
+     * The method essentially explores different possibilities of extending existing alignments by adding characters or gaps from the input sequences (sequence1 and sequence2).
+     * The goal is to generate all possible alignments and keep the one with the highest score.
      *
      * @param alignments The list to store alignment strings.
      */
 
-    public void enumeration(ArrayList<AlignmentImpl> alignments) { //New alignments are created by adding characters or gaps, and the corresponding scores are updated.
-
+    @Override
+    protected void enumeration(ArrayList<AlignmentImpl> alignments) {
+        //New alignments are created by adding characters or gaps, and the corresponding scores are updated.
         int position1;
         int position2;
         boolean added;  //Indicates whether new alignments have been added.
@@ -64,8 +63,9 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAlgorithms<Seque
                 }
             }
 
-            // Add sequence1 character and a gap
             //Conditions check if adding a character from either sequence (or both) is possible without exceeding their lengths.
+
+            // Add sequence1 character and a gap
             if(position1 < sequence1.getSequence().length()) {
                 alignments.add(new AlignmentImpl(alignments.get(i).getSequence1() + sequence1.charAt(position1), alignments.get(i).getSequence2() + "-", alignments.get(i).getScore() + scorer.score(sequence1.charAt(position1), '-')));
                 added =true;
@@ -88,19 +88,24 @@ public class NaivGlobal<S extends Sequence> extends AbstractNaivAlgorithms<Seque
                 alignments.remove(i);
                 i--;
             }
-            //The method essentially explores different possibilities of extending existing alignments by adding characters or gaps from the input sequences (sequence1 and sequence2).
-            //The goal is to generate all possible alignments and keep the one with the highest score.
         }
     }
-
-
+    /**
+     * Retrieves the first sequence used in alignment.
+     *
+     * @return The second sequence.
+     */
+    @Override
     public Sequence getSequence1() {
-        return sequence1;
+        return null;
     }
-
+    /**
+     * Retrieves the second sequence used in alignment.
+     *
+     * @return The second sequence.
+     */
     @Override
     public Sequence getSequence2() {
-        return sequence2;
+        return null;
     }
 }
-
