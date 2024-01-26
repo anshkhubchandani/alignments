@@ -126,17 +126,26 @@ public class RequestHandler {
         }
     }
 
+    /**
+     * Prints alignment scores to the screen.
+     */
     protected void printScores() {
         System.out.println(alignmentScorer.getScoresAsString() + " ");
         System.out.println(createResultString("score"));
     }
 
+    /**
+     * Prints optimal alignments and scores to the screen.
+     */
     protected void printOptimalAlignmentsAndScores() {
         System.out.println(alignmentScorer.getScoresAsString() + " ");
         System.out.println(createResultString("alignment"));
     }
 
-
+    /**
+     * Saves alignment results in an output file.
+     * @param outputFileNameOrPath  File name or file path, where results should be written to
+     */
     protected void saveResults(String outputFileNameOrPath, String function) {
 
         BufferedWriter resultWriter = null;
@@ -196,6 +205,10 @@ public class RequestHandler {
         return sb.toString();
     }
 
+    /**
+     * Saves distance matrix in an output file.
+     * @param outputFileNameOrPath  File name or file path, where the distance matrix should be written to
+     */
     protected void saveDistanceMatrix(String outputFileNameOrPath) {
 
         ArrayList<String> sequenceObjects = new ArrayList<>();
