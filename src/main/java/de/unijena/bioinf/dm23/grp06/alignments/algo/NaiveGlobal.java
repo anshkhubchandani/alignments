@@ -97,7 +97,7 @@ public class NaiveGlobal<S extends Sequence> extends AbstractNaiveAlgorithms<Seq
      */
     @Override
     public Sequence getSequence1() {
-        return null;
+        return sequence1;
     }
 
     /**
@@ -107,7 +107,7 @@ public class NaiveGlobal<S extends Sequence> extends AbstractNaiveAlgorithms<Seq
      */
     @Override
     public Sequence getSequence2() {
-        return null;
+        return sequence2;
     }
 }
 

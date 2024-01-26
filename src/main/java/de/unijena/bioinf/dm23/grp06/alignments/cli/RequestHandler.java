@@ -62,16 +62,16 @@ public class RequestHandler {
                     // do nothing
                 }
                 else if (algo.equals("NG")) {
-                    alignerObjects.add(new NaiveGlobal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
+                    alignerObjects.add(new NaiveGlobal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input2.get(k), sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("NL")) {
-                    alignerObjects.add(new NaiveLocal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
+                    alignerObjects.add(new NaiveLocal(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input2.get(k), sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("NW")) {
-                    alignerObjects.add(new NeedlemanWunsch(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
+                    alignerObjects.add(new NeedlemanWunsch(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input2.get(k), sequenceType), alignmentScorer));
                 }
                 else if (algo.equals("SW")) {
-                    alignerObjects.add(new SmithWaterman(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input1.get(k), sequenceType), alignmentScorer));
+                    alignerObjects.add(new SmithWaterman(readFastaToSequence(input1.get(i), sequenceType), readFastaToSequence(input2.get(k), sequenceType), alignmentScorer));
                 }
             }
             if (sameSequences) {
@@ -224,14 +224,14 @@ public class RequestHandler {
 
             bw.write("\n   "); // erste Zeile
             for (int i = 1; i <= sequenceObjects.size(); i++) {
-                bw.write(Integer.toString(i) + "    ");
+                bw.write(Integer.toString(i) + "   ");
             }
             bw.write("\n");
 
             int[][] distances = new int[sequenceObjects.size()][sequenceObjects.size()];
 
             for (Aligner i : alignerObjects) {
-                i.getOptimalAlignment();
+                //i.getOptimalAlignment();
                 distances[sequenceObjects.indexOf(i.getSequence1().getName())][sequenceObjects.indexOf(i.getSequence2().getName())] =
                         i.getAlignmentScore();
             }

@@ -32,7 +32,7 @@ public class NaiveLocal<S extends Sequence> extends AbstractNaiveAlgorithms<Sequ
      *
      * @param alignments The list to store alignment strings.
      */
-    public void enumeration(ArrayList<AlignmentImpl> alignments) {
+    protected void enumeration(ArrayList<AlignmentImpl> alignments) {
 
         // Initialize a variable to keep track of the current position in the alignments list
         int arrayPos = 0;
