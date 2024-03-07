@@ -28,7 +28,8 @@ public class CLMain extends AlignerOptions {
 }
 
 /**
- * Class that contains commandline Options and forwards user input to a {@link RequestHandler} object.
+ * Class for commandline Options. It forwards user input to a {@link RequestHandler} object and uses
+ * methods of that object to print and save alignment results if intended by the user.
  */
 class AlignerOptions implements Runnable {
 
