@@ -9,8 +9,8 @@ public class Scorer {
 
     private final boolean defaultScores;
     private final int match = 0;
-    private final int mismatch = +1;
-    private final int gap = +1;
+    private final int mismatch = 1;
+    private final int gap = 1;
     private HashMap<String,Integer> customScores;
     private String path;
 
